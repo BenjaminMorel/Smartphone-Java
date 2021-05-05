@@ -1,8 +1,10 @@
 package Demo;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+
 
 public class Smartphone extends JFrame{
     private JPanel panel;
@@ -17,7 +19,7 @@ public class Smartphone extends JFrame{
         label = new JLabel();
 
         // ajout de l'image du smartphone
-        ImageIcon png = new ImageIcon("C:\\Users\\choff\\IdeaProjects\\smartphone\\src\\main\\java\\smartphone_PNG.png");
+        ImageIcon png = new ImageIcon("src/main/java/Images/smartphone_PNG.png");
         label.setIcon(png);
         panel.add(label);
 
