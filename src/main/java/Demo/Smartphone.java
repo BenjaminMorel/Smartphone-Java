@@ -1,42 +1,41 @@
 package Demo;
 
 
+import General.CloseButton;
+import General.Time;
+import Screen.HomeScreen;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
 
 public class Smartphone extends JFrame{
-    private JPanel panel;
-    private JLabel label;
-    private ImageIcon png ;
-    private Shape shape ;
-    private JLayeredPane layeredPane ;
+    private Image png ;
+    private HomeScreen homeScreen ;
+
 
     public Smartphone() {
 
-        panel = new JPanel();
-        label = new JLabel();
-
         // ajout de l'image du smartphone
-        ImageIcon png = new ImageIcon("src/main/java/Images/smartphone_PNG.png");
-        label.setIcon(png);
-        panel.add(label);
-
-        // ajout du panel
-        add(panel);
+        png = new ImageIcon("src/main/java/Images/smartphone_PNG.png").getImage();
 
         // modification de la forme pour qu'elle prenne celui du smartphone
-        setSize(340,690);
+        this.setSize(600,690);
         setUndecorated(true);
         setShape(new RoundRectangle2D.Double(20, 15, 300, 623, 70, 70));
 
-        // créer label wallpaper
-        panel.setBackground(Color.yellow);
+        // on appelle le homescreen
+        homeScreen = new HomeScreen() ;
 
-        // layeredPane sert à créer un système de couches afin d'organiser les panels
-        layeredPane = new JLayeredPane();
-        layeredPane.highestLayer();
+
     }
 
+    public void paint(Graphics g){
+        Graphics2D g2D = (Graphics2D) g;
+
+        homeScreen.paint(g2D);
+
+        g2D.drawImage(png, 18, 13, null);
+    }
 }

@@ -1,4 +1,57 @@
 package General;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Timer;
+
 public class Time {
+    private int wait = 1000 ;
+
+    private Timer timer ;
+    public Time() {
+        Calendar maintenant = Calendar.getInstance();
+    }
+
+    public String getTime(){
+        String time = "";
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+
+        time+=dtf.format(now);
+
+        return time;
+    }
+
+    public String getDate() {
+        String date = "";
+        LocalDate currentDate = LocalDate.now();
+        DayOfWeek day = currentDate.getDayOfWeek();
+
+        switch (day){
+            case MONDAY : date += "lundi" ;
+                break ;
+            case TUESDAY : date += "mardi" ;
+                break ;
+            case WEDNESDAY: date += "mercredi" ;
+                break ;
+            case THURSDAY: date += "jeudi" ;
+                break ;
+            case FRIDAY: date += "vendredi" ;
+                break ;
+            case SATURDAY: date += "samedi" ;
+                break ;
+            case SUNDAY: date += "dimanche" ;
+                break ;
+        }
+
+        return date ;
+    }
 }
