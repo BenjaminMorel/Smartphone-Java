@@ -16,7 +16,6 @@ public class LockedScreen extends JFrame implements ActionListener {
         setUndecorated(true);
         setShape(new RoundRectangle2D.Double(20, 15, 300, 623, 70, 70));
         wallpaper = new ImageIcon("src/main/java/Images/LockedScreen.jpg").getImage();
-
     }
 
 
