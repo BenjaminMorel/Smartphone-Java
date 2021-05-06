@@ -4,6 +4,7 @@ package Demo;
 import General.CloseButton;
 import General.Time;
 import Screen.HomeScreen;
+import Screen.LockedScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,8 @@ import java.awt.geom.RoundRectangle2D;
 
 
 public class Smartphone extends JFrame{
-    private Image png ;
-    private HomeScreen homeScreen ;
+    private Image png;
+    private LockedScreen lockedScreen;
 
 
     public Smartphone() {
@@ -24,18 +25,14 @@ public class Smartphone extends JFrame{
         this.setSize(600,690);
         setUndecorated(true);
         setShape(new RoundRectangle2D.Double(20, 15, 300, 623, 70, 70));
+        setLocationRelativeTo(null);
 
-        // on appelle le homescreen
-        homeScreen = new HomeScreen() ;
-
-
+        // Calling the lockedScreen
+        lockedScreen = new LockedScreen();
     }
 
     public void paint(Graphics g){
-        Graphics2D g2D = (Graphics2D) g;
-
-        homeScreen.paint(g2D);
-
-        g2D.drawImage(png, 18, 13, null);
+        lockedScreen.paint(g);
+        g.drawImage(png, 18, 13, null);
     }
 }

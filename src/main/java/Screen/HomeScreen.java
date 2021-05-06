@@ -19,7 +19,6 @@ public class HomeScreen extends JFrame implements ActionListener {
     private Image googleSearchBar ;
 
 
-
     public HomeScreen() {
         this.setSize(600,690);
         setUndecorated(true);
