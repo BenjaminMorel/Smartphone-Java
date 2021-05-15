@@ -1,6 +1,5 @@
 package Screen;
 import Demo.Smartphone ;
-import Demo.SwitchApp;
 import General.Time;
 
 import javax.swing.*;
@@ -14,9 +13,10 @@ public class HomeScreen extends JPanel implements ActionListener {
     private JPanel panel;
     private Image imageBackround ;
     private Dimension dimension = new Dimension(300, 200) ;
-    private SwitchApp switchApp ;
+    private Smartphone switchApp ;
     private JButton button = new JButton("yeslife") ;
     private JButton button1 = new JButton("yeslife1") ;
+
 
     public HomeScreen() {
         imageBackround = new ImageIcon("src/main/java/Images/wallpaper_PNG.png").getImage() ;
@@ -34,14 +34,14 @@ public class HomeScreen extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == button){
-            switchApp= new SwitchApp(this, new TestScreen());
+            switchApp = new Smartphone(new TestScreen());
         }
     }
 
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g ;
-        g2D.drawImage(imageBackround, 20, 25, 300, 580, null) ;
+        g2D.drawImage(imageBackround, 15, 25, 310, 580, null) ;
     }
 
 

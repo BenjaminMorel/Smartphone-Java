@@ -1,7 +1,6 @@
 package Screen;
 
 import Demo.Smartphone;
-import Demo.SwitchApp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +10,7 @@ import java.awt.event.ActionListener;
 public class TestScreen extends JPanel implements ActionListener {
 
     private JButton button = new JButton("test") ;
-    private SwitchApp switchApp;
+    private Smartphone switchApp;
 
 
     public TestScreen() {
@@ -25,7 +24,7 @@ public class TestScreen extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == button){
-            switchApp = new SwitchApp(this, new HomeScreen()) ;
+            switchApp = new Smartphone(new HomeScreen()) ;
         }
     }
 }
