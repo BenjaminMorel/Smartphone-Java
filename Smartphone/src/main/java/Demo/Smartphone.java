@@ -1,8 +1,6 @@
 package Demo;
 
 
-import General.CloseButton;
-import General.Time;
 import Screen.BottomBar;
 import Screen.HomeScreen;
 import Screen.TopBar;
@@ -57,7 +55,7 @@ public class Smartphone extends JFrame {
             add(bottomBar, BorderLayout.SOUTH) ;
 
             // importer image smartphone
-            contourSmartPhone = new ImageIcon("src/main/java/Images/smartphone_PNG.png").getImage() ;
+            contourSmartPhone = new ImageIcon("Smartphone/src/main/java/Images/smartphone_PNG.png").getImage() ;
 
             pack();
             setLocationRelativeTo(null);

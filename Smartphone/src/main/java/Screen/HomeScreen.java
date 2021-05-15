@@ -19,7 +19,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 
 
     public HomeScreen() {
-        imageBackround = new ImageIcon("src/main/java/Images/wallpaper_PNG.png").getImage() ;
+        imageBackround = new ImageIcon("Smartphone/src/main/java/Images/wallpaper_PNG.png").getImage() ;
         setPreferredSize(dimension);
 
         setLayout(new FlowLayout());
