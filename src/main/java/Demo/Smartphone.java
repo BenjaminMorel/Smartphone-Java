@@ -29,53 +29,60 @@ public class Smartphone extends JFrame {
     // Cardlayout va spécifier comment le smartphone va fonctionner
     private static CardLayout cardLayout = new CardLayout() ;
 
-    private boolean initialise = false ;
+    private InitialisationSmartphone initialisationSmartphone = new InitialisationSmartphone() ;
 
-    public Smartphone(JPanel app) {
-        this.app=app;
 
-        // Création de la JFrame
-        setPreferredSize(SIZE);
-        setUndecorated(true);
-        setShape(SHAPE);
-        setVisible(true);
 
-        // contenuApp et le vieux panel qui va acueillir les applications et autres
-        contenuApp.setLayout(cardLayout);
 
-        // on ajoute l'application (input de la classe) au contenu
-        contenuApp.add(app);
 
-        setLayout(new BorderLayout());
-        add(topBar, BorderLayout.NORTH) ;
-        add(contenuApp, BorderLayout.CENTER) ;
-        add(bottomBar, BorderLayout.SOUTH) ;
+    public Smartphone(JPanel newApp) {
 
-        // importer image smartphone
-        contourSmartPhone = new ImageIcon("src/main/java/Images/smartphone_PNG.png").getImage() ;
+        if(newApp == null){
+            app = initialisationSmartphone.getHomeScreen() ;
+            contenuApp.add(app);
 
-        pack();
-        setLocationRelativeTo(null);
+            // Création de la JFrame
+            setPreferredSize(SIZE);
+            setUndecorated(true);
+            setShape(SHAPE);
+            setVisible(true);
 
+            // contenuApp et le vieux panel qui va acueillir les applications et autres
+            contenuApp.setLayout(cardLayout);
+
+
+            setLayout(new BorderLayout());
+            add(topBar, BorderLayout.NORTH) ;
+            add(contenuApp, BorderLayout.CENTER) ;
+            add(bottomBar, BorderLayout.SOUTH) ;
+
+            // importer image smartphone
+            contourSmartPhone = new ImageIcon("src/main/java/Images/smartphone_PNG.png").getImage() ;
+
+            pack();
+            setLocationRelativeTo(null);
+        }
+        else{
+            switchApplication(newApp);
+        }
     }
+
+
+
+
+
+    public void switchApplication(JPanel newApp){
+        contenuApp.remove(app);
+        app = newApp ;
+        contenuApp.add(app);
+        cardLayout.next(contenuApp);
+    }
+
 
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g ;
-
         g2D.drawImage(contourSmartPhone, 10, 10, null) ;
     }
-
-
-    public void switchApplication(JPanel newApp){
-        contenuApp.remove(app) ;
-        app = newApp ;
-        contenuApp.add(app) ;
-        cardLayout.next(contenuApp);
-
-    }
-
-
-
 
 }

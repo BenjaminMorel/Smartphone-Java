@@ -10,9 +10,8 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        HomeScreen homeScreen = new HomeScreen() ;
 
-        Smartphone smartphone = new Smartphone(homeScreen);
+        Smartphone smartphone = new Smartphone(null);
         smartphone.setVisible(true);
 
 
