@@ -1,12 +1,4 @@
-package Demo;
-
-import General.CloseButton;
-import Screen.HomeScreen;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
-import java.util.HashMap;
+import Demo.Smartphone;
 
 public class Main {
     public static void main(String[] args) {
