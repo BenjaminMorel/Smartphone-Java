@@ -1,6 +1,7 @@
 package Screen;
 import Demo.Smartphone ;
 import General.Time;
+import Meteo.WeatherWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 
 
     public HomeScreen() {
-        imageBackround = new ImageIcon("Smartphone/src/main/java/Images/wallpaper_PNG.png").getImage() ;
+        imageBackround = new ImageIcon("src/main/java/Images/wallpaper_PNG.png").getImage() ;
         setPreferredSize(dimension);
 
         setLayout(new FlowLayout());
@@ -31,10 +32,11 @@ public class HomeScreen extends JPanel implements ActionListener {
 
 
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == button){
-            switchApp = new Smartphone(new TestScreen());
+            switchApp = new Smartphone(new WeatherWindow());
         }
     }
 

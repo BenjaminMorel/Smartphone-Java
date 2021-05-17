@@ -54,4 +54,15 @@ public class Time {
 
         return date ;
     }
+
+    public String getMonth(){
+        String time = "";
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MMM");
+        LocalDateTime now = LocalDateTime.now();
+
+        time+=dtf.format(now);
+
+        return time;
+    }
 }

@@ -13,7 +13,7 @@ import java.awt.geom.RoundRectangle2D;
 public class Smartphone extends JFrame {
 
     // création de la taille et de la forme du smartphone
-    private static final Dimension SIZE = new Dimension(400, 690) ;
+    private static final Dimension SIZE = new Dimension(320, 690) ;
     private RoundRectangle2D.Double SHAPE = new RoundRectangle2D.Double(16, 14, 305, 640, 75, 75) ;
 
     // rajouter le contenu de l'image de base plus du futur contenu des applications
@@ -55,7 +55,7 @@ public class Smartphone extends JFrame {
             add(bottomBar, BorderLayout.SOUTH) ;
 
             // importer image smartphone
-            contourSmartPhone = new ImageIcon("Smartphone/src/main/java/Images/smartphone_PNG.png").getImage() ;
+            // contourSmartPhone = new ImageIcon("src/main/java/Images/smartphone_PNG.png").getImage() ;
 
             pack();
             setLocationRelativeTo(null);
