@@ -9,6 +9,7 @@ public class Contact {
     public Contact(String firstName, String lastName, String telNumber) {
         setFirstName(firstName);
         setLastName(lastName);
+        setTelNumber(telNumber);
     }
 
     public Contact() {
