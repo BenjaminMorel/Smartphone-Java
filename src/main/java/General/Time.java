@@ -65,4 +65,20 @@ public class Time {
 
         return time;
     }
+
+    public String unixToDate(int unixSeconds){
+        Date date = new java.util.Date(unixSeconds*1000L);                                          // convert seconds to miliseconds
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm z");       // the format of your date
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+2"));                                   // give a timezone reference for formatting (see comment at the bottom)
+        String formattedDate = sdf.format(date);
+        return formattedDate ;
+    }
+
+    public String unixToHours(int unixSeconds){
+        Date date = new java.util.Date(unixSeconds*1000L);                                          // convert seconds to miliseconds
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH");       // the format of your date
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+2"));                                   // give a timezone reference for formatting (see comment at the bottom)
+        String formattedDate = sdf.format(date);
+        return formattedDate ;
+    }
 }

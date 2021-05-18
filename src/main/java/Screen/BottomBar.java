@@ -11,6 +11,9 @@ public class BottomBar extends JPanel{
     public BottomBar() {
        setBackground(Color.yellow);
        setPreferredSize(dimension);
+
+       JButton button = new JButton() ;
+       add(button) ;
     }
 
 
