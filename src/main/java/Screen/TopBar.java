@@ -9,7 +9,7 @@ public class TopBar extends JPanel{
 
     public TopBar() {
         setPreferredSize(dimension);
-
+        setBackground(Color.BLUE);
     }
 
 }

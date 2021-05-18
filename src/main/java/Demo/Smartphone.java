@@ -55,7 +55,7 @@ public class Smartphone extends JFrame {
             add(bottomBar, BorderLayout.SOUTH) ;
 
             // importer image smartphone
-            // contourSmartPhone = new ImageIcon("src/main/java/Images/smartphone_PNG.png").getImage() ;
+            contourSmartPhone = new ImageIcon("src/main/java/Images/smartphone_PNG.png").getImage() ;
 
             pack();
             setLocationRelativeTo(null);

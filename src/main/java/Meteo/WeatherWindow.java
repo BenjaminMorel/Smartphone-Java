@@ -11,12 +11,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 public class WeatherWindow extends JPanel implements ActionListener {
 
-    private JButton button = new JButton("test") ;
+    private JTextField textField ;
+    private JButton searchButton ;
     private Smartphone switchApp;
-    private Weather weather = new Weather() ;
+    private String setVille = "Sierre" ;
+    private Weather weather ;
     private Time timeGeneral = new Time() ;
 
     // text font + color
@@ -33,10 +36,31 @@ public class WeatherWindow extends JPanel implements ActionListener {
     private JPanel panelDescription = new JPanel() ;
 
 
-    public WeatherWindow() {
+    public WeatherWindow(String setVille) throws IOException {
+        this.setVille=setVille ;
         setLayout(null); // permet d'ajouter des labels et panels avec setBounds
 
 
+        textField = new JTextField() ;
+        textField.addActionListener(this);
+        textField.setBounds(70, 6, 200, 30);
+        textField.setOpaque(false);
+        textField.setFont(moyenFont);
+        textField.setForeground(Color.white);
+        textField.setVisible(false);
+        add(textField);
+
+        searchButton = new JButton() ;
+        searchButton.addActionListener(this);
+        searchButton.setBounds(275, 4, 40, 40);
+        ImageIcon iconSearchButton = new ImageIcon("src/main/java/Images/WeatherIcon/searchBar.png") ;
+        searchButton.setIcon(iconSearchButton);
+        searchButton.setBorderPainted(false);
+        searchButton.setFocusPainted(false);
+        searchButton.setContentAreaFilled(false);
+        add(searchButton) ;
+
+        weather = new Weather(setVille) ;
         // les panels sont créés en dehors du constructeur
         // Panel + label Ville
         panelVille.setOpaque(false);
@@ -80,7 +104,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
         actualTemperature.setForeground(Color.white);
         add(actualTemperature);
 
-        // ajout d'une image(test)
+        // ajout d'une image de la grande icone
         JLabel labelImage = new JLabel();
         String[] contentStringIcon = weather.getWeather() ;
         String stringIcon = contentStringIcon[3] ;
@@ -94,13 +118,23 @@ public class WeatherWindow extends JPanel implements ActionListener {
         add(labelImage);
 
 
-        // Label + panel MAX/MIN temp, temp feels_like
+        // Label + panel MAX/MIN temp, temp feels_like                      pattern recherché : 30°/17° Feels like 31°
         panelMaxMinTemp.setOpaque(false);
         panelMaxMinTemp.setBounds(17, 210, 303, 20);
         panelMaxMinTemp.setLayout(new GridBagLayout());
         add(panelMaxMinTemp);
 
-        JLabel maxMinTemp = new JLabel("yoyoyoyoyoyo") ;
+        String[] contentMaxMinTemp = weather.getTemperature() ;             // même principe que plus haut mais répété 3x
+        String stringMaxTemp = contentMaxMinTemp[3];
+        stringMaxTemp = stringMaxTemp.substring(10);
+        double doubleMaxTemp = Double.parseDouble(stringMaxTemp) ;
+        String stringMinTemp = contentMaxMinTemp[2];
+        stringMinTemp = stringMinTemp.substring(10);
+        double doubleMinTemp = Double.parseDouble(stringMinTemp) ;
+        String stringFeelsLike = contentMaxMinTemp[1];
+        stringFeelsLike = stringFeelsLike.substring(12);
+        double doubleFeelsLike = Double.parseDouble(stringFeelsLike) ;
+        JLabel maxMinTemp = new JLabel((int)doubleMaxTemp + "°/" + (int)doubleMinTemp + "° Feels like " + (int)doubleFeelsLike + "°") ;
         maxMinTemp.setForeground(liightGray);
         maxMinTemp.setFont(moyenFont);
         panelMaxMinTemp.add(maxMinTemp) ;
@@ -112,24 +146,136 @@ public class WeatherWindow extends JPanel implements ActionListener {
         panelDescription.setLayout(new GridBagLayout());
         add(panelDescription);
 
-        JLabel labelDescription = new JLabel("bashdbbvasdbh") ;
+        String[] stringDescriptionContent = weather.getWeather() ;
+        String stringDescription = stringDescriptionContent[2] ;
+        stringDescription = stringDescription.substring(13) ;
+        JLabel labelDescription = new JLabel(stringDescription) ;
         labelDescription.setForeground(Color.white);
         labelDescription.setFont(moyenFont);
         panelDescription.add(labelDescription) ;
 
 
-        // label sunrise + sunset
-//        JLabel labelSunrise = new JLabel();
-//        ImageIcon imageSunrise = new ImageIcon("src/main/java/Images/WeatherIcon/sunrise.png");
-//        labelSunrise.setIcon(imageSunrise);
-//        labelSunrise.setBounds(40, 300, 100, 100);
-//        add(labelSunrise) ;
-//
-//        JLabel labelSet = new JLabel();
-//        ImageIcon imageSet = new ImageIcon("src/main/java/Images/WeatherIcon/sunset.png");
-//        labelSet.setIcon(imageSet);
-//        labelSet.setBounds(40, 334, 100, 100);
-//        add(labelSet) ;
+        // Texte + icone sunrise et sunset
+        // icone sunrise
+        JLabel labelSunrise = new JLabel();
+        ImageIcon imageSunrise = new ImageIcon("src/main/java/Images/WeatherIcon/sunrise.png");
+        labelSunrise.setIcon(imageSunrise);
+        labelSunrise.setBounds(40, 275, 100, 100);
+        add(labelSunrise) ;
+        // texte sunrise
+        String[] stringContentSunrise = weather.getSun() ;                              // transformation de String[] en int (même procédure que plus haut)
+        String stringSunrise = stringContentSunrise[3];
+        stringSunrise = stringSunrise.substring(9) ;
+        int intStringSunrise = Integer.parseInt(stringSunrise) ;
+        stringSunrise = timeGeneral.unixToDate(intStringSunrise) ;                      // changement de secondes unix en String (méthode dans General.Time)
+        JLabel labelStringSunrise = new JLabel(stringSunrise) ;
+        labelStringSunrise.setForeground(Color.white);
+        labelStringSunrise.setFont(timeFont);
+        labelStringSunrise.setBounds(90, 307, 150, 30);
+        add(labelStringSunrise) ;
+
+        // icone sunset
+        JLabel labelSet = new JLabel();
+        ImageIcon imageSet = new ImageIcon("src/main/java/Images/WeatherIcon/sunset.png");
+        labelSet.setIcon(imageSet);
+        labelSet.setBounds(40, 322, 100, 100);
+        add(labelSet) ;
+        // texte sunset
+        String[] stringContentSunset = weather.getSun() ;
+        String stringSunset = stringContentSunset[4] ;
+        stringSunset = stringSunset.substring(8) ;
+        int intStringSunset = Integer.parseInt(stringSunset);
+        stringSunset = timeGeneral.unixToDate(intStringSunset);             // fonction qui transforme les heures unix en heures compréhensibles
+        JLabel labelStringSunset = new JLabel(stringSunset) ;
+        labelStringSunset.setForeground(Color.white);
+        labelStringSunset.setFont(timeFont);
+        labelStringSunset.setBounds(90, 355, 150, 30);
+        add(labelStringSunset) ;
+
+        // label + icone humidité
+        // icone humidité
+        JLabel labelHumidite = new JLabel() ;
+        ImageIcon iconHumidite = new ImageIcon("src/main/java/Images/WeatherIcon/humidity.png") ;
+        labelHumidite.setIcon(iconHumidite);
+        labelHumidite.setBounds(52, 390, 50, 50);
+        add(labelHumidite);
+
+        // label humidité
+        String[] humiditeContent = weather.getTemperature() ;
+        String humiditeString = humiditeContent[5] ;
+        humiditeString = humiditeString.substring(10) ;
+        humiditeString = humiditeString.substring(0,humiditeString.length()-1) ;
+        JLabel labelStringHumidite = new JLabel("humidité : " + humiditeString + "%") ;
+        labelStringHumidite.setForeground(Color.white);
+        labelStringHumidite.setFont(timeFont);
+        labelStringHumidite.setBounds(90, 390, 150, 50);
+        add(labelStringHumidite) ;
+
+
+        // ajout de toutes les heures au bas de l'écran (hourly)
+        String stingGetTime = timeGeneral.getTime() ;
+        stingGetTime = stingGetTime.substring(0, stingGetTime.length()-3) ;
+        int intStingGetTime = Integer.parseInt(stingGetTime) ;
+        int intActualHour = intStingGetTime ;
+        intStingGetTime++ ;                                                         // heure +1 pour démarrer les guess depuis la seconde heure
+        int hBounds = 48 ;                                                          // valeur horizontale de base
+        JLabel hourlyLabelHour ;
+
+
+        for (int i = 0 ; i < 5 ; i++){                                              // boucle for qui va s'occuper de créer 5 labels
+            hourlyLabelHour = new JLabel(""+ intStingGetTime + ":00");
+            hourlyLabelHour.setForeground(Color.white);
+            hourlyLabelHour.setFont(timeFont);
+            hourlyLabelHour.setBounds(hBounds, 460, 50, 50);   // hBounds s'incrémente à chaque passage, c'est la seule variable qui change dans setBounds.
+            add(hourlyLabelHour) ;
+            hBounds += 50 ;
+            if((intStingGetTime == 21) || (intStingGetTime ==  22) || (intStingGetTime == 23) || (intStingGetTime == 24)){ // jour suivant => remise à 0
+                intStingGetTime = intStingGetTime-24 ; // on enlève 24(h) au compteur
+                intStingGetTime += 3 ;
+
+            }
+            else{
+                intStingGetTime += 3 ; // incrémentation des heures (+3)
+            }
+        }
+
+        // ajout des icones en bas de l'écran (hourly)
+        JLabel labelImagesDuBas ;
+        ImageIcon iconImageDuBas ;
+        hBounds = 40 ;
+        String stringGetHoursSunset = timeGeneral.unixToHours(intStringSunset) ;
+        int intGetHoursSunset = Integer.parseInt(stringGetHoursSunset) ;                // les heures du coucher/lever soleil servent à adapter l'icone à l'heure
+        String stringGetHoursSunrise = timeGeneral.unixToHours(intStringSunrise) ;
+        int intGetHoursSunrise = Integer.parseInt(stringGetHoursSunrise) ;
+        String stringGetIconPath = "" ;
+        stringIcon = stringIcon.substring(0, stringIcon.length()-1) ; // on coupe le "d" ou "n" après car il sera désormais variable selon l'heure
+        System.out.println(stringIcon);
+
+        for(int i = 0 ; i < 5 ; i++){
+            labelImagesDuBas = new JLabel() ;
+            stringGetIconPath = "src/main/java/Images/WeatherIcon/" ; // on reset le path
+            if((intActualHour>=intGetHoursSunrise) && (intActualHour<=intGetHoursSunset)){
+                // icone jour
+                stringGetIconPath += stringIcon + "d.png" ;
+                iconImageDuBas = new ImageIcon(stringGetIconPath) ;
+                Image imageDuBas = iconImageDuBas.getImage();           // changer la taille de l'icone (la rétrécir)
+                Image newimg = imageDuBas.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+                iconImageDuBas = new ImageIcon(newimg);
+            }
+            else{
+                // icone nuit
+                stringGetIconPath += stringIcon + "n.png" ;
+                iconImageDuBas = new ImageIcon(stringGetIconPath) ;
+                Image imageDuBas = iconImageDuBas.getImage();
+                Image newimg = imageDuBas.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+                iconImageDuBas = new ImageIcon(newimg);
+            }
+            labelImagesDuBas.setIcon(iconImageDuBas);
+            labelImagesDuBas.setBounds(hBounds, 490, 200, 50);
+            add(labelImagesDuBas) ;
+            hBounds += 50 ;
+
+        }
 
 
 
@@ -159,8 +305,24 @@ public class WeatherWindow extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == button){
-            switchApp = new Smartphone(new HomeScreen()) ;
+        if(e.getSource() == searchButton){
+            System.out.println("buttonABF;AKBSHFH");
+            if(textField.getText().equals("")){
+                textField.setVisible(true);
+            }
+            else{
+                try {
+                    System.out.println(textField.getText());
+                    switchApp = new Smartphone(new WeatherWindow(textField.getText())) ;
+                } catch (MalformedURLException malformedURLException) {
+                    malformedURLException.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        }
+        if(e.getSource() == textField){
+            setVille = textField.getText() ;
         }
     }
 

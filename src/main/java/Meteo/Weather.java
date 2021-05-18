@@ -3,6 +3,10 @@ package Meteo;
 import Storable.JSONStorage;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.Map;
 
 public class Weather {
@@ -14,15 +18,44 @@ public class Weather {
     private String[] keySet ;
     private String keyValueNotSorted ;
     private String[] keyValue ;
+    private String ville = "Sierre" ;
 
-    public Weather() {
+    public Weather(String sVille) throws IOException {
 
-        // va chercher les données de l'API
-        try {
-            map = jsonStorage.readFromUrl("https://api.openweathermap.org/data/2.5/weather?q=Sierre&units=metric&appid=fcd518773066748f0875a9cd8791dc49") ;
-        }catch (IOException i){
-        System.out.println(i.getMessage());
+        // on gère si la recherche est nulle
+        if(sVille== null){
+            ville = "Sierre" ;
         }
+        else{
+            ville = sVille ;
+        }
+
+        // création de l'URL
+        String preURL = "https://api.openweathermap.org/data/2.5/weather?q=";
+        String postURL = "&units=metric&appid=fcd518773066748f0875a9cd8791dc49";
+        URL url = new URL(preURL + ville + postURL) ;
+        String sURL = preURL + ville + postURL ;
+
+        map = jsonStorage.readFromUrl(sURL) ;
+
+//        try {
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setRequestMethod("GET");
+//
+//            int responseCode = conn.getResponseCode();
+//            if (responseCode == HttpURLConnection.HTTP_OK) {
+//                map = jsonStorage.readFromUrl(sURL) ;
+//            }
+//            else{
+//               map = jsonStorage.readFromUrl("https://api.openweathermap.org/data/2.5/weather?q=Sierre&units=metric&appid=fcd518773066748f0875a9cd8791dc49") ;
+//               System.out.println("Ville non trouvée");
+//            }
+//        } catch (MalformedURLException | ProtocolException i){
+//            i.getMessage() ;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
 
         // création d'un tableau de string depuis un keyset
         keySetNotSorted = String.join(",",map.keySet()) ;
@@ -30,9 +63,9 @@ public class Weather {
 
 
         // test de la classe getWeather
-        String test ;
-        test = getVille();
-        System.out.println(test);
+        String[] test ;
+        test = getSun();
+      // System.out.println(test[3]);
 
 
     }
@@ -89,27 +122,52 @@ public class Weather {
         return wind ;
     }
 
-    public String[] getRain(){
-
-        // tri de l'objet coordinates
-        String rainContent = "" ;
-        rainContent += map.get(keySet[6]) ;
-        rainContent = rainContent.substring(1) ;
-        rainContent = rainContent.substring(0, rainContent.length()-2) ;
-
-        // séparation et retour de l'objet coordinates
-        String[] rain = rainContent.split(",") ;
-        return rain ;
-    }
 
     public String getVille(){
 
+        String checkRain ="{all=" ;                                     // contenu des 4 premières cases de l'objet no.7
+        String checkRain2 =  "" ;                                       // va rechercher ce qu'il y a dans la case avec le contenu no.7. si egal => pluie => une case en plus
+        checkRain2 += map.get(keySet[7]);
+        checkRain2 = checkRain2.substring(0, checkRain2.length()-4) ;
+
+
+
+
         // tri de l'objet coordinates
         String cityContent = "" ;
-        cityContent += map.get(keySet[12]) ;
-        cityContent = cityContent.substring(0, cityContent.length()) ;
+        if(checkRain.equals(checkRain2)){
+            cityContent += map.get(keySet[12]) ;
+            cityContent = cityContent.substring(0, cityContent.length()) ;
+        }
+        else{
+            cityContent += map.get(keySet[11]) ;
+            cityContent = cityContent.substring(0, cityContent.length()) ;
+        }
 
         return cityContent ;
+    }
+
+    public String[] getSun(){
+
+        String checkRain ="{all=" ;                                     // contenu des 4 premières cases de l'objet no.7
+        String checkRain2 =  "" ;                                       // va rechercher ce qu'il y a dans la case avec le contenu no.7. si egal => pluie => une case en plus
+        checkRain2 += map.get(keySet[7]);
+        checkRain2 = checkRain2.substring(0, checkRain2.length()-4) ;
+
+
+        String sunContent = "" ;
+        if(checkRain.equals(checkRain2)) {
+            sunContent += map.get(keySet[9]);
+            sunContent = sunContent.substring(1);
+            sunContent = sunContent.substring(0, sunContent.length() - 1);
+        }
+        else {
+            sunContent += map.get(keySet[8]);
+            sunContent = sunContent.substring(1);
+            sunContent = sunContent.substring(0, sunContent.length() - 1);
+        }
+        String[] sun = sunContent.split(",") ;
+        return sun ;
     }
 
 }

@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 
 public class HomeScreen extends JPanel implements ActionListener {
@@ -36,7 +38,13 @@ public class HomeScreen extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == button){
-            switchApp = new Smartphone(new WeatherWindow());
+            try {
+                switchApp = new Smartphone(new WeatherWindow("Sierre"));
+            } catch (MalformedURLException malformedURLException) {
+                malformedURLException.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 
