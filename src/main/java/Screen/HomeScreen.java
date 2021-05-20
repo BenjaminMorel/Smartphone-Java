@@ -12,32 +12,44 @@ import java.net.MalformedURLException;
 
 
 public class HomeScreen extends JPanel implements ActionListener {
-    private Time hours;
-    private JPanel panel;
-    private Image imageBackround ;
-    private Dimension dimension = new Dimension(300, 200) ;
+    private Time timeGeneral = new Time();
+    private ImageIcon imageBackround ;
     private Smartphone switchApp ;
-    private JButton button = new JButton("yeslife") ;
-    private JButton button1 = new JButton("yeslife1") ;
+    private JButton buttonWeather ;
+
 
 
     public HomeScreen() {
-        imageBackround = new ImageIcon("src/main/java/Images/wallpaper_PNG.png").getImage() ;
-        setPreferredSize(dimension);
-
-        setLayout(new FlowLayout());
-
-        button.addActionListener(this);
-
-        add(button) ;
-        add(button1) ;
+        setLayout(null);
 
 
+
+        // bouton weatherapp
+        buttonWeather = new JButton("yeslife") ;
+        buttonWeather.addActionListener(this);
+        buttonWeather.setBounds(50, 50, 100, 40);
+        add(buttonWeather) ;
+
+
+        // set background
+        //forme grise au top
+        ImageIcon iconThingOnTop = new ImageIcon("src/main/java/Images/HomeScreen/grayThingOnTop.png") ;
+        JLabel labelThingOnTop = new JLabel() ;
+        labelThingOnTop.setIcon(iconThingOnTop);
+        labelThingOnTop.setBounds(42, 0, 290, 150);
+        add(labelThingOnTop) ;
+
+        //image background
+        imageBackround = new ImageIcon("src/main/java/Images/wallpaper_PNG.png");
+        JLabel labelBackground = new JLabel() ;
+        labelBackground.setIcon(imageBackround);
+        labelBackground.setBounds(17,0 , 303, 600);
+        add(labelBackground) ;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == button){
+        if(e.getSource() == buttonWeather){
             try {
                 switchApp = new Smartphone(new WeatherWindow("Sierre"));
             } catch (MalformedURLException malformedURLException) {
@@ -48,11 +60,6 @@ public class HomeScreen extends JPanel implements ActionListener {
         }
     }
 
-    public void paint(Graphics g){
-        super.paint(g);
-        Graphics2D g2D = (Graphics2D) g ;
-        g2D.drawImage(imageBackround, 15, 25, 310, 580, null) ;
-    }
 
 
 }
