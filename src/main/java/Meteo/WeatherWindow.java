@@ -167,6 +167,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
         String stringSunrise = stringContentSunrise[3];
         stringSunrise = stringSunrise.substring(9) ;
         int intStringSunrise = Integer.parseInt(stringSunrise) ;
+
         stringSunrise = timeGeneral.unixToDate(intStringSunrise) ;                      // changement de secondes unix en String (méthode dans General.Time)
         JLabel labelStringSunrise = new JLabel(stringSunrise) ;
         labelStringSunrise.setForeground(Color.white);
@@ -249,12 +250,13 @@ public class WeatherWindow extends JPanel implements ActionListener {
         int intGetHoursSunrise = Integer.parseInt(stringGetHoursSunrise) ;
         String stringGetIconPath = "" ;
         stringIcon = stringIcon.substring(0, stringIcon.length()-1) ; // on coupe le "d" ou "n" après car il sera désormais variable selon l'heure
-        System.out.println(stringIcon);
+        intActualHour = intActualHour+1 ;
+
 
         for(int i = 0 ; i < 5 ; i++){
             labelImagesDuBas = new JLabel() ;
             stringGetIconPath = "src/main/java/Images/WeatherIcon/" ; // on reset le path
-            if((intActualHour>=intGetHoursSunrise) && (intActualHour<=intGetHoursSunset)){
+            if((intActualHour>=intGetHoursSunrise) && (intActualHour<=intGetHoursSunset)){   // on choisit le mode jour ou nuit de l'icone en fonction du lever/coucher du soleil
                 // icone jour
                 stringGetIconPath += stringIcon + "d.png" ;
                 iconImageDuBas = new ImageIcon(stringGetIconPath) ;
@@ -274,7 +276,14 @@ public class WeatherWindow extends JPanel implements ActionListener {
             labelImagesDuBas.setBounds(hBounds, 490, 200, 50);
             add(labelImagesDuBas) ;
             hBounds += 50 ;
+            if((intActualHour == 21) || (intActualHour ==  22) || (intActualHour == 23) || (intActualHour == 24)){ // jour suivant => remise à 0
+                intActualHour = intActualHour-24 ; // on enlève 24(h) au compteur
+                intActualHour += 3 ;
 
+            }
+            else{
+                intActualHour += 3 ; // incrémentation des heures (+3)
+            }
         }
 
 

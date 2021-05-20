@@ -125,12 +125,11 @@ public class Weather {
 
     public String getVille(){
 
-        String checkRain ="{all=" ;                                     // contenu des 4 premières cases de l'objet no.7
+        String checkRain ="{all" ;                                     // contenu des 4 premières cases de l'objet no.7
         String checkRain2 =  "" ;                                       // va rechercher ce qu'il y a dans la case avec le contenu no.7. si egal => pluie => une case en plus
         checkRain2 += map.get(keySet[7]);
-        checkRain2 = checkRain2.substring(0, checkRain2.length()-4) ;
-
-
+        checkRain2 = checkRain2.substring(0, 4) ;
+        System.out.println(checkRain2);
 
 
         // tri de l'objet coordinates
@@ -149,10 +148,10 @@ public class Weather {
 
     public String[] getSun(){
 
-        String checkRain ="{all=" ;                                     // contenu des 4 premières cases de l'objet no.7
+        String checkRain ="{all" ;                                     // contenu des 4 premières cases de l'objet no.7
         String checkRain2 =  "" ;                                       // va rechercher ce qu'il y a dans la case avec le contenu no.7. si egal => pluie => une case en plus
         checkRain2 += map.get(keySet[7]);
-        checkRain2 = checkRain2.substring(0, checkRain2.length()-4) ;
+        checkRain2 = checkRain2.substring(0, 4) ;
 
 
         String sunContent = "" ;
@@ -167,6 +166,8 @@ public class Weather {
             sunContent = sunContent.substring(0, sunContent.length() - 1);
         }
         String[] sun = sunContent.split(",") ;
+
+
         return sun ;
     }
 

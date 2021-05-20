@@ -1,6 +1,6 @@
 package Contacts;
 
-import SmartphoneShape.Smartphone;
+import Demo.Smartphone;
 import Storable.JSONStorage;
 
 import javax.swing.*;
