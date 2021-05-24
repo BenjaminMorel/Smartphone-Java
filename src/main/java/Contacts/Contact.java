@@ -2,14 +2,13 @@ package Contacts;
 
 public class Contact {
 
-    private String firstName;
-    private String lastName;
-    private String telNumber;
+    private String firstName, lastName, telNumber, birthDate;
 
-    public Contact(String firstName, String lastName, String telNumber) {
+    public Contact(String firstName, String lastName, String telNumber, String birthDate) {
         setFirstName(firstName);
         setLastName(lastName);
         setTelNumber(telNumber);
+        setBirthDate(birthDate);
     }
 
     public Contact() {
@@ -38,5 +37,13 @@ public class Contact {
 
     public void setTelNumber(String telNumber) {
         this.telNumber = telNumber;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 }

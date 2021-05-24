@@ -19,9 +19,10 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
 
     private JSONStorage jsonStorage = new JSONStorage();        // Json Storage pour sauvegarder/lire les contacts
     private Contact[] contacts;                                 // Liste des contacts
-    private JLabel nbContacts;                                  // Label avec le nombre de contacts
+    private JLabel labelNbContacts;                                  // Label avec le nombre de contacts
+    private int nbContacts;
 
-    private Smartphone switchInfoContact;
+    private Smartphone switchApp;
 
 
     public ContactWindow() {
@@ -33,6 +34,7 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
         // Settings du Panel pour ajouter un contact
         panelAdd = new JPanel();
         buttonAdd = new JButton("+");
+        buttonAdd.addActionListener(new ButtonAddContact());
         panelAdd.add(buttonAdd);
         add(panelAdd);
 
@@ -49,12 +51,15 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
             buttonsContact[i] = new JButton(contacts[i].getFirstName() + " " + contacts[i].getLastName());
             buttonsContact[i].setFont(new Font("Roboto", Font.BOLD, 12));
             buttonsContact[i].setPreferredSize(new Dimension(300,10));
+            buttonsContact[i].addActionListener(new ButtonShowInfoContact());
             contactsPanel.add(buttonsContact[i]);
         }
 
+        nbContacts = contacts.length;
+
         // Nb de contacts
-        nbContacts = new JLabel("             " + contacts.length + " contacts");
-        contactsPanel.add(nbContacts);
+        labelNbContacts = new JLabel("            " + contacts.length + " contacts");
+        contactsPanel.add(labelNbContacts, BorderLayout.CENTER);
 
         saveContact();
 
@@ -72,14 +77,23 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
 
     public void showContactInformation(JPanel infoContact) {}
 
+    class ButtonAddContact implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == buttonAdd) {
+                switchApp = new Smartphone(new NewContact(contacts, nbContacts));
+            }
+        }
+    }
+
     class ButtonShowInfoContact implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < contacts.length; i++) {
                 if (e.getSource() == buttonsContact[i]) {
-                    switchInfoContact = new Smartphone(new InfoContact());
-                    System.out.println(buttonsContact[i]);
+                    switchApp = new Smartphone(new InfoContact(contacts[i]));
                 }
             }
         }

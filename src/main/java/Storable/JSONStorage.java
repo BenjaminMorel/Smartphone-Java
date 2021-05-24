@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.Map;
 
 
-public class JSONStorage {
+public class JSONStorage implements Storable {
 
     public Contact[] read(File source, Contact[] contacts) {
         ObjectMapper mapper = new ObjectMapper();

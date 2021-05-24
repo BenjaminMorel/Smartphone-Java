@@ -1,33 +1,47 @@
 package Contacts;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class InfoContact extends ContactWindow {
+public class InfoContact extends JPanel {
 
+    private JPanel panelImage;
     private JPanel panelInfoContact;
-    private JLabel firstName;
-    private JLabel lastName;
-    private JLabel telNumber;
-    private ImageIcon imageContact = new ImageIcon("src/main/java/Contacts/Contact.png");
 
-    public InfoContact() {
+    private JLabel firstName, lastName, telNumber, birthDate;
+    private JLabel image;
+    private ImageIcon imageContact;
 
-        // Création label InfoContact
+
+    public InfoContact(Contact contact) {
+        setLayout(null);
+
+        // Panel image
+        panelImage = new JPanel();
+        panelImage.setLayout(new BorderLayout());
+        image = new JLabel();
+        image.setIcon(new ImageIcon("src/main/java/Contacts/Contact.png"));
+        panelImage.setBounds(55,50,300,150);
+        panelImage.add(image);
+        add(panelImage);
+
+        // Panel info Contact
         panelInfoContact = new JPanel();
-        add(panelInfoContact);
+        panelInfoContact.setLayout(new GridLayout(4,1));
 
         // Création labels
-        firstName = new JLabel();
-        lastName = new JLabel();
-        telNumber = new JLabel();
+        firstName = new JLabel("Prénom: " + contact.getFirstName());
+        lastName = new JLabel("Nom: " + contact.getLastName());
+        telNumber = new JLabel("Numéro de téléphone: " + contact.getTelNumber());
+//        SimpleDateFormat formatter = new SimpleDateFormat("\"MM/dd/yyyy\"");
+//        String strDate = formatter.format(contact.getBirthDate());
+        birthDate = new JLabel("Date de naissance: " + contact.getBirthDate());
         panelInfoContact.add(firstName);
         panelInfoContact.add(lastName);
         panelInfoContact.add(telNumber);
-
-
-
-
-
+        panelInfoContact.add(birthDate);
+        panelInfoContact.setBounds(40,220,300,200);
+        add(panelInfoContact);
 
 
 
