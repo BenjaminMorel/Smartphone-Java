@@ -40,7 +40,8 @@ public class JSONStorage {
         ObjectMapper mapper = new ObjectMapper();
         URL url = new URL(sUrl) ;
         Map<String,Object> map = mapper.readValue(url, Map.class);
-        System.out.print("Météo : ");
+
+        //sout de test
         System.out.println(map.toString());
         return map ;
     }
