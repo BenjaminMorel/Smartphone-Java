@@ -40,6 +40,12 @@ public class WeatherWindow extends JPanel implements ActionListener {
         this.setVille=setVille ;
         setLayout(null); // permet d'ajouter des labels et panels avec setBounds
 
+        // ajout du contour du smartphone
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png") ;
+        JLabel labelContourSmartphone = new JLabel() ;
+        labelContourSmartphone.setIcon(iconContourSmartphone);
+        labelContourSmartphone.setBounds(9, -8, 320, 600);
+        add(labelContourSmartphone) ;
 
         textField = new JTextField() ;
         textField.addActionListener(this);
@@ -310,6 +316,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
         backgroundImage.setIcon(iconBackgroundImage);
         backgroundImage.setBounds(10, 0, 330, 600);
         add(backgroundImage);
+
     }
 
     @Override

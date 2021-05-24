@@ -22,19 +22,16 @@ public class Smartphone extends JFrame {
     private static JPanel contenuApp = new JPanel() ;
     private static JPanel app ;
     private Image contourSmartPhone ;
+    private ImageIcon iconContourSmartphone ;
     private HomeScreen homeScreen ;
 
     // Cardlayout va spécifier comment le smartphone va fonctionner
     private static CardLayout cardLayout = new CardLayout() ;
 
-    private InitialisationSmartphone initialisationSmartphone = new InitialisationSmartphone() ;
-
-
-
+    private InitialisationSmartphone initialisationSmartphone = new InitialisationSmartphone();
 
 
     public Smartphone(JPanel newApp) {
-
         if(newApp == null){
             app = initialisationSmartphone.getHomeScreen() ;
             contenuApp.add(app);
@@ -47,15 +44,10 @@ public class Smartphone extends JFrame {
 
             // contenuApp et le vieux panel qui va acueillir les applications et autres
             contenuApp.setLayout(cardLayout);
-
-
             setLayout(new BorderLayout());
             add(topBar, BorderLayout.NORTH) ;
             add(contenuApp, BorderLayout.CENTER) ;
             add(bottomBar, BorderLayout.SOUTH) ;
-
-            // importer image smartphone
-            contourSmartPhone = new ImageIcon("src/main/java/Images/smartphone_PNG.png").getImage() ;
 
             pack();
             setLocationRelativeTo(null);
@@ -65,10 +57,6 @@ public class Smartphone extends JFrame {
         }
     }
 
-
-
-
-
     public void switchApplication(JPanel newApp){
         contenuApp.remove(app);
         app = newApp ;
@@ -76,11 +64,5 @@ public class Smartphone extends JFrame {
         cardLayout.next(contenuApp);
     }
 
-
-    public void paint(Graphics g){
-        super.paint(g);
-        Graphics2D g2D = (Graphics2D) g ;
-        g2D.drawImage(contourSmartPhone, 10, 10, null) ;
-    }
 
 }
