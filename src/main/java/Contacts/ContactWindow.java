@@ -21,13 +21,23 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
     private Contact[] contacts;                                 // Liste des contacts
     private JLabel labelNbContacts;                                  // Label avec le nombre de contacts
     private int nbContacts;
+    private JScrollPane scrollPane ;
 
     private Smartphone switchApp;
 
 
     public ContactWindow() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Permet d'ajouter des labels et panels avec setBounds
+
+        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Permet d'ajouter des labels et panels avec setBounds
+        setLayout(null);
         setBackground(new Color(179, 176, 176));
+
+        // ajout du contour du smartphone
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png") ;
+        JLabel labelContourSmartphone = new JLabel() ;
+        labelContourSmartphone.setIcon(iconContourSmartphone);
+        labelContourSmartphone.setBounds(9, -8, 320, 600);
+        add(labelContourSmartphone) ;
 
         loadContact();                                          // Recharge le tableau de contacts depuis le fichier JSON
 
@@ -36,13 +46,15 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
         buttonAdd = new JButton("+");
         buttonAdd.addActionListener(new ButtonAddContact());
         panelAdd.add(buttonAdd);
+        panelAdd.setBounds(150, 0, 50, 40);
         add(panelAdd);
 
         // Settings du Panel qui contient les contacts
         contactsPanel = new JPanel();
         contactsPanel.setLayout(new GridLayout(0,1));
         contactsPanel.setPreferredSize(new Dimension(300,contacts.length*100));
-        JScrollPane scrollPane = new JScrollPane(contactsPanel);
+        scrollPane = new JScrollPane(contactsPanel);
+        scrollPane.setBounds(26, 40, 286, 580);
         add(scrollPane);
 
         // Création boutons contacts
@@ -64,7 +76,6 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
         saveContact();
 
     }
-
 
 
     public void saveContact() {
