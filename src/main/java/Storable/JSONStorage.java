@@ -1,5 +1,6 @@
 package Storable;
 import Contacts.Contact;
+import Gallery.Images;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -44,6 +45,33 @@ public class JSONStorage implements Storable {
         //sout de test
         System.out.println(map.toString());
         return map ;
+    }
+
+
+    //read and write IMAGES
+    public Images[] readImages(File source, Images[] images) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            images = mapper.readValue(source, Images[].class);
+        } catch (IOException e) {
+            e.printStackTrace(); // Donne les détails de l'erreur
+            //throw new IOException("Error while reading JSON file");
+        }
+
+        return images;
+    }
+
+    public void writeImages(File destination, Images[] images) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            mapper.writeValue(destination, images);
+        } catch (IOException e) {
+            //e.printStackTrace();
+            System.out.println("Crash while writing Image");
+            //throw new IOException("Error while writing in JSON file");
+        }
     }
 
 }

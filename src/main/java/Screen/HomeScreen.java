@@ -1,6 +1,7 @@
 package Screen;
 import Contacts.ContactWindow;
 import Demo.Smartphone ;
+import Gallery.GalleryWindow;
 import General.Google;
 import General.Time;
 import Meteo.WeatherWindow;
@@ -135,7 +136,7 @@ public class HomeScreen extends JPanel implements ActionListener {
             switchApp = new Smartphone(new ContactWindow()) ;
         }
         if(e.getSource() == buttonGallery){
-
+            switchApp = new Smartphone(new GalleryWindow());
         }
         if(e.getSource() == searchBar){
             switchApp = new Smartphone(new Google()) ;
