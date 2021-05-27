@@ -1,20 +1,35 @@
 package Contacts;
 
+import Demo.Smartphone;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InfoContact extends JPanel {
 
     private JPanel panelImage;
     private JPanel panelInfoContact;
+    private JPanel panelRetour;
 
     private JLabel firstName, lastName, telNumber, birthDate;
     private JLabel image;
     private ImageIcon imageContact;
 
+    private JButton buttonRetour;
+    private Smartphone switchApp;
+
 
     public InfoContact(Contact contact) {
         setLayout(null);
+
+        // Ajout du contour du smartphone
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png");
+        JLabel labelContourSmartphone = new JLabel();
+        labelContourSmartphone.setIcon(iconContourSmartphone);
+        labelContourSmartphone.setBounds(9, -8, 320, 600);
+        add(labelContourSmartphone);
 
         // Panel image
         panelImage = new JPanel();
@@ -27,7 +42,7 @@ public class InfoContact extends JPanel {
 
         // Panel info Contact
         panelInfoContact = new JPanel();
-        panelInfoContact.setLayout(new GridLayout(4,1));
+        panelInfoContact.setLayout(new GridLayout(5,1));
 
         // Création labels
         firstName = new JLabel("Prénom: " + contact.getFirstName());
@@ -41,10 +56,28 @@ public class InfoContact extends JPanel {
         panelInfoContact.add(telNumber);
         panelInfoContact.add(birthDate);
         panelInfoContact.setBounds(40,220,300,200);
+
+        // Ajout du bouton retour
+        panelRetour = new JPanel();
+        buttonRetour = new JButton("Retour");
+        panelRetour.add(buttonRetour);
+        buttonRetour.addActionListener(new BackContactWindow());
+        panelRetour.setBounds(20,450,300,40);
+        add(panelRetour);
+
+        // Ajout du panel panelInfoContact au panel principal
         add(panelInfoContact);
 
+    }
 
+    class BackContactWindow implements ActionListener {
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == buttonRetour) {
+                switchApp = new Smartphone(new ContactWindow());
+            }
+        }
     }
 
 }
