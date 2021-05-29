@@ -1,6 +1,7 @@
 package Gallery;
 
 import Demo.Smartphone;
+import Screen.HomeScreen;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 public class GalleryWindow extends JPanel{
 
@@ -16,72 +18,109 @@ public class GalleryWindow extends JPanel{
     private static final int WIDTH = 300;
     private static final int HEIGTH = 623;
 
-    private JPanel panel = new JPanel();
+    private JPanel panel;
+    private JPanel buttonsAddDeletePanel;
 
     private Smartphone switchApp;
 
     private JScrollPane scrollPane = new JScrollPane(panel);
 
-    private Images[] images;
+    //private Images[] images;
+    private ArrayList<Images> images;
 
     private GridLayout grid;
     private JSONStorage jsonStorage = new JSONStorage();
 
     private JButton[] buttonImages;
-   // private JButton add = new JButton("add");
+
+    private JButton buttonAdd = new JButton("Add");
+
+    private JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon("src/main/java/Images/IconButtons/retour").getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
 
     private int nbImages;
 
     public GalleryWindow() {
         setLayout(null);
         JScrollPane scrollPane = new JScrollPane();
-        setBackground(Color.cyan);
+
+        buttonsAddDeletePanel = new JPanel();
+        buttonsAddDeletePanel.setBounds(15,5,300,35);
 
         // ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png") ;
-        JLabel labelContourSmartphone = new JLabel() ;
-        labelContourSmartphone.setIcon(iconContourSmartphone);
-        labelContourSmartphone.setBounds(9, -8, 320, 600);
-        add(labelContourSmartphone) ;
+        setSmartphoneShape();
 
         loadImage();
-        nbImages = images.length;
 
-
+        //donner taille tableau JButton
+        nbImages = images.size();
         buttonImages = new JButton[nbImages];
+        nbImages = nbImages/3+1;
 
 
         //faire round
-        //grid = new GridLayout(nbImages/3+1, 3, 2, 2);
+        grid = new GridLayout(nbImages, 3, 2, 2);
 
-        grid = new GridLayout(0, 3, 2, 2);
-
-        //Panel ou toutes les photos sont stockées
-        panel.setLayout(grid);
-        panel.setBackground(Color.RED);
-        panel.setPreferredSize(new Dimension(300, 100)); //NBimages/50
-        scrollPane.setBounds(26, 40, 286, 580);
-
-
-
-        for (int i = 0; i < images.length; i++) {
-            System.out.println(images.length);
-            System.out.println(images[i].getName());
-            buttonImages[i] = new JButton(new ImageIcon(new ImageIcon(images[i].getName()).getImage().getScaledInstance(WIDTH/3, WIDTH/3, Image.SCALE_DEFAULT)));
-            buttonImages[i].setPreferredSize(new Dimension(50,50));
-            buttonImages[i].addActionListener(new ButtonImageGrand());
-            panel.add(buttonImages[i]);
+        if(nbImages < 3)
+        {
+            grid.setRows(3);
+            grid.setColumns(3);
+        }
+        else
+        {
+            grid.setRows(nbImages);
+            grid.setColumns(3);
         }
 
 
+        //Panel ou toutes les photos sont stockées
+        panel = new JPanel(grid);
+        panel.setPreferredSize(new Dimension(250, (nbImages))); //NBimages/50
+        scrollPane.setBounds(30, 40, 280, 500);
+
+
+        for (int i = 0; i < images.size(); i++)
+        {
+            System.out.println(images.size());
+            System.out.println(images.get(i).getName());
+            buttonImages[i] = new JButton(new ImageIcon(new ImageIcon(images.get(i).getName()).getImage().getScaledInstance(WIDTH/3, WIDTH/3, Image.SCALE_DEFAULT)));
+            buttonImages[i].setSize(WIDTH/3, WIDTH/3);
+            buttonImages[i].addActionListener(new ButtonImageGrand());
+            buttonImages[i].setBorderPainted(false);
+            buttonImages[i].setFocusPainted(false);
+            buttonImages[i].setContentAreaFilled(false);
+            panel.add(buttonImages[i]);
+        }
+
+        for(int i=images.size(); i<9; i++) { //ajouter cases libres pour ensuite les écraser
+            JLabel caseVide = new JLabel();
+            caseVide.setPreferredSize(new Dimension(50, 50));
+            panel.add(caseVide);
+
+        }
+
+        //paramètres du JScrollPanel
         scrollPane.getVerticalScrollBar().setUnitIncrement(20);                               // paramètre du Scroll pane et ajout de ce dernier dans notre objet allContatwindows (this)
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setViewportView(this);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setOpaque(true);
+        scrollPane.getViewport().setOpaque(true);
         scrollPane.getViewport().add(panel);
-        scrollPane.setOpaque(false);
+        scrollPane.setBackground(Color.GRAY);
 
+
+        buttonsAddDeletePanel.setLayout(null);
+        buttonsAddDeletePanel.add(buttonReturn);
+        buttonsAddDeletePanel.add(buttonAdd);
+
+        buttonReturn.setBounds(30,10,25,25);
+        buttonReturn.addActionListener(new ButtonReturn());
+        buttonAdd.setBounds(100,10,60,30);
+        buttonAdd.addActionListener(new ButtonAddImage());
+
+
+        add(buttonsAddDeletePanel);
         add(scrollPane);
         saveImage();
     }
@@ -97,21 +136,55 @@ public class GalleryWindow extends JPanel{
             jsonStorage.writeImages(new File("Data/Images.json"), images);
         }
 
+
+        class ButtonReturn implements ActionListener
+        {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == buttonReturn)
+                {
+                    switchApp = new Smartphone(new HomeScreen());
+                }
+            }
+        }
+
         class ButtonImageGrand implements ActionListener
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                for (int i = 0; i < images.length; i++)
+                for (int i = 0; i < images.size(); i++)
                 {
                     if(e.getSource() == buttonImages[i])
                     {
                        // switchApp = new Smartphone(new ImageGrand((ImageIcon) buttonImages[i].getIcon()));//recuperer path au lieu du getIcon
-                        switchApp = new Smartphone(new ImageGrand(images[i].getName()));
+                        switchApp = new Smartphone(new ImageGrand(images.get(i).getName()));
                     }
                 }
             }
         }
+
+        class ButtonAddImage implements ActionListener
+        {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == buttonAdd)
+                {
+                    switchApp = new Smartphone(new AddImage());
+                }
+            }
+        }
+
+        public void setSmartphoneShape() {
+        // Ajout du contour du smartphone
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png");
+        JLabel labelContourSmartphone = new JLabel();
+        labelContourSmartphone.setIcon(iconContourSmartphone);
+        labelContourSmartphone.setBounds(9, -8, 320, 600);
+        add(labelContourSmartphone);
+    }
 
     }
 

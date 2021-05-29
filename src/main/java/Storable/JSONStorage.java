@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 
@@ -49,11 +51,12 @@ public class JSONStorage implements Storable {
 
 
     //read and write IMAGES
-    public Images[] readImages(File source, Images[] images) {
+    public ArrayList<Images> readImages(File source, ArrayList<Images> images) {
         ObjectMapper mapper = new ObjectMapper();
-
+        Images[] imagesArray;
         try {
-            images = mapper.readValue(source, Images[].class);
+            imagesArray = mapper.readValue(source, Images[].class);
+            images = new ArrayList<>(Arrays.asList(imagesArray)); //transformer le tableau d'iamges en Array liste images
         } catch (IOException e) {
             e.printStackTrace(); // Donne les détails de l'erreur
             //throw new IOException("Error while reading JSON file");
@@ -62,7 +65,7 @@ public class JSONStorage implements Storable {
         return images;
     }
 
-    public void writeImages(File destination, Images[] images) {
+    public void writeImages(File destination, ArrayList<Images> images) {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
