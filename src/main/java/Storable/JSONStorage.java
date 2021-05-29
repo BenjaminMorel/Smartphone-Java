@@ -7,25 +7,28 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 
-public class JSONStorage implements Storable {
+public class JSONStorage {
 
-    public Contact[] read(File source, Contact[] contacts) {
+    public ArrayList<Contact> read(File source, ArrayList<Contact> contacts) {
         ObjectMapper mapper = new ObjectMapper();
+        Contact[] contactsArray;
 
         try {
-            contacts = mapper.readValue(source, Contact[].class);
+            contactsArray = mapper.readValue(source, Contact[].class);
+            contacts = new ArrayList<>(Arrays.asList(contactsArray));
         } catch (IOException e) {
             e.printStackTrace(); // Donne les détails de l'erreur
             //throw new IOException("Error while reading JSON file");
         }
-
         return contacts;
     }
 
-    public void write(File destination, Contact[] contacts) {
+    public void write(File destination, ArrayList<Contact> contacts) {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
