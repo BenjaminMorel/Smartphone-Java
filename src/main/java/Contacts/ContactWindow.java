@@ -40,10 +40,7 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
         // Recharge le tableau de contacts depuis le fichier JSON
         loadContact();
 
-//        // Trie les contacts par ordre alphabétique
-//        for (int i = 0; i < contacts.size(); i++) {
-//            contacts.add(contacts[i]);
-//        }
+        // Trier les contacts par ordre alphabétique
         contacts.sort(new ContactNameComparator());
 
         // Top panel qui contient le nombre de contacts, et l'option de créer un nouveau contact
@@ -102,11 +99,6 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
         labelContourSmartphone.setBounds(9, -8, 320, 600);
         add(labelContourSmartphone);
     }
-
-//    public void saveContact() {
-//        System.out.println("Sauvegarde des contacts");
-//        jsonStorage.write(new File("Data/Contacts.json"), contacts);
-//    }
 
     public void loadContact() {
         System.out.println("Chargement des contacts");

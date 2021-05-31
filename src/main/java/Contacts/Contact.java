@@ -2,13 +2,14 @@ package Contacts;
 
 public class Contact {
 
-    private String firstName, lastName, fullName, telNumber, birthDate;
+    private String firstName, lastName, fullName, telNumber, birthDate, imagePath;
 
-    public Contact(String firstName, String lastName, String telNumber, String birthDate) {
+    public Contact(String firstName, String lastName, String telNumber, String birthDate, String imagePath) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.telNumber = telNumber;
         this.birthDate = birthDate;
+        this.imagePath = imagePath;
         setFullName(null);
     }
 
@@ -57,12 +58,19 @@ public class Contact {
         this.birthDate = birthDate;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     @Override
     public String toString() {
         return "Contact{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", fullName='" + fullName + '\'' +
                 ", telNumber='" + telNumber + '\'' +
                 ", birthDate='" + birthDate + '\'' +
                 '}';

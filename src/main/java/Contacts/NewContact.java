@@ -41,7 +41,7 @@ public class NewContact extends JPanel {
         panelImage = new JPanel();
         panelImage.setLayout(new BorderLayout());
         labelImage = new JLabel();
-        labelImage.setIcon(new ImageIcon("src/main/java/Images/ContactApp/Contact.png"));
+        labelImage.setIcon(new ImageIcon());
         panelImage.setBounds(55, 50, 300, 150);
         panelImage.add(labelImage);
 
@@ -105,16 +105,57 @@ public class NewContact extends JPanel {
         add(labelContourSmartphone);
     }
 
+    public boolean validateInformation() {
+
+        // Vérifie si le contact existe déjà
+        String strFullName = lastNameText.getText() + firstNameText.getText();
+        for (int i = 0; i < contacts.size(); i++) {
+            if (strFullName.equals(contacts.get(i).getFullName())) {
+                System.out.println("Contact déjà existant");
+                return false;
+            }
+        }
+
+        // Vérifie si le prénom est vide
+        if (firstNameText.getText().isEmpty()) {
+            System.out.println("Prénom vide");
+            return false;
+        }
+
+        // Vérifie si le nom est vide
+        if (lastNameText.getText().isEmpty()) {
+            System.out.println("Nom vide");
+            return false;
+        }
+//        Double num;
+//        System.out.println(num = Double.parseDouble(firstNameText.getText()));
+
+        if (firstNameText.getText().matches("[0-9]")) {
+            System.out.println("pas de numéro autorisés");
+            return false;
+        }
+
+        if (lastNameText.getText().matches("[0-9]")) {
+            System.out.println("pas de numéro autorisés");
+            return false;
+        }
+
+        return true;
+    }
+
+
     public void saveNewContact(File destination) throws Exception {
 
+        // Mise en forme du prénom, avec 1ère lettre en majuscule et le reste en minuscule
         String firstName = firstNameText.getText();
         firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1).toLowerCase();
 
+        // Mise en forme du nom, avec 1ère lettre en majuscule et le reste en minuscule
         String lastName = lastNameText.getText();
-        lastName = firstName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();
+        lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();
 
-        // Créé le nouveau contact en prenant les infos des textFields
-        contacts.add(new Contact(firstName, lastName, telNumberText.getText(), birthDateText.getText()));
+        // Création du nouveau contact en prenant les infos des textFields
+        contacts.add(new Contact(firstName, lastName, telNumberText.getText(), birthDateText.getText(), "src/main/java/Images/ContactApp/Contact.png"));
 
         // Appel du jsonStorage et modifications de l'arrayList des contacts en y ajoutant le nouveau contact
         storable.write(destination, contacts);
@@ -124,13 +165,16 @@ public class NewContact extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == buttonConfirm) {
-                try {
-                    saveNewContact(new File("Data/Contacts.json"));
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    System.out.println("Erreur lors de la confirmation");
+
+                if (validateInformation()) {
+                    try {
+                        saveNewContact(new File("Data/Contacts.json"));
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                        System.out.println("Erreur lors de la confirmation");
+                    }
+                    switchApp = new Smartphone(new ContactWindow());
                 }
-                switchApp = new Smartphone(new ContactWindow());
             }
         }
     }
@@ -142,5 +186,4 @@ public class NewContact extends JPanel {
             switchApp = new Smartphone(new ContactWindow());
         }
     }
-
 }

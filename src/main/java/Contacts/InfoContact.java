@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class InfoContact extends JPanel {
 
 
-    private JPanel panelInfoContact;
+    protected JPanel panelInfoContact;
     protected JLabel firstName, lastName, telNumber, birthDate;
 
     private JPanel panelImage;
@@ -48,6 +48,7 @@ public class InfoContact extends JPanel {
         panelImage.setBounds(55, 50, 300, 150);
         panelImage.add(labelImage);
         add(panelImage);
+
 
         // Panel info Contact
         panelInfoContact = new JPanel();

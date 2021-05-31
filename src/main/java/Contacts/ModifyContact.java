@@ -1,6 +1,7 @@
 package Contacts;
 
 import Demo.Smartphone;
+import Gallery.GalleryWindow;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -26,14 +27,19 @@ public class ModifyContact extends InfoContact {
 
     public ModifyContact(Contact contact, ArrayList<Contact> contacts) {
         super(contact, contacts);
+        setLayout(null);
         this.contacts = contacts;
         this.contact = contact;
 
         // Ajout du contour du smartphone
         setSmartphoneShape();
 
+        // Opaque = non
+        panelInfoContact.setOpaque(false);
+
         // Changer image de contact
         buttonChangeImage = new JButton("Changer image");
+        buttonChangeImage.addActionListener(new ChangeContactImage());
         buttonChangeImage.setBounds(105, 205, 130, 25);
         buttonChangeImage.setFont(new Font("Roboto", Font.BOLD, 11));
         setButtonShape(buttonChangeImage);
@@ -99,6 +105,7 @@ public class ModifyContact extends InfoContact {
     }
 
     class ConfirmInformation implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == buttonConfirm) {
@@ -108,7 +115,7 @@ public class ModifyContact extends InfoContact {
                     exception.printStackTrace();
                     System.out.println("Erreur lors de la confirmation");
                 }
-                switchApp = new Smartphone(new ContactWindow());
+                switchApp = new Smartphone(new InfoContact(contact, contacts));
             }
         }
     }
@@ -121,4 +128,12 @@ public class ModifyContact extends InfoContact {
         }
     }
 
+    class ChangeContactImage implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switchApp = new Smartphone(new ModifyContactImage(contact));
+            System.out.println("Changement de l'image du contact: " + contact.getFullName());
+        }
+    }
 }
