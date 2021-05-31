@@ -33,7 +33,7 @@ public class GalleryWindow extends JPanel{
 
     private JButton[] buttonImages;
 
-    private JButton buttonAdd = new JButton("Add");
+    protected JButton buttonAdd = new JButton("Add");
 
     private JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon("src/main/java/Images/IconButtons/retour").getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
 
@@ -159,7 +159,7 @@ public class GalleryWindow extends JPanel{
                     if(e.getSource() == buttonImages[i])
                     {
                        // switchApp = new Smartphone(new ImageGrand((ImageIcon) buttonImages[i].getIcon()));//recuperer path au lieu du getIcon
-                        switchApp = new Smartphone(new ImageGrand(images.get(i).getName()));
+                        switchApp = new Smartphone(new ImageGrand(images.get(i).getName(), images));
                     }
                 }
             }
@@ -172,7 +172,7 @@ public class GalleryWindow extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == buttonAdd)
                 {
-                    switchApp = new Smartphone(new AddImage());
+                    switchApp = new Smartphone(new AddImage(images));
                 }
             }
         }
