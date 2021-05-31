@@ -1,30 +1,44 @@
 package Gallery;
 
 import Demo.Smartphone;
+import Storable.JSONStorage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
 public class ImageGrand extends JPanel {
 
-    private JPanel panel;
-    private JLabel label;
-    private Image image;
+    protected JPanel panel;
+    protected JLabel label;
+    protected Image image;
     private int width;
     private int height;
+
+    private ArrayList<Images> images1;
 
     private Smartphone switchApp;
 
     private JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon("src/main/java/Images/IconButtons/retour").getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
 
-    private JButton buttonDelete = new JButton("Delete");
+    protected JButton buttonDelete = new JButton("Delete");
 
-    public ImageGrand(String name) {
+    private JSONStorage jsonStorage = new JSONStorage();
+
+    private String pathImage;
+
+
+    public ImageGrand(String name, ArrayList<Images> images) {
+
+        images1 = images;
 
         // ajout du contour du smartphone
         setSmartphoneShape();
+
+        pathImage = name;
 
         height = 400;
         width = 285;
@@ -46,6 +60,7 @@ public class ImageGrand extends JPanel {
         add(buttonDelete);
 
         buttonDelete.setBounds(120,500,75,25);
+        buttonDelete.addActionListener(new ButtonDeleteImage());
 
         buttonReturn.setBounds(30, 20,25,25);
         buttonReturn.addActionListener(new ButtonReturnImage());
@@ -62,6 +77,29 @@ public class ImageGrand extends JPanel {
             if(e.getSource() == buttonReturn)
             {
                 switchApp = new Smartphone(new GalleryWindow());
+            }
+        }
+    }
+
+    class ButtonDeleteImage implements ActionListener
+    {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == buttonDelete)
+            {
+                for (int i = 0; i < images1.size(); i++) {
+                    if(pathImage == images1.get(i).getName())
+                    {
+                        System.out.println("remove " + pathImage);
+                        System.out.println("remove " + images1.get(i).getName());
+                        images1.remove(images1.get(i));
+                    }
+
+                    jsonStorage.writeImages(new File("Data/Images.json"), images1);
+                    switchApp = new Smartphone((new GalleryWindow()));
+                }
+
             }
         }
     }
