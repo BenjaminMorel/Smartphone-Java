@@ -32,14 +32,6 @@
             <artifactId>json</artifactId>
             <version>20140107</version>
         </dependency>
-
-        <!-- capitalize the first letter of a string in Java -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
-        </dependency>
-
     </dependencies>
 
 

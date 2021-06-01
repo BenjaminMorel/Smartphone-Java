@@ -11,11 +11,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
-public class ModifyContact extends InfoContact {
+/**
+ * Classe contenant un panel où le contact passé en paramètre pourra être modifié
+ */
 
-    private JButton buttonChangeImage;
-    private JButton buttonConfirm;
-    private JButton buttonCancel;
+public class ModifyContact extends InfoContact implements ContactInterace {
+
+    private JButton buttonChangeImage, buttonConfirm, buttonCancel;
 
     private JTextField firstNameText, lastNameText, telNumberText, birthDateText;
 
@@ -27,22 +29,24 @@ public class ModifyContact extends InfoContact {
 
     public ModifyContact(Contact contact, ArrayList<Contact> contacts) {
         super(contact, contacts);
-        setLayout(null);
         this.contacts = contacts;
         this.contact = contact;
+
+        setLayout(null);
 
         // Ajout du contour du smartphone
         setSmartphoneShape();
 
-        // Opaque = non
+        // Modification du panel infoContact
         panelInfoContact.setOpaque(false);
 
         // Changer image de contact
         buttonChangeImage = new JButton("Changer image");
-        buttonChangeImage.addActionListener(new ChangeContactImage());
+        buttonChangeImage.addActionListener(new ModifyContactListener());
         buttonChangeImage.setBounds(105, 205, 130, 25);
         buttonChangeImage.setFont(new Font("Roboto", Font.BOLD, 11));
         setButtonShape(buttonChangeImage);
+        buttonChangeImage.setBorderPainted(true);
         add(buttonChangeImage);
 
         // Modification des labels
@@ -71,14 +75,14 @@ public class ModifyContact extends InfoContact {
 
         // Button pour confirmer les informations entrées
         buttonConfirm = new JButton("Enregistrer");
-        buttonConfirm.addActionListener(new ConfirmInformation());
+        buttonConfirm.addActionListener(new ModifyContactListener());
         buttonConfirm.setBounds(60, 500, 100, 25);
         buttonConfirm.setFont(new Font("Roboto", Font.BOLD, 11));
         add(buttonConfirm);
 
         // Bouton pour annuler et revenir sur la page des contacts
         buttonCancel = new JButton("Annuler");
-        buttonCancel.addActionListener(new CancelInformation());
+        buttonCancel.addActionListener(new ModifyContactListener());
         buttonCancel.setBounds(180, 500, 100, 25);
         buttonCancel.setFont(new Font("Roboto", Font.BOLD, 11));
         add(buttonCancel);
@@ -94,7 +98,8 @@ public class ModifyContact extends InfoContact {
         add(labelContourSmartphone);
     }
 
-    public void saveModifications(File destination) throws Exception {
+    @Override
+    public void saveInJsonStorage(File destination) throws Exception {
 
         contact.setFirstName(firstNameText.getText());
         contact.setLastName(lastNameText.getText());
@@ -102,38 +107,35 @@ public class ModifyContact extends InfoContact {
         contact.setBirthDate(birthDateText.getText());
 
         storable.write(destination, contacts);
+
     }
 
-    class ConfirmInformation implements ActionListener {
+    class ModifyContactListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            // Listener pour confirmer les modifications
             if (e.getSource() == buttonConfirm) {
                 try {
-                    saveModifications(new File("Data/Contacts.json"));
+                    saveInJsonStorage(new File("Data/Contacts.json"));
                 } catch (Exception exception) {
                     exception.printStackTrace();
                     System.out.println("Erreur lors de la confirmation");
                 }
                 switchApp = new Smartphone(new InfoContact(contact, contacts));
             }
-        }
-    }
 
-    class CancelInformation implements ActionListener {
+            // Listener pour retourner au panel InfoContact
+            if (e.getSource() == buttonCancel) {
+                switchApp = new Smartphone(new InfoContact(contact, contacts));
+            }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            switchApp = new Smartphone(new InfoContact(contact, contacts));
-        }
-    }
-
-    class ChangeContactImage implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            switchApp = new Smartphone(new ModifyContactImage(contact));
-            System.out.println("Changement de l'image du contact: " + contact.getFullName());
+            // Listener pour modifier l'image du contact
+            if (e.getSource() == buttonChangeImage) {
+                switchApp = new Smartphone(new ModifyContactImage(contact, contacts));
+                System.out.println("Changement de l'image du contact: " + contact.getFullName());
+            }
         }
     }
 }
