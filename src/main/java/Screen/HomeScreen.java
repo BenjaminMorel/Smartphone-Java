@@ -22,6 +22,7 @@ public class HomeScreen extends JPanel implements ActionListener {
     private JButton buttonContact ;
     private JButton buttonGallery ;
     private JButton searchBar ;
+    private TopBar topBar ;
 
     // fonts
     private Font timeGrisMini = new Font("Roboto", Font.PLAIN, 12) ;
@@ -36,6 +37,9 @@ public class HomeScreen extends JPanel implements ActionListener {
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);
         add(labelContourSmartphone) ;
+
+
+
 
         // date et heure panel grisé
         // jour gauche
