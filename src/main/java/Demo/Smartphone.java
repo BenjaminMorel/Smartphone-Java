@@ -1,6 +1,7 @@
 package Demo;
 
 
+import General.Time;
 import Screen.BottomBar;
 import Screen.HomeScreen;
 import Screen.TopBar;
@@ -17,13 +18,12 @@ public class Smartphone extends JFrame {
     private RoundRectangle2D.Double SHAPE = new RoundRectangle2D.Double(16, 14, 305, 640, 75, 75) ;
 
     // rajouter le contenu de l'image de base plus du futur contenu des applications
+    private Time timer = new Time() ;
     private TopBar topBar = new TopBar() ;
     private BottomBar bottomBar = new BottomBar() ;
     private static JPanel contenuApp = new JPanel() ;
     private static JPanel app ;
-    private Image contourSmartPhone ;
-    private ImageIcon iconContourSmartphone ;
-    private HomeScreen homeScreen ;
+
 
     // Cardlayout va spécifier comment le smartphone va fonctionner
     private static CardLayout cardLayout = new CardLayout() ;

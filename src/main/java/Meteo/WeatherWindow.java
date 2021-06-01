@@ -1,8 +1,11 @@
 package Meteo;
 
 import Demo.Smartphone;
+import Errors.BusinessException;
+import Errors.ErrorCode;
 import General.Time;
 import Screen.HomeScreen;
+import Screen.TopBar;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -21,6 +24,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
     private String setVille = "Sierre" ;
     private Weather weather ;
     private Time timeGeneral = new Time() ;
+    private TopBar topBar ;
 
     // text font + color
     private Font locationFont = new Font("Roboto", Font.PLAIN, 19);
@@ -47,15 +51,18 @@ public class WeatherWindow extends JPanel implements ActionListener {
         labelContourSmartphone.setBounds(9, -8, 320, 600);
         add(labelContourSmartphone) ;
 
+
+        // ajout du textField qui apparait une fois le bouton search cliqué
         textField = new JTextField() ;
         textField.addActionListener(this);
         textField.setBounds(70, 6, 200, 30);
         textField.setOpaque(false);
         textField.setFont(moyenFont);
         textField.setForeground(Color.white);
-        textField.setVisible(false);
+        textField.setVisible(false); // passe à true une fois le search cliqué
         add(textField);
 
+        // ajout du bouton search en haut à droite
         searchButton = new JButton() ;
         searchButton.addActionListener(this);
         searchButton.setBounds(275, 4, 40, 40);
@@ -66,7 +73,10 @@ public class WeatherWindow extends JPanel implements ActionListener {
         searchButton.setContentAreaFilled(false);
         add(searchButton) ;
 
+        // va chercher toutes les données météo
         weather = new Weather(setVille) ;
+
+
         // les panels sont créés en dehors du constructeur
         // Panel + label Ville
         panelVille.setOpaque(false);
@@ -79,7 +89,6 @@ public class WeatherWindow extends JPanel implements ActionListener {
         labelVille.setForeground(Color.white);
         labelVille.setFont(locationFont);
         panelVille.add(labelVille) ;
-
 
 
         // Panel + label time
@@ -322,7 +331,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == searchButton){
-            System.out.println("buttonABF;AKBSHFH");
+            System.out.println("button check");
             if(textField.getText().equals("")){
                 textField.setVisible(true);
             }
@@ -330,8 +339,6 @@ public class WeatherWindow extends JPanel implements ActionListener {
                 try {
                     System.out.println(textField.getText());
                     switchApp = new Smartphone(new WeatherWindow(textField.getText())) ;
-                } catch (MalformedURLException malformedURLException) {
-                    malformedURLException.printStackTrace();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }

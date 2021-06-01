@@ -1,6 +1,7 @@
 package General;
 
-import java.text.ParseException;
+import Screen.TopBar;
+
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -8,15 +9,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Timer;
 
 public class Time {
-    private int wait = 1000 ;
 
-    private Timer timer ;
     public Time() {
         Calendar maintenant = Calendar.getInstance();
+
     }
 
     public String getTime(){
@@ -26,8 +25,7 @@ public class Time {
         LocalDateTime now = LocalDateTime.now();
 
         time+=dtf.format(now);
-
-        return time;
+        return time ;
     }
 
     public String getDate() {
@@ -81,4 +79,6 @@ public class Time {
         String formattedDate = sdf.format(date);
         return formattedDate ;
     }
+
+
 }

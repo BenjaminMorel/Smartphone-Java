@@ -16,9 +16,7 @@ public class Weather {
     // arrangement des valeurs du map
     private String keySetNotSorted ;
     private String[] keySet ;
-    private String keyValueNotSorted ;
-    private String[] keyValue ;
-    private String ville = "Sierre" ;
+    private String ville ;
 
     public Weather(String sVille) throws IOException {
 
@@ -33,40 +31,14 @@ public class Weather {
         // création de l'URL
         String preURL = "https://api.openweathermap.org/data/2.5/weather?q=";
         String postURL = "&units=metric&appid=fcd518773066748f0875a9cd8791dc49";
-        URL url = new URL(preURL + ville + postURL) ;
         String sURL = preURL + ville + postURL ;
 
+        // appel de la méthode qui va retourner le map selon l'url donnée
         map = jsonStorage.readFromUrl(sURL) ;
-
-//        try {
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setRequestMethod("GET");
-//
-//            int responseCode = conn.getResponseCode();
-//            if (responseCode == HttpURLConnection.HTTP_OK) {
-//                map = jsonStorage.readFromUrl(sURL) ;
-//            }
-//            else{
-//               map = jsonStorage.readFromUrl("https://api.openweathermap.org/data/2.5/weather?q=Sierre&units=metric&appid=fcd518773066748f0875a9cd8791dc49") ;
-//               System.out.println("Ville non trouvée");
-//            }
-//        } catch (MalformedURLException | ProtocolException i){
-//            i.getMessage() ;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
 
         // création d'un tableau de string depuis un keyset
         keySetNotSorted = String.join(",",map.keySet()) ;
         keySet = keySetNotSorted.split(",") ;
-
-
-        // test de la classe getWeather
-        String[] test ;
-        test = getSun();
-      // System.out.println(test[3]);
-
 
     }
 
@@ -107,19 +79,6 @@ public class Weather {
         // séparation et retour de l'objet coordinates
         String[] temperature = temperatureContent.split(",") ;
         return temperature ;
-    }
-
-    public String[] getWind(){
-
-        // tri de l'objet coordinates
-        String windContent = "" ;
-        windContent += map.get(keySet[5]) ;
-        windContent = windContent.substring(1) ;
-        windContent = windContent.substring(0, windContent.length()-2) ;
-
-        // séparation et retour de l'objet coordinates
-        String[] wind = windContent.split(",") ;
-        return wind ;
     }
 
 
