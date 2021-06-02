@@ -1,6 +1,7 @@
-package Contacts;
+package Apps.Contacts;
 
 import Demo.Smartphone;
+import TopBar.TopBarContactApp;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -182,14 +183,14 @@ public class NewContact extends JPanel implements ContactInterace {
                         exception.printStackTrace();
                         System.out.println("Erreur lors de la confirmation");
                     }
-                    switchApp = new Smartphone(new ContactWindow());
+                    switchApp = new Smartphone(new ContactWindow(), new TopBarContactApp());
                 }
             }
 
             // Listener pour annuler
             if (e.getSource() == buttonCancel) {
                 System.out.println("Annulation");
-                switchApp = new Smartphone(new ContactWindow());
+                switchApp = new Smartphone(new ContactWindow(), new TopBarContactApp());
             }
         }
     }

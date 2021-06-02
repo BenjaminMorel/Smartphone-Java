@@ -1,11 +1,10 @@
 package Storable;
-import Contacts.Contact;
-import Gallery.Images;
+import Apps.Contacts.Contact;
+import Apps.Gallery.Images;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;

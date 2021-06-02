@@ -1,4 +1,4 @@
-package Contacts;
+package Apps.Contacts;
 
 import java.io.File;
 

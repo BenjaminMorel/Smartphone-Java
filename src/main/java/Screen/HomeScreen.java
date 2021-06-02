@@ -1,10 +1,12 @@
 package Screen;
-import Contacts.ContactWindow;
+import Apps.Contacts.ContactWindow;
 import Demo.Smartphone ;
-import Gallery.GalleryWindow;
+import Apps.Gallery.GalleryWindow;
 import General.Google;
 import General.Time;
-import Meteo.WeatherWindow;
+import Apps.Weather.WeatherWindow;
+import TopBar.TopBarHomeScreen;
+import TopBar.TopBarWeatherApp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,7 +65,7 @@ public class HomeScreen extends JPanel implements ActionListener {
         labelHeureDroite.setBounds(220,65, 100, 20);
         add(labelHeureDroite) ;
 
-        // bouton Gallery
+        // bouton Apps.Gallery
         ImageIcon iconeGallery = new ImageIcon("src/main/java/Images/HomeScreen/iconeGallery.png") ;
         buttonGallery = new JButton() ;
         buttonGallery.setBorderPainted(false);
@@ -109,21 +111,21 @@ public class HomeScreen extends JPanel implements ActionListener {
         add(searchBar) ;
 
         // ajout du texte du nom des applications, sous les applications.
-        // application Weather
+        // application Apps.Weather
         JLabel labelTexteAppWeather = new JLabel("Weather") ;
         labelTexteAppWeather.setForeground(Color.white);
         labelTexteAppWeather.setFont(timeGrisMini);
         labelTexteAppWeather.setBounds(150, 370, 50, 50);
         add(labelTexteAppWeather) ;
 
-        //application Contacts
+        //application Apps.Contacts
         JLabel labelTexteAppContacts = new JLabel("Contacts") ;
         labelTexteAppContacts.setForeground(Color.white);
         labelTexteAppContacts.setFont(timeGrisMini);
         labelTexteAppContacts.setBounds(230, 370, 50, 50);
         add(labelTexteAppContacts) ;
 
-        // application Gallery
+        // application Apps.Gallery
         JLabel labelTexteAppGallery = new JLabel("Gallery") ;
         labelTexteAppGallery.setForeground(Color.white);
         labelTexteAppGallery.setFont(timeGrisMini);

@@ -1,8 +1,7 @@
 package Demo;
 
 import Screen.HomeScreen;
-import Screen.TopBarHomeScreen;
-import Screen.TopBarWeatherApp;
+import TopBar.TopBarHomeScreen;
 
 public class InitialisationSmartphone {
     private HomeScreen homeScreen ;

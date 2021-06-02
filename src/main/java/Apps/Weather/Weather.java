@@ -1,12 +1,8 @@
-package Meteo;
+package Apps.Weather;
 
 import Storable.JSONStorage;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.util.Map;
 
 public class Weather {

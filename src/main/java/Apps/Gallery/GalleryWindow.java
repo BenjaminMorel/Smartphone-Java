@@ -1,7 +1,9 @@
-package Gallery;
+package Apps.Gallery;
 
 import Demo.Smartphone;
 import Screen.HomeScreen;
+import TopBar.TopBarGalleryApp;
+import TopBar.TopBarHomeScreen;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -161,7 +163,7 @@ public class GalleryWindow extends JPanel{
                 if(e.getSource() == buttonReturn)
                 {
                     System.out.println(images.size());
-                    switchApp = new Smartphone(new HomeScreen());
+                    switchApp = new Smartphone(new HomeScreen(), new TopBarHomeScreen());
                 }
             }
         }
@@ -176,7 +178,7 @@ public class GalleryWindow extends JPanel{
                     if(e.getSource() == buttonImages[i])
                     {
                        // switchApp = new Smartphone(new ImageGrand((ImageIcon) buttonImages[i].getIcon()));//recuperer path au lieu du getIcon
-                        switchApp = new Smartphone(new ImageGrand(images.get(i).getName(), images));
+                        switchApp = new Smartphone(new ImageGrand(images.get(i).getName(), images), new TopBarGalleryApp());
                     }
                 }
             }
@@ -189,7 +191,7 @@ public class GalleryWindow extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == buttonAdd)
                 {
-                    switchApp = new Smartphone(new AddImage(images));
+                    switchApp = new Smartphone(new AddImage(images), new TopBarGalleryApp());
                 }
             }
         }

@@ -1,19 +1,15 @@
-package Gallery;
+package Apps.Gallery;
 
 import Demo.Smartphone;
+import TopBar.TopBarGalleryApp;
 import Storable.JSONStorage;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.nio.file.spi.FileTypeDetector;
 import java.util.ArrayList;
 
 public class AddImage extends JPanel {
@@ -73,11 +69,11 @@ public class AddImage extends JPanel {
                 String path = "ImagesGallery" +"/" + f.getName();
                 images.add(new Images(path));
                 storable.writeImages(jsonFile, images);
-                switchApp = new Smartphone(new GalleryWindow());
+                switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());
             }
             if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
             {
-                switchApp = new Smartphone(new GalleryWindow());
+                switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());
             }
         }
     }

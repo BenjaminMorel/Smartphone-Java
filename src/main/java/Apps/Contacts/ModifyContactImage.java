@@ -1,11 +1,9 @@
-package Contacts;
+package Apps.Contacts;
 
 import Demo.Smartphone;
-import Gallery.GalleryWindow;
-import Gallery.ImageGrand;
+import Apps.Gallery.GalleryWindow;
+import TopBar.TopBarContactApp;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -44,7 +42,7 @@ public class ModifyContactImage extends GalleryWindow {
                 if (e.getSource() == buttonImages[i]) {
                     contact.setImagePath(images.get(i).getName());
                     System.out.println(images.get(i).getName());
-                    switchApp = new Smartphone(new ModifyContact(contact, contacts));
+                    switchApp = new Smartphone(new ModifyContact(contact, contacts), new TopBarContactApp());
                 }
             }
         }

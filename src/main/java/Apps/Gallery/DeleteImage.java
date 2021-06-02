@@ -1,4 +1,4 @@
-package Gallery;
+package Apps.Gallery;
 
 import javax.swing.*;
 

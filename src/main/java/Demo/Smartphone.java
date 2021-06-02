@@ -3,7 +3,7 @@ package Demo;
 
 import General.Time;
 import Screen.BottomBar;
-import Screen.TopBarHomeScreen;
+import TopBar.TopBarHomeScreen;
 
 import javax.swing.*;
 import java.awt.*;

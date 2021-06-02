@@ -1,6 +1,7 @@
-package Contacts;
+package Apps.Contacts;
 
 import Demo.Smartphone;
+import TopBar.TopBarContactApp;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -123,13 +124,13 @@ public class InfoContact extends JPanel {
 
             // Listener pour retourner sur la classe ContactWindow
             if (e.getSource() == buttonReturn) {
-                switchApp = new Smartphone(new ContactWindow());
+                switchApp = new Smartphone(new ContactWindow(), new TopBarContactApp());
             }
 
             // Listener pour modifier un contact
             if (e.getSource() == buttonModify) {
                 System.out.println("Modification du contact " + contact.getFullName());
-                switchApp = new Smartphone(new Contacts.ModifyContact(contact, contacts));
+                switchApp = new Smartphone(new Apps.Contacts.ModifyContact(contact, contacts), new TopBarContactApp());
             }
 
             // Listener pour supprimer un contact
@@ -138,7 +139,7 @@ public class InfoContact extends JPanel {
                 deleteContact(contact.getFullName());
                 System.out.println("Supprime le contact: " + contact.getFullName());
                 // Puis on recréé un panel et retour sur la classe ContactWindow
-                switchApp = new Smartphone(new ContactWindow());
+                switchApp = new Smartphone(new ContactWindow(), new TopBarContactApp());
             }
         }
     }
