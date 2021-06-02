@@ -13,7 +13,7 @@ public class BottomBar extends JPanel implements ActionListener {
     private Dimension dimension = new Dimension(300, 78) ;
     private Smartphone switchapp ;
     private JButton button ;
-    private TopBar topBar ;
+    private TopBarHomeScreen topBar ;
     int cmpt = 0 ;
 
     public BottomBar() {
@@ -43,7 +43,7 @@ public class BottomBar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == button){
             // changement de panel principal par le homescreen
-            switchapp = new Smartphone(new HomeScreen()) ;;
+            switchapp = new Smartphone(new HomeScreen(), new TopBarHomeScreen()) ;
         }
     }
 }

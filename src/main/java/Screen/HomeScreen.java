@@ -22,7 +22,7 @@ public class HomeScreen extends JPanel implements ActionListener {
     private JButton buttonContact ;
     private JButton buttonGallery ;
     private JButton searchBar ;
-    private TopBar topBar ;
+    private TopBarHomeScreen topBar ;
 
     // fonts
     private Font timeGrisMini = new Font("Roboto", Font.PLAIN, 12) ;
@@ -108,6 +108,28 @@ public class HomeScreen extends JPanel implements ActionListener {
         searchBar.setBounds(22, 450, 300, 50);
         add(searchBar) ;
 
+        // ajout du texte du nom des applications, sous les applications.
+        // application Weather
+        JLabel labelTexteAppWeather = new JLabel("Weather") ;
+        labelTexteAppWeather.setForeground(Color.white);
+        labelTexteAppWeather.setFont(timeGrisMini);
+        labelTexteAppWeather.setBounds(150, 370, 50, 50);
+        add(labelTexteAppWeather) ;
+
+        //application Contacts
+        JLabel labelTexteAppContacts = new JLabel("Contacts") ;
+        labelTexteAppContacts.setForeground(Color.white);
+        labelTexteAppContacts.setFont(timeGrisMini);
+        labelTexteAppContacts.setBounds(230, 370, 50, 50);
+        add(labelTexteAppContacts) ;
+
+        // application Gallery
+        JLabel labelTexteAppGallery = new JLabel("Gallery") ;
+        labelTexteAppGallery.setForeground(Color.white);
+        labelTexteAppGallery.setFont(timeGrisMini);
+        labelTexteAppGallery.setBounds(66, 370, 50, 50);
+        add(labelTexteAppGallery) ;
+
 
         // set background
         //forme grise au top
@@ -129,7 +151,7 @@ public class HomeScreen extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == buttonWeather){
             try {
-                switchApp = new Smartphone(new WeatherWindow("Sierre"));
+                switchApp = new Smartphone(new WeatherWindow("Sierre"), new TopBarWeatherApp());
             } catch (MalformedURLException malformedURLException) {
                 malformedURLException.printStackTrace();
             } catch (IOException ioException) {
@@ -137,13 +159,13 @@ public class HomeScreen extends JPanel implements ActionListener {
             }
         }
         if(e.getSource() == buttonContact){
-            switchApp = new Smartphone(new ContactWindow()) ;
+            switchApp = new Smartphone(new ContactWindow(), new TopBarWeatherApp()) ;
         }
         if(e.getSource() == buttonGallery){
-            switchApp = new Smartphone(new GalleryWindow());
+            switchApp = new Smartphone(new GalleryWindow(), new TopBarWeatherApp());
         }
         if(e.getSource() == searchBar){
-            switchApp = new Smartphone(new Google()) ;
+            switchApp = new Smartphone(new Google(), new TopBarWeatherApp()) ;
         }
     }
 
