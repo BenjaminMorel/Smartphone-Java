@@ -1,20 +1,15 @@
 package Meteo;
 
 import Demo.Smartphone;
-import Errors.BusinessException;
-import Errors.ErrorCode;
 import General.Time;
-import Screen.HomeScreen;
-import Screen.TopBar;
-import Storable.JSONStorage;
+import Screen.TopBarHomeScreen;
+import Screen.TopBarWeatherApp;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 public class WeatherWindow extends JPanel implements ActionListener {
 
@@ -24,7 +19,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
     private String setVille = "Sierre" ;
     private Weather weather ;
     private Time timeGeneral = new Time() ;
-    private TopBar topBar ;
+    private TopBarHomeScreen topBar ;
 
     // text font + color
     private Font locationFont = new Font("Roboto", Font.PLAIN, 19);
@@ -338,7 +333,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
             else{
                 try {
                     System.out.println(textField.getText());
-                    switchApp = new Smartphone(new WeatherWindow(textField.getText())) ;
+                    switchApp = new Smartphone(new WeatherWindow(textField.getText()), new TopBarWeatherApp()) ;
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
