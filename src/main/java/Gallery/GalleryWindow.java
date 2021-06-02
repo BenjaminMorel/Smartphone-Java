@@ -44,7 +44,7 @@ public class GalleryWindow extends JPanel{
      */
     public GalleryWindow() {
         setLayout(null);
-        JScrollPane scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        JScrollPane scrollPane = new JScrollPane(panel);
 
         buttonsAddDeletePanel = new JPanel();
         buttonsAddDeletePanel.setBounds(15,5,300,35);
@@ -57,8 +57,15 @@ public class GalleryWindow extends JPanel{
         //donner taille tableau JButton
         nbImages = images.size();
         buttonImages = new JButton[nbImages];
-        nbImages = nbImages/3+1;
 
+        if((nbImages%3) == 0)
+        {
+            nbImages = nbImages/3;
+        }
+        else
+        {
+            nbImages = nbImages/3+1;
+        }
 
         //faire grille
         grid = new GridLayout(nbImages, 3, 2, 2);
@@ -76,8 +83,7 @@ public class GalleryWindow extends JPanel{
 
         //Panel ou toutes les photos sont stockées
         panel = new JPanel(grid);
-        panel.setPreferredSize(new Dimension(250, nbImages*100)); //NBimages/50
-        panel.setBackground(Color.green);
+        panel.setPreferredSize(new Dimension(250, nbImages*100));                                           //
         scrollPane.setBounds(30, 40, 280, 500);
 
 
@@ -86,7 +92,7 @@ public class GalleryWindow extends JPanel{
             System.out.println(images.size());
             System.out.println(images.get(i).getName());
             buttonImages[i] = new JButton(new ImageIcon(new ImageIcon(images.get(i).getName()).getImage().getScaledInstance(WIDTH/3, WIDTH/3, Image.SCALE_DEFAULT)));
-            //buttonImages[i].setSize(50, 50);
+           // buttonImages[i].setSize(50, 50);
             buttonImages[i].setBorderPainted(false);
             buttonImages[i].setFocusPainted(false);
             buttonImages[i].setContentAreaFilled(false);
@@ -105,8 +111,8 @@ public class GalleryWindow extends JPanel{
         scrollPane.getVerticalScrollBar().setUnitIncrement(20);                               // paramètre du Scroll pane et ajout de ce dernier dans notre objet GalleryWindow (this)
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setViewportView(this);
-/*        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);*/
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setOpaque(true);
         scrollPane.getViewport().setOpaque(true);
         scrollPane.getViewport().add(panel);

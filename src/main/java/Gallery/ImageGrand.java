@@ -51,6 +51,7 @@ public class ImageGrand extends JPanel {
         setLayout(null);
 
         panel = new JPanel();
+        panel.setOpaque(false);
 
         image = new ImageIcon(name).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT); //redimenssionner l'image en allant chercher le path qui est donné en paramètre
 
@@ -101,13 +102,13 @@ public class ImageGrand extends JPanel {
                 for (int i = 0; i < images.size(); i++) {                                                               //parcourir toute la liste des images
                     if(name == images.get(i).getName())    //regarder adresse                                           //si le nom en parametre est le m'eme sur l'image cliqué
                     {
-                        System.out.println("remove " + name);
-                        System.out.println("remove " + images.get(i).getName());
                         images.remove(images.get(i));                                                                   //supprimer l'image de la Liste d'Images
                     }
-                    jsonStorage.writeImages(new File("Data/Images.json"), images);                             //mettre à jour le fichier JSon avec tous les paths
-                    switchApp = new Smartphone((new GalleryWindow()));                                                  //revenir sur la page Gallery Windows, il n'y aura pas l'image supprimée
+                                                                                                                        //revenir sur la page Gallery Windows, il n'y aura pas l'image supprimée
                 }
+                System.out.println("remove " + name);
+                jsonStorage.writeImages(new File("Data/Images.json"), images);                             //mettre à jour le fichier JSon avec tous les paths
+                switchApp = new Smartphone((new GalleryWindow()));
             }
         }
     }
