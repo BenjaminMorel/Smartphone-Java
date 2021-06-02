@@ -2,8 +2,9 @@ package Apps.Contacts;
 
 import Demo.Smartphone;
 import Apps.Gallery.GalleryWindow;
-import TopBar.TopBarContactApp;
+import TopBar.TopBarColor;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class ModifyContactImage extends GalleryWindow {
                 if (e.getSource() == buttonImages[i]) {
                     contact.setImagePath(images.get(i).getName());
                     System.out.println(images.get(i).getName());
-                    switchApp = new Smartphone(new ModifyContact(contact, contacts), new TopBarContactApp());
+                    switchApp = new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(new Color(0,0,0)));
                 }
             }
         }

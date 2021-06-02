@@ -1,8 +1,8 @@
 package Apps.Contacts;
 
 import Demo.Smartphone;
-import TopBar.TopBarContactApp;
 import Storable.JSONStorage;
+import TopBar.TopBarColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +24,7 @@ public class ModifyContact extends InfoContact implements ContactInterace {
     private ArrayList<Contact> contacts;
     private Contact contact;
     private JSONStorage storable = new JSONStorage();
+    private File jsonFile = new File("Data/Contacts.json");
 
     private Smartphone switchApp;
 
@@ -118,22 +119,23 @@ public class ModifyContact extends InfoContact implements ContactInterace {
             // Listener pour confirmer les modifications
             if (e.getSource() == buttonConfirm) {
                 try {
-                    saveInJsonStorage(new File("Data/Contacts.json"));
+                    saveInJsonStorage(jsonFile);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                     System.out.println("Erreur lors de la confirmation");
                 }
-                switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarContactApp());
+                switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(new Color(0,0,0)));
             }
 
             // Listener pour retourner au panel InfoContact
             if (e.getSource() == buttonCancel) {
-                switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarContactApp());
+                contact.setImagePath("src/main/java/Images/ContactApp/Contact.png");
+                switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(new Color(0,0,0)));
             }
 
             // Listener pour modifier l'image du contact
             if (e.getSource() == buttonChangeImage) {
-                switchApp = new Smartphone(new ModifyContactImage(contact, contacts), new TopBarContactApp());
+                switchApp = new Smartphone(new ModifyContactImage(contact, contacts), new TopBarColor(new Color(0,0,0)));
                 System.out.println("Changement de l'image du contact: " + contact.getFullName());
             }
         }

@@ -1,8 +1,8 @@
 package Apps.Contacts;
 
 import Demo.Smartphone;
-import TopBar.TopBarContactApp;
 import Storable.JSONStorage;
+import TopBar.TopBarColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +23,7 @@ public class NewContact extends JPanel implements ContactInterace {
 
     private ArrayList<Contact> contacts;
     private JSONStorage storable = new JSONStorage();
+    private File jsonFile = new File("Data/Contacts.json");
     private int nbContacts;
 
     private Smartphone switchApp;
@@ -177,20 +178,20 @@ public class NewContact extends JPanel implements ContactInterace {
 
                 if (validateInformation()) {
                     try {
-                        saveInJsonStorage(new File("Data/Contacts.json"));
+                        saveInJsonStorage(jsonFile);
                         System.out.println("Enregistrement du nouveau contact");
                     } catch (Exception exception) {
                         exception.printStackTrace();
                         System.out.println("Erreur lors de la confirmation");
                     }
-                    switchApp = new Smartphone(new ContactWindow(), new TopBarContactApp());
+                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(new Color(0,0,0)));
                 }
             }
 
             // Listener pour annuler
             if (e.getSource() == buttonCancel) {
                 System.out.println("Annulation");
-                switchApp = new Smartphone(new ContactWindow(), new TopBarContactApp());
+                switchApp = new Smartphone(new ContactWindow(), new TopBarColor(new Color(0,0,0)));
             }
         }
     }

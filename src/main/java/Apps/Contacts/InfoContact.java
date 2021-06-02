@@ -1,8 +1,8 @@
 package Apps.Contacts;
 
 import Demo.Smartphone;
-import TopBar.TopBarContactApp;
 import Storable.JSONStorage;
+import TopBar.TopBarColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,8 +44,9 @@ public class InfoContact extends JPanel {
         panelImage = new JPanel();
         panelImage.setLayout(new BorderLayout());
         labelImage = new JLabel();
-        labelImage.setIcon(new ImageIcon(contact.getImagePath()));
-//        labelImage.setIcon(new ImageIcon(new ImageIcon(contact.getImagePath()).getImage().getScaledInstance(250, 150, Image.SCALE_DEFAULT)));
+
+//        labelImage.setIcon(new ImageIcon(contact.getImagePath()));
+        labelImage.setIcon(new ImageIcon(new ImageIcon(contact.getImagePath()).getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH)));
         panelImage.setBounds(50, 50, 230, 150);
         panelImage.add(labelImage);
         add(panelImage);
@@ -124,13 +125,13 @@ public class InfoContact extends JPanel {
 
             // Listener pour retourner sur la classe ContactWindow
             if (e.getSource() == buttonReturn) {
-                switchApp = new Smartphone(new ContactWindow(), new TopBarContactApp());
+                switchApp = new Smartphone(new ContactWindow(), new TopBarColor(new Color(0,0,0)));
             }
 
             // Listener pour modifier un contact
             if (e.getSource() == buttonModify) {
                 System.out.println("Modification du contact " + contact.getFullName());
-                switchApp = new Smartphone(new Apps.Contacts.ModifyContact(contact, contacts), new TopBarContactApp());
+                switchApp = new Smartphone(new Apps.Contacts.ModifyContact(contact, contacts), new TopBarColor(new Color(0,0,0)));
             }
 
             // Listener pour supprimer un contact
@@ -139,7 +140,7 @@ public class InfoContact extends JPanel {
                 deleteContact(contact.getFullName());
                 System.out.println("Supprime le contact: " + contact.getFullName());
                 // Puis on recréé un panel et retour sur la classe ContactWindow
-                switchApp = new Smartphone(new ContactWindow(), new TopBarContactApp());
+                switchApp = new Smartphone(new ContactWindow(), new TopBarColor(new Color(0,0,0)));
             }
         }
     }

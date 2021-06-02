@@ -1,5 +1,7 @@
 package Apps.Gallery;
 
+import Apps.Contacts.Contact;
+import Apps.Contacts.ContactWindow;
 import Demo.Smartphone;
 import TopBar.TopBarGalleryApp;
 import Storable.JSONStorage;
@@ -96,17 +98,36 @@ public class ImageGrand extends JPanel {
      */
     class ButtonDeleteImage implements ActionListener                                                                   //classe bouton supprimer qui contient un actionListener pour donner une fonction au bouton
     {
+        ArrayList<Contact> contacts;
+        JSONStorage jsonStorage = new JSONStorage();
+
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            contacts = jsonStorage.read(new File("Data/Contacts.json"), contacts);
+
             if(e.getSource() == buttonDelete)
             {
                 for (int i = 0; i < images.size(); i++) {                                                               //parcourir toute la liste des images
                     if(name == images.get(i).getName())    //regarder adresse                                           //si le nom en parametre est le m'eme sur l'image cliqué
                     {
+                        for (int j = 0; j < contacts.size(); j++) {
+                            if ((contacts.get(j).getImagePath().equals(images.get(i).getName()))) {
+                                contacts.get(j).setImagePath("src/main/java/Images/ContactApp/Contact.png");
+                            }
+                        }
                         images.remove(images.get(i));                                                                   //supprimer l'image de la Liste d'Images
                     }
                                                                                                                         //revenir sur la page Apps.Gallery Windows, il n'y aura pas l'image supprimée
                 }
+
+                try {
+                    jsonStorage.write(new File("Data/Contacts.json"), contacts);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    System.out.println("Erreur lors de la confirmation");
+                }
+
                 System.out.println("remove " + name);
                 jsonStorage.writeImages(new File("Data/Images.json"), images);                             //mettre à jour le fichier JSon avec tous les paths
                 switchApp = new Smartphone((new GalleryWindow()), new TopBarGalleryApp());
