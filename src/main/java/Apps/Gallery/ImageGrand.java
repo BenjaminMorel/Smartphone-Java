@@ -1,6 +1,7 @@
-package Gallery;
+package Apps.Gallery;
 
 import Demo.Smartphone;
+import TopBar.TopBarGalleryApp;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -85,7 +86,7 @@ public class ImageGrand extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == buttonReturn)
             {
-                switchApp = new Smartphone(new GalleryWindow());                            //revient à la page Gallery Window
+                switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());                            //revient à la page Apps.Gallery Window
             }
         }
     }
@@ -104,11 +105,11 @@ public class ImageGrand extends JPanel {
                     {
                         images.remove(images.get(i));                                                                   //supprimer l'image de la Liste d'Images
                     }
-                                                                                                                        //revenir sur la page Gallery Windows, il n'y aura pas l'image supprimée
+                                                                                                                        //revenir sur la page Apps.Gallery Windows, il n'y aura pas l'image supprimée
                 }
                 System.out.println("remove " + name);
                 jsonStorage.writeImages(new File("Data/Images.json"), images);                             //mettre à jour le fichier JSon avec tous les paths
-                switchApp = new Smartphone((new GalleryWindow()));
+                switchApp = new Smartphone((new GalleryWindow()), new TopBarGalleryApp());
             }
         }
     }

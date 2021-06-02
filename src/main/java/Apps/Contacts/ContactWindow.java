@@ -1,6 +1,7 @@
-package Contacts;
+package Apps.Contacts;
 
 import Demo.Smartphone;
+import TopBar.TopBarContactApp;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -9,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class ContactWindow extends JPanel implements ScrollPaneConstants {
@@ -132,14 +132,14 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
             // Listener pour l'ajout d'un nouveau contact
             if (e.getSource() == buttonAdd) {
                 System.out.println("Ajout d'un nouveau contact");
-                switchApp = new Smartphone(new NewContact(contacts));
+                switchApp = new Smartphone(new NewContact(contacts), new TopBarContactApp());
             }
 
             // Listener pour afficher un contact déjà existant
             for (int i = 0; i < contacts.size(); i++) {
                 if (e.getSource() == buttonsContact[i]) {
                     System.out.println("Affiche le contact: " + contacts.get(i).getFullName());
-                    switchApp = new Smartphone(new InfoContact(contacts.get(i), contacts));
+                    switchApp = new Smartphone(new InfoContact(contacts.get(i), contacts), new TopBarContactApp());
                 }
             }
         }

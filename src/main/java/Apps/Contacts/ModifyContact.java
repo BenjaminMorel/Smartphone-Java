@@ -1,7 +1,7 @@
-package Contacts;
+package Apps.Contacts;
 
 import Demo.Smartphone;
-import Gallery.GalleryWindow;
+import TopBar.TopBarContactApp;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -123,17 +123,17 @@ public class ModifyContact extends InfoContact implements ContactInterace {
                     exception.printStackTrace();
                     System.out.println("Erreur lors de la confirmation");
                 }
-                switchApp = new Smartphone(new InfoContact(contact, contacts));
+                switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarContactApp());
             }
 
             // Listener pour retourner au panel InfoContact
             if (e.getSource() == buttonCancel) {
-                switchApp = new Smartphone(new InfoContact(contact, contacts));
+                switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarContactApp());
             }
 
             // Listener pour modifier l'image du contact
             if (e.getSource() == buttonChangeImage) {
-                switchApp = new Smartphone(new ModifyContactImage(contact, contacts));
+                switchApp = new Smartphone(new ModifyContactImage(contact, contacts), new TopBarContactApp());
                 System.out.println("Changement de l'image du contact: " + contact.getFullName());
             }
         }

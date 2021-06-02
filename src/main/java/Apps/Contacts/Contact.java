@@ -1,4 +1,4 @@
-package Contacts;
+package Apps.Contacts;
 
 public class Contact {
 

@@ -1,9 +1,9 @@
-package Meteo;
+package Apps.Weather;
 
 import Demo.Smartphone;
 import General.Time;
-import Screen.TopBarHomeScreen;
-import Screen.TopBarWeatherApp;
+import TopBar.TopBarHomeScreen;
+import TopBar.TopBarWeatherApp;
 
 import javax.swing.*;
 import java.awt.*;

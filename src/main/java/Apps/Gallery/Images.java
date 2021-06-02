@@ -1,4 +1,4 @@
-package Gallery;
+package Apps.Gallery;
 
 public class Images {
 
