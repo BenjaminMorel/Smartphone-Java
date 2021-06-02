@@ -5,6 +5,7 @@ import Apps.Gallery.GalleryWindow;
 import General.Google;
 import General.Time;
 import Apps.Weather.WeatherWindow;
+import TopBar.TopBarColor;
 import TopBar.TopBarHomeScreen;
 import TopBar.TopBarWeatherApp;
 
@@ -161,7 +162,7 @@ public class HomeScreen extends JPanel implements ActionListener {
             }
         }
         if(e.getSource() == buttonContact){
-            switchApp = new Smartphone(new ContactWindow(), new TopBarWeatherApp()) ;
+            switchApp = new Smartphone(new ContactWindow(), new TopBarColor(new Color(0,0,0)));
         }
         if(e.getSource() == buttonGallery){
             switchApp = new Smartphone(new GalleryWindow(), new TopBarWeatherApp());
