@@ -15,30 +15,35 @@ public class ImageGrand extends JPanel {
     protected JPanel panel;
     protected JLabel label;
     protected Image image;
-    private int width;
-    private int height;
 
-    private ArrayList<Images> images1;
+    private int width;                                                      //largeur fixe pour le panel et l'image affichée en grand
+    private int height;                                                     //hauteur fixe pour le panel et l'image affichée en grand
 
-    private Smartphone switchApp;
+    private ArrayList<Images> images;                                       //liste de images
 
+    private Smartphone switchApp;                                           //pouvoir changer de classe
+
+    //button retour, qui contient une icone dimensionnée à la taille du bouton
     private JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon("src/main/java/Images/IconButtons/retour").getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
 
-    protected JButton buttonDelete = new JButton("Delete");
+    protected JButton buttonDelete = new JButton("Delete");             //création du bouton delete
 
     private JSONStorage jsonStorage = new JSONStorage();
 
-    private String pathImage;
+    private String name;                                                    //String qui contiendra le path de l'iamge donné en paramètre
 
 
+    /**
+     * Classe du constructeur qui a en parametre
+     * @param name String name, qui contient le path de l'image
+     * @param images Array list avec toutes les images
+     */
     public ImageGrand(String name, ArrayList<Images> images) {
 
-        images1 = images;
+        this.images = images;
+        this.name = name;                                                                    // pathImage est égal au nom em paramètre qui est aussi un path
 
-        // ajout du contour du smartphone
-        setSmartphoneShape();
-
-        pathImage = name;
+        setSmartphoneShape();                                                               // ajout du contour du smartphone
 
         height = 400;
         width = 285;
@@ -47,63 +52,69 @@ public class ImageGrand extends JPanel {
 
         panel = new JPanel();
 
-        System.out.println(name);
-        image = new ImageIcon(name).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        image = new ImageIcon(name).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT); //redimenssionner l'image en allant chercher le path qui est donné en paramètre
 
+        label = new JLabel(new ImageIcon(image));                                             //ajouter l'image à un Jlabel
+        panel.add(label);                                                                     //ajouter le label au panel
 
-        label = new JLabel(new ImageIcon(image));
-        panel.add(label);
+        panel.setBounds(30,60,width,height);                                            //donner taille et emplacement du panel qui contient l'image
 
-        panel.setBounds(30,60,width,height);
-        add(panel);
-        add(buttonReturn);
-        add(buttonDelete);
+        add(panel);                                                                           //ajouter panel qui contien l'image au panel principal, le panel de l'application
+        add(buttonReturn);                                                                    //ajouter un bouton retour au panel principal
+        add(buttonDelete);                                                                    //ajouter un bouton supprimer au panel principal
 
-        buttonDelete.setBounds(120,500,75,25);
-        buttonDelete.addActionListener(new ButtonDeleteImage());
+        buttonDelete.setBounds(120,500,75,25);                              //donner une taille et un emplacement au bouton supprimer dans le panel principal
+        buttonDelete.addActionListener(new ButtonDeleteImage());                              //attribuer un actionlistener qui va appeler une classe, pour que celui-ci ait une fonction
 
-        buttonReturn.setBounds(30, 20,25,25);
-        buttonReturn.addActionListener(new ButtonReturnImage());
-        setBackground(Color.GRAY);
+        buttonReturn.setBounds(30, 20,25,25);                               //donner une taille et un emplacement au bouton supprimer dans le panel principal
+        buttonReturn.addActionListener(new ButtonReturnImage());                              //attribuer un actionlistener qui va appeler une classe, pour que le bouton ait une fonction
+
+        setBackground(Color.GRAY); //couleur de fond gris
 
 
     }
 
-    class ButtonReturnImage implements ActionListener
+    /**
+     *
+     */
+    class ButtonReturnImage implements ActionListener                                       //classe bouton retour qui contient un actionListener pour donner une fonction au bouton
     {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == buttonReturn)
             {
-                switchApp = new Smartphone(new GalleryWindow());
+                switchApp = new Smartphone(new GalleryWindow());                            //revient à la page Gallery Window
             }
         }
     }
 
-    class ButtonDeleteImage implements ActionListener
+    /**
+     *
+     */
+    class ButtonDeleteImage implements ActionListener                                                                   //classe bouton supprimer qui contient un actionListener pour donner une fonction au bouton
     {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == buttonDelete)
             {
-                for (int i = 0; i < images1.size(); i++) {
-                    if(pathImage == images1.get(i).getName())
+                for (int i = 0; i < images.size(); i++) {                                                               //parcourir toute la liste des images
+                    if(name == images.get(i).getName())    //regarder adresse                                           //si le nom en parametre est le m'eme sur l'image cliqué
                     {
-                        System.out.println("remove " + pathImage);
-                        System.out.println("remove " + images1.get(i).getName());
-                        images1.remove(images1.get(i));
+                        System.out.println("remove " + name);
+                        System.out.println("remove " + images.get(i).getName());
+                        images.remove(images.get(i));                                                                   //supprimer l'image de la Liste d'Images
                     }
-
-                    jsonStorage.writeImages(new File("Data/Images.json"), images1);
-                    switchApp = new Smartphone((new GalleryWindow()));
+                    jsonStorage.writeImages(new File("Data/Images.json"), images);                             //mettre à jour le fichier JSon avec tous les paths
+                    switchApp = new Smartphone((new GalleryWindow()));                                                  //revenir sur la page Gallery Windows, il n'y aura pas l'image supprimée
                 }
-
             }
         }
     }
 
+    /**
+     * methode qui donne les bordures du natel
+     */
     public void setSmartphoneShape() {
         // Ajout du contour du smartphone
         ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png");
