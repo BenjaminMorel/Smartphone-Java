@@ -2,16 +2,14 @@ package Contacts;
 
 import Demo.Smartphone;
 import Storable.JSONStorage;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 
-public class NewContact extends JPanel {
+public class NewContact extends JPanel implements ContactInterace {
 
     private JPanel panelInfoContact;
     private JLabel firstName, lastName, telNumber, birthDate;
@@ -20,8 +18,7 @@ public class NewContact extends JPanel {
     private JPanel panelImage;
     private JLabel labelImage;
 
-    private JButton buttonConfirm;
-    private JButton buttonCancel;
+    private JButton buttonConfirm, buttonCancel;
 
     private ArrayList<Contact> contacts;
     private JSONStorage storable = new JSONStorage();
@@ -29,7 +26,7 @@ public class NewContact extends JPanel {
 
     private Smartphone switchApp;
 
-    public NewContact(ArrayList<Contact> contacts, int nbContacts) {
+    public NewContact(ArrayList<Contact> contacts) {
         // SetLayout pour le panel principal
         setLayout(null);
         this.contacts = contacts;
@@ -41,7 +38,7 @@ public class NewContact extends JPanel {
         panelImage = new JPanel();
         panelImage.setLayout(new BorderLayout());
         labelImage = new JLabel();
-        labelImage.setIcon(new ImageIcon());
+        labelImage.setIcon(new ImageIcon("src/main/java/Images/ContactApp/Contact.png"));
         panelImage.setBounds(55, 50, 300, 150);
         panelImage.add(labelImage);
 
@@ -76,16 +73,15 @@ public class NewContact extends JPanel {
 
         // Button pour confirmer les informations entrées
         buttonConfirm = new JButton("Enregistrer");
-        buttonConfirm.addActionListener(new ConfirmInformation());
+        buttonConfirm.addActionListener(new NewContactListener());
         buttonConfirm.setBounds(60, 500, 100, 25);
         buttonConfirm.setFont(new Font("Roboto", Font.BOLD, 11));
         add(buttonConfirm);
-        this.contacts = contacts;
-        this.nbContacts = nbContacts;
+
 
         // Bouton pour annuler et revenir sur la page des contacts
         buttonCancel = new JButton("Annuler");
-        buttonCancel.addActionListener(new CancelInformation());
+        buttonCancel.addActionListener(new NewContactListener());
         buttonCancel.setBounds(180, 500, 100, 25);
         buttonCancel.setFont(new Font("Roboto", Font.BOLD, 11));
         add(buttonCancel);
@@ -144,31 +140,44 @@ public class NewContact extends JPanel {
     }
 
 
-    public void saveNewContact(File destination) throws Exception {
+    @Override
+    public void saveInJsonStorage(File destination) throws Exception {
 
         // Mise en forme du prénom, avec 1ère lettre en majuscule et le reste en minuscule
-        String firstName = firstNameText.getText();
-        firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1).toLowerCase();
+        String strFirstName = firstNameText.getText();
+        strFirstName = strFirstName.substring(0, 1).toUpperCase() + strFirstName.substring(1).toLowerCase();
 
         // Mise en forme du nom, avec 1ère lettre en majuscule et le reste en minuscule
-        String lastName = lastNameText.getText();
-        lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();
+        String strLastName = lastNameText.getText();
+        strLastName = strLastName.substring(0, 1).toUpperCase() + strLastName.substring(1).toLowerCase();
 
-        // Création du nouveau contact en prenant les infos des textFields
-        contacts.add(new Contact(firstName, lastName, telNumberText.getText(), birthDateText.getText(), "src/main/java/Images/ContactApp/Contact.png"));
+        // Mise en forme du téléphone, avec format sur l'heure
+
+
+        // Mise en forme de la date de naissance, avec format sur la date
+//        SimpleDateFormat formatter = new SimpleDateFormat("\"dd.mm.yyyy\"");
+//        String strDate = formatter.format(birthDateText.getText());
+
+        // Création du nouveau contact en prenant les infos des textFields et image par défaut
+        contacts.add(new Contact(strFirstName, strLastName, telNumberText.getText(), birthDateText.getText(), "src/main/java/Images/ContactApp/Contact.png"));
 
         // Appel du jsonStorage et modifications de l'arrayList des contacts en y ajoutant le nouveau contact
         storable.write(destination, contacts);
+
     }
 
-    class ConfirmInformation implements ActionListener {
+    class NewContactListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            // Listener pour confirmer le nouveau contact
             if (e.getSource() == buttonConfirm) {
 
                 if (validateInformation()) {
                     try {
-                        saveNewContact(new File("Data/Contacts.json"));
+                        saveInJsonStorage(new File("Data/Contacts.json"));
+                        System.out.println("Enregistrement du nouveau contact");
                     } catch (Exception exception) {
                         exception.printStackTrace();
                         System.out.println("Erreur lors de la confirmation");
@@ -176,14 +185,12 @@ public class NewContact extends JPanel {
                     switchApp = new Smartphone(new ContactWindow());
                 }
             }
-        }
-    }
 
-    class CancelInformation implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            switchApp = new Smartphone(new ContactWindow());
+            // Listener pour annuler
+            if (e.getSource() == buttonCancel) {
+                System.out.println("Annulation");
+                switchApp = new Smartphone(new ContactWindow());
+            }
         }
     }
 }

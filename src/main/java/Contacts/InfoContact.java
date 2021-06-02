@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class InfoContact extends JPanel {
 
-
     protected JPanel panelInfoContact;
     protected JLabel firstName, lastName, telNumber, birthDate;
 
@@ -44,11 +43,11 @@ public class InfoContact extends JPanel {
         panelImage = new JPanel();
         panelImage.setLayout(new BorderLayout());
         labelImage = new JLabel();
-        labelImage.setIcon(new ImageIcon("src/main/java/Images/ContactApp/Contact.png"));
-        panelImage.setBounds(55, 50, 300, 150);
+        labelImage.setIcon(new ImageIcon(contact.getImagePath()));
+//        labelImage.setIcon(new ImageIcon(new ImageIcon(contact.getImagePath()).getImage().getScaledInstance(250, 150, Image.SCALE_DEFAULT)));
+        panelImage.setBounds(50, 50, 230, 150);
         panelImage.add(labelImage);
         add(panelImage);
-
 
         // Panel info Contact
         panelInfoContact = new JPanel();
@@ -58,34 +57,28 @@ public class InfoContact extends JPanel {
         firstName = new JLabel("Prénom: " + contact.getFirstName());
         lastName = new JLabel("Nom: " + contact.getLastName());
         telNumber = new JLabel("Numéro de téléphone: " + contact.getTelNumber());
-//        SimpleDateFormat formatter = new SimpleDateFormat("\"MM/dd/yyyy\"");
-//        String strDate = formatter.format(contact.getBirthDate());
         birthDate = new JLabel("Date de naissance: " + contact.getBirthDate());
-        panelInfoContact.add(firstName);
-        panelInfoContact.add(lastName);
-        panelInfoContact.add(telNumber);
-        panelInfoContact.add(birthDate);
+        panelInfoContact.add(firstName); panelInfoContact.add(lastName);
+        panelInfoContact.add(telNumber); panelInfoContact.add(birthDate);
         panelInfoContact.setBounds(40, 230, 300, 180);
 
         // Ajout du bouton pour retourner sur la page des contacts
         buttonReturn = new JButton(new ImageIcon(new ImageIcon("src/main/java/Images/ContactApp/BackButton.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-        buttonReturn.addActionListener(new BackContactWindow());
+        buttonReturn.addActionListener(new InfoContactListener());
         buttonReturn.setBounds(15, -12, 80, 80);
-        buttonReturn.setBorderPainted(false);
-        buttonReturn.setFocusPainted(false);
-        buttonReturn.setContentAreaFilled(false);
+        setButtonShape(buttonReturn);
         add(buttonReturn);
 
         // Ajout du bouton modifier contact
         buttonModify = new JButton("Modifier");
-        buttonModify.addActionListener(new ModifyContact());
+        buttonModify.addActionListener(new InfoContactListener());
         buttonModify.setBounds(60, 500, 100, 25);
         buttonModify.setFont(new Font("Roboto", Font.BOLD, 11));
         add(buttonModify);
 
         // Ajout du bouton supprimer contact
         buttonDelete = new JButton("Supprimer");
-        buttonDelete.addActionListener(new DeleteContact());
+        buttonDelete.addActionListener(new InfoContactListener());
         buttonDelete.setBounds(180, 500, 100, 25);
         buttonDelete.setFont(new Font("Roboto", Font.BOLD, 11));
         add(buttonDelete);
@@ -106,7 +99,7 @@ public class InfoContact extends JPanel {
 
     public void setButtonShape(JButton button) {
         // Méthode pour modifier l'apparence des boutons (évite d'écrire ces 3 lignes plusieurs fois)
-        button.setBorderPainted(true);
+        button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
     }
@@ -119,38 +112,29 @@ public class InfoContact extends JPanel {
             }
         }
 
-        // Enregistrement dans le fichier JSON
+        // Enregistrement des modifications dans le fichier JSON
         jsonStorage.write(new File("Data/Contacts.json"), contacts);
     }
 
-    class BackContactWindow implements ActionListener {
+    class InfoContactListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            // Listener pour retourner sur la classe ContactWindow
             if (e.getSource() == buttonReturn) {
-                // Si clic sur le bouton retour, on recréé un panel et retour sur la classe ContactWindow
                 switchApp = new Smartphone(new ContactWindow());
             }
-        }
-    }
 
-    class ModifyContact implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
+            // Listener pour modifier un contact
             if (e.getSource() == buttonModify) {
                 System.out.println("Modification du contact " + contact.getFullName());
                 switchApp = new Smartphone(new Contacts.ModifyContact(contact, contacts));
             }
-        }
-    }
 
-    class DeleteContact implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
+            // Listener pour supprimer un contact
             if (e.getSource() == buttonDelete) {
-                // Si clic sur le bouton supprimer, le contact est supprimé grâce à la méthode deleteContact
+                // Appel de la méthode deleteContact
                 deleteContact(contact.getFullName());
                 System.out.println("Supprime le contact: " + contact.getFullName());
                 // Puis on recréé un panel et retour sur la classe ContactWindow
