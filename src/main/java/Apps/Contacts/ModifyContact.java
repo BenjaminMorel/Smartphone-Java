@@ -1,6 +1,8 @@
 package Apps.Contacts;
 
 import Demo.Smartphone;
+import Errors.ErrorCode;
+import Errors.SmartphoneException;
 import Storable.JSONStorage;
 import TopBar.TopBarColor;
 
@@ -100,17 +102,18 @@ public class ModifyContact extends InfoContact implements ContactInterace {
     }
 
     @Override
-    public void saveInJsonStorage(File destination) throws Exception {
+    public void saveInJsonStorage(File destination) throws SmartphoneException {
 
-        // trycatch
+        try {
+            contact.setFirstName(firstNameText.getText());
+            contact.setLastName(lastNameText.getText());
+            contact.setTelNumber(telNumberText.getText());
+            contact.setBirthDate(birthDateText.getText());
 
-        contact.setFirstName(firstNameText.getText());
-        contact.setLastName(lastNameText.getText());
-        contact.setTelNumber(telNumberText.getText());
-        contact.setBirthDate(birthDateText.getText());
-
-        storable.write(destination, contacts);
-
+            storable.write(destination, contacts);
+        } catch (SmartphoneException e) {
+            throw new SmartphoneException("Error while saving data in Json File", ErrorCode.SAVE_ERROR);
+        }
     }
 
     class ModifyContactListener implements ActionListener {
@@ -124,7 +127,7 @@ public class ModifyContact extends InfoContact implements ContactInterace {
                     saveInJsonStorage(jsonFile);
                 } catch (Exception exception) {
                     exception.printStackTrace();
-                    System.out.println("Erreur lors de la confirmation");
+                    // ERROR
                 }
                 switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(new Color(0,0,0)));
             }

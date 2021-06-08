@@ -1,7 +1,9 @@
 package Apps.Contacts;
 
 import Demo.Smartphone;
+import Errors.ErrorCode;
 import Errors.ErrorPanel;
+import Errors.SmartphoneException;
 import Storable.JSONStorage;
 import TopBar.TopBarColor;
 
@@ -104,45 +106,45 @@ public class NewContact extends JPanel implements ContactInterace {
         add(labelContourSmartphone);
     }
 
-    public boolean validateInformation() {
-
-        // Vérifie si le contact existe déjà
-        String strFullName = lastNameText.getText() + firstNameText.getText();
-        for (int i = 0; i < contacts.size(); i++) {
-            if (strFullName.equals(contacts.get(i).getFullName())) {
-                System.out.println("Contact déjà existant");
-                new ErrorPanel(122);
-                return false;
-            }
-        }
-
-        // Vérifie si le prénom est vide
-        if (firstNameText.getText().isEmpty()) {
-            System.out.println("Prénom vide");
-            new ErrorPanel(100);
-            return false;
-        }
-
-        // Vérifie si le nom est vide
-        if (lastNameText.getText().isEmpty()) {
-            System.out.println("Nom vide");
-            return false;
-        }
-//        Double num;
-//        System.out.println(num = Double.parseDouble(firstNameText.getText()));
-
-        if (firstNameText.getText().matches("[0-9]")) {
-            System.out.println("pas de numéro autorisés");
-            return false;
-        }
-
-        if (lastNameText.getText().matches("[0-9]")) {
-            System.out.println("pas de numéro autorisés");
-            return false;
-        }
-
-        return true;
-    }
+//    public boolean validateInformation() {
+//
+//        // Vérifie si le contact existe déjà
+//        String strFullName = lastNameText.getText() + firstNameText.getText();
+//        for (int i = 0; i < contacts.size(); i++) {
+//            if (strFullName.equals(contacts.get(i).getFullName())) {
+//                System.out.println("Contact déjà existant");
+//                new ErrorPanel(122);
+//                return false;
+//            }
+//        }
+//
+//        // Vérifie si le prénom est vide
+//        if (firstNameText.getText().isEmpty()) {
+//            System.out.println("Prénom vide");
+//            new ErrorPanel(100);
+//            return false;
+//        }
+//
+//        // Vérifie si le nom est vide
+//        if (lastNameText.getText().isEmpty()) {
+//            System.out.println("Nom vide");
+//            return false;
+//        }
+////        Double num;
+////        System.out.println(num = Double.parseDouble(firstNameText.getText()));
+//
+//        if (firstNameText.getText().matches("[0-9]")) {
+//            System.out.println("pas de numéro autorisés");
+//            return false;
+//        }
+//
+//        if (lastNameText.getText().matches("[0-9]")) {
+//            System.out.println("pas de numéro autorisés");
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
 
     @Override
@@ -163,11 +165,16 @@ public class NewContact extends JPanel implements ContactInterace {
 //        SimpleDateFormat formatter = new SimpleDateFormat("\"dd.mm.yyyy\"");
 //        String strDate = formatter.format(birthDateText.getText());
 
-        // Création du nouveau contact en prenant les infos des textFields et image par défaut
-        contacts.add(new Contact(strFirstName, strLastName, telNumberText.getText(), birthDateText.getText(), "src/main/java/Images/ContactApp/Contact.png"));
 
-        // Appel du jsonStorage et modifications de l'arrayList des contacts en y ajoutant le nouveau contact
-        storable.write(destination, contacts);
+        try {
+            // Création du nouveau contact en prenant les infos des textFields et image par défaut
+            contacts.add(new Contact(strFirstName, strLastName, telNumberText.getText(), birthDateText.getText(), "src/main/java/Images/ContactApp/Contact.png"));
+
+            // Appel du jsonStorage et modifications de l'arrayList des contacts en y ajoutant le nouveau contact
+            storable.write(destination, contacts);
+        } catch (SmartphoneException e) {
+            throw new SmartphoneException("Error while saving data in Json File", ErrorCode.SAVE_ERROR);
+        }
 
     }
 
@@ -179,16 +186,14 @@ public class NewContact extends JPanel implements ContactInterace {
             // Listener pour confirmer le nouveau contact
             if (e.getSource() == buttonConfirm) {
 
-                if (validateInformation()) {
-                    try {
-                        saveInJsonStorage(jsonFile);
-                        System.out.println("Enregistrement du nouveau contact");
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                        System.out.println("Erreur lors de la confirmation");
-                    }
-                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(new Color(0,0,0)));
+                try {
+                    saveInJsonStorage(jsonFile);
+                    System.out.println("Enregistrement du nouveau contact");
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    System.out.println("Erreur lors de la confirmation");
                 }
+                switchApp = new Smartphone(new ContactWindow(), new TopBarColor(new Color(0,0,0)));
             }
 
             // Listener pour annuler
