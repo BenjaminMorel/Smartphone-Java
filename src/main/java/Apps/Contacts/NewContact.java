@@ -1,6 +1,7 @@
 package Apps.Contacts;
 
 import Demo.Smartphone;
+import Errors.ErrorPanel;
 import Storable.JSONStorage;
 import TopBar.TopBarColor;
 
@@ -110,6 +111,7 @@ public class NewContact extends JPanel implements ContactInterace {
         for (int i = 0; i < contacts.size(); i++) {
             if (strFullName.equals(contacts.get(i).getFullName())) {
                 System.out.println("Contact déjà existant");
+                new ErrorPanel(122);
                 return false;
             }
         }
@@ -117,6 +119,7 @@ public class NewContact extends JPanel implements ContactInterace {
         // Vérifie si le prénom est vide
         if (firstNameText.getText().isEmpty()) {
             System.out.println("Prénom vide");
+            new ErrorPanel(100);
             return false;
         }
 

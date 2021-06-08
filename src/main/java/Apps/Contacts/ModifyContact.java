@@ -102,6 +102,8 @@ public class ModifyContact extends InfoContact implements ContactInterace {
     @Override
     public void saveInJsonStorage(File destination) throws Exception {
 
+        // trycatch
+
         contact.setFirstName(firstNameText.getText());
         contact.setLastName(lastNameText.getText());
         contact.setTelNumber(telNumberText.getText());

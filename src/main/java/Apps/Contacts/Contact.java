@@ -1,14 +1,16 @@
 package Apps.Contacts;
 
+import Errors.ErrorPanel;
+
 public class Contact {
 
     private String firstName, lastName, fullName, telNumber, birthDate, imagePath;
 
     public Contact(String firstName, String lastName, String telNumber, String birthDate, String imagePath) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.telNumber = telNumber;
-        this.birthDate = birthDate;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setTelNumber(telNumber);
+        setBirthDate(birthDate);
         this.imagePath = imagePath;
         setFullName(null);
     }
@@ -22,7 +24,13 @@ public class Contact {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if (validateInformation(firstName)) {
+            try {
+
+            } catch (Exception exception) {
+
+            }
+        }
     }
 
     public String getLastName() {
@@ -75,4 +83,12 @@ public class Contact {
                 ", birthDate='" + birthDate + '\'' +
                 '}';
     }
+
+    public boolean validateInformation(String param) {
+        if (param.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
 }
