@@ -68,7 +68,12 @@ public class AddImage extends JPanel {
                 f = fileChooser.getSelectedFile();
                 String path = "ImagesGallery" +"/" + f.getName();
                 images.add(new Images(path));
-                storable.writeImages(jsonFile, images);
+                try {
+                    storable.writeImages(jsonFile, images);
+                } catch (Exception exception)
+                {
+                    System.out.println("failed to confirm");
+                }
                 switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());
             }
             if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
