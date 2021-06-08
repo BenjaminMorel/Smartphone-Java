@@ -1,12 +1,14 @@
 package Apps.Contacts;
 
-import Errors.ErrorPanel;
+
+import Errors.ErrorCode;
+import Errors.SmartphoneException;
 
 public class Contact {
 
     private String firstName, lastName, fullName, telNumber, birthDate, imagePath;
 
-    public Contact(String firstName, String lastName, String telNumber, String birthDate, String imagePath) {
+    public Contact(String firstName, String lastName, String telNumber, String birthDate, String imagePath) throws SmartphoneException {
         setFirstName(firstName);
         setLastName(lastName);
         setTelNumber(telNumber);
@@ -23,13 +25,13 @@ public class Contact {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        if (validateInformation(firstName)) {
-            try {
-
-            } catch (Exception exception) {
-
-            }
+    public void setFirstName(String firstName) throws SmartphoneException {
+        if (firstName.isEmpty()) {
+            System.out.println("ErrorCode.FIRSTNAME_EMPTY");
+            throw new SmartphoneException("FirstName is empty", ErrorCode.FIRSTNAME_EMPTY);
+        }
+        else {
+            this.firstName = firstName;
         }
     }
 
@@ -83,12 +85,4 @@ public class Contact {
                 ", birthDate='" + birthDate + '\'' +
                 '}';
     }
-
-    public boolean validateInformation(String param) {
-        if (param.isEmpty()) {
-            return false;
-        }
-        return true;
-    }
-
 }
