@@ -43,7 +43,7 @@ public class AddImage extends JPanel {
         panelChooser.setBounds(40,40,260,500);
 
         fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("ImagesGallery"));
+        fileChooser.setCurrentDirectory(new File("src/main/resources/ImagesGallery"));
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setBounds(0,-40,260,500);
         fileChooser.setPreferredSize(new Dimension(280,400));
@@ -66,7 +66,7 @@ public class AddImage extends JPanel {
             if (e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION))
             {
                 f = fileChooser.getSelectedFile();
-                String path = "ImagesGallery" +"/" + f.getName();
+                String path = "src/main/resources/ImagesGallery" +"/" + f.getName();
                 images.add(new Images(path));
                 try {
                     storable.writeImages(jsonFile, images);
@@ -86,7 +86,7 @@ public class AddImage extends JPanel {
     public void setSmartphoneShape()
     {
         // Ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png");
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png");
         JLabel labelContourSmartphone = new JLabel();
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);

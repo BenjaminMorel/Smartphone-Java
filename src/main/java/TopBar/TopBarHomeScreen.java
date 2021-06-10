@@ -9,7 +9,7 @@ public class TopBarHomeScreen extends TopBar {
         super();
 
         // ajout du prolongement du background
-        ImageIcon iconImageBackground = new ImageIcon("src/main/java/Images/wallpaper_PNG.png") ;
+        ImageIcon iconImageBackground = new ImageIcon("src/main/resources/Images/wallpaper_PNG.png") ;
         JLabel labelImageBackground = new JLabel() ;
         labelImageBackground.setIcon(iconImageBackground);
         labelImageBackground.setBounds(16, 20, 300, 644);

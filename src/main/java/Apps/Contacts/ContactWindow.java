@@ -61,7 +61,7 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
         topPanel.add(labelNbContacts);
 
         // Bouton d'ajout de contact
-        buttonAdd = new JButton(new ImageIcon(new ImageIcon("src/main/java/Images/ContactApp/60807.png").getImage().getScaledInstance(30,30, Image.SCALE_DEFAULT)));
+        buttonAdd = new JButton(new ImageIcon(new ImageIcon("src/main/resources/Images/ContactApp/60807.png").getImage().getScaledInstance(30,30, Image.SCALE_DEFAULT)));
         // Ajout de l'action Listener de la classe AddContact
         buttonAdd.addActionListener(new ContactActionListener());
         // Emplacement du boutton dans le topPanel
@@ -99,7 +99,7 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
 
     public void setSmartphoneShape() {
         // Ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png");
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png");
         JLabel labelContourSmartphone = new JLabel();
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);

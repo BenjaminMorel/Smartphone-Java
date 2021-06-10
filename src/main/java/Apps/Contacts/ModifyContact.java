@@ -94,7 +94,7 @@ public class ModifyContact extends InfoContact implements ContactInterace {
 
     public void setSmartphoneShape() {
         // Ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png");
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png");
         JLabel labelContourSmartphone = new JLabel();
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);
@@ -134,7 +134,7 @@ public class ModifyContact extends InfoContact implements ContactInterace {
 
             // Listener pour retourner au panel InfoContact
             if (e.getSource() == buttonCancel) {
-                contact.setImagePath("src/main/java/Images/ContactApp/Contact.png");
+                contact.setImagePath("src/main/resources/Images/ContactApp/Contact.png");
                 switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(new Color(0,0,0)));
             }
 
