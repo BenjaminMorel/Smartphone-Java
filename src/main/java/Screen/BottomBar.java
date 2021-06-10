@@ -22,7 +22,7 @@ public class BottomBar extends JPanel implements ActionListener {
        setPreferredSize(dimension);
 
        // ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png") ;
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png") ;
         JLabel labelContourSmartphone = new JLabel() ;
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -609, 320, 660);

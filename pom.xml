@@ -9,8 +9,23 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Maven -->
+        <maven.compiler.release>14</maven.compiler.release>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+        <maven.assembly.plugin.version>3.3.0</maven.assembly.plugin.version>
+        <maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
+        <!-- External dependencies -->
+        <apache.commons.io.version>2.8.0</apache.commons.io.version>
+        <guava.version>30.1-jre</guava.version>
+        <jackson.version>2.12.1</jackson.version>
+        <javax.json.version>1.1.4</javax.json.version>
+        <javax.json-api.version>1.1.4</javax.json-api.version>
+        <junit-json-params.version>5.6.2-r0</junit-json-params.version>
+        <junit5.version>5.7.1</junit5.version>
+        <junit5.platform.runnerversion>1.6.0</junit5.platform.runnerversion>
+        <picocli.version>4.6.1</picocli.version>
     </properties>
 
     <dependencies>
@@ -26,6 +41,12 @@
             <version>2.12.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>3.0.6.RELEASE</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.json/json -->
         <dependency>
             <groupId>org.json</groupId>
@@ -34,5 +55,43 @@
         </dependency>
     </dependencies>
 
+    <build>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+            </plugin>
+            <plugin>
+
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

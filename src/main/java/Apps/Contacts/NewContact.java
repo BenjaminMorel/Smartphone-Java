@@ -43,7 +43,7 @@ public class NewContact extends JPanel implements ContactInterace {
         panelImage = new JPanel();
         panelImage.setLayout(new BorderLayout());
         labelImage = new JLabel();
-        labelImage.setIcon(new ImageIcon("src/main/java/Images/ContactApp/Contact.png"));
+        labelImage.setIcon(new ImageIcon("src/main/resources/Images/ContactApp/Contact.png"));
         panelImage.setBounds(55, 50, 300, 150);
         panelImage.add(labelImage);
 
@@ -99,7 +99,7 @@ public class NewContact extends JPanel implements ContactInterace {
 
     public void setSmartphoneShape() {
         // Ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png");
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png");
         JLabel labelContourSmartphone = new JLabel();
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);

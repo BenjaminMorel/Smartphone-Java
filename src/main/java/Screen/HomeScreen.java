@@ -35,7 +35,7 @@ public class HomeScreen extends JPanel implements ActionListener {
         setLayout(null);
 
         // ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/java/Images/smartphone_PNG.png") ;
+        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png") ;
         JLabel labelContourSmartphone = new JLabel() ;
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);
@@ -67,7 +67,7 @@ public class HomeScreen extends JPanel implements ActionListener {
         add(labelHeureDroite) ;
 
         // bouton Apps.Gallery
-        ImageIcon iconeGallery = new ImageIcon("src/main/java/Images/HomeScreen/iconeGallery.png") ;
+        ImageIcon iconeGallery = new ImageIcon("src/main/resources/Images/HomeScreen/iconeGallery.png") ;
         buttonGallery = new JButton() ;
         buttonGallery.setBorderPainted(false);
         buttonGallery.setFocusPainted(false);
@@ -78,7 +78,7 @@ public class HomeScreen extends JPanel implements ActionListener {
         add(buttonGallery) ;
 
         // bouton ContactsApp
-        ImageIcon iconeContact = new ImageIcon("src/main/java/Images/HomeScreen/iconeContact.png") ;
+        ImageIcon iconeContact = new ImageIcon("src/main/resources/Images/HomeScreen/iconeContact.png") ;
         buttonContact = new JButton() ;
         buttonContact.setBorderPainted(false);
         buttonContact.setFocusPainted(false);
@@ -89,7 +89,7 @@ public class HomeScreen extends JPanel implements ActionListener {
         add(buttonContact) ;
 
         // bouton weatherapp
-        ImageIcon iconeWeather = new ImageIcon("src/main/java/Images/HomeScreen/iconeWeather.png") ;
+        ImageIcon iconeWeather = new ImageIcon("src/main/resources/Images/HomeScreen/iconeWeather.png") ;
         buttonWeather = new JButton() ;
         buttonWeather.setBorderPainted(false);
         buttonWeather.setFocusPainted(false);
@@ -101,7 +101,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 
 
         // bouton google search
-        ImageIcon iconSearchBar = new ImageIcon("src/main/java/Images/googleSearchBar_PNG.png") ;
+        ImageIcon iconSearchBar = new ImageIcon("src/main/resources/Images/googleSearchBar_PNG.png") ;
         searchBar = new JButton() ;
         searchBar.setBorderPainted(false);
         searchBar.setFocusPainted(false);
@@ -136,14 +136,14 @@ public class HomeScreen extends JPanel implements ActionListener {
 
         // set background
         //forme grise au top
-        ImageIcon iconThingOnTop = new ImageIcon("src/main/java/Images/HomeScreen/grayThingOnTop.png") ;
+        ImageIcon iconThingOnTop = new ImageIcon("src/main/resources/Images/HomeScreen/grayThingOnTop.png") ;
         JLabel labelThingOnTop = new JLabel() ;
         labelThingOnTop.setIcon(iconThingOnTop);
         labelThingOnTop.setBounds(42, 0, 290, 150);
         add(labelThingOnTop) ;
 
         //image background
-        imageBackround = new ImageIcon("src/main/java/Images/wallpaper_PNG.png");
+        imageBackround = new ImageIcon("src/main/resources/Images/wallpaper_PNG.png");
         JLabel labelBackground = new JLabel() ;
         labelBackground.setIcon(imageBackround);
         labelBackground.setBounds(16,0 , 304, 600);
