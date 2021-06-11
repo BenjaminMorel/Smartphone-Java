@@ -46,7 +46,8 @@ public class InfoContact extends JPanel {
         labelImage = new JLabel();
 
 //        labelImage.setIcon(new ImageIcon(contact.getImagePath()));
-        labelImage.setIcon(new ImageIcon(new ImageIcon(contact.getImagePath()).getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH)));
+        labelImage.setIcon(new ImageIcon(contact.getImagePath()));
+//        labelImage.setIcon(new ImageIcon(new ImageIcon(contact.getImagePath()).getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH)));
         panelImage.setBounds(50, 50, 230, 150);
         panelImage.add(labelImage);
         add(panelImage);

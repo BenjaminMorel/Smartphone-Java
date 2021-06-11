@@ -113,7 +113,7 @@ public class ImageGrand extends JPanel {
                     {
                         for (int j = 0; j < contacts.size(); j++) {
                             if ((contacts.get(j).getImagePath().equals(images.get(i).getName()))) {
-                                contacts.get(j).setImagePath(String.valueOf(ClassLoader.getSystemResource("ImagesGallery/dents-du-midi-lever-de-soleil-202012_dsc0226.jpg")));
+                                contacts.get(j).setImagePath("Images/ContactApp/Contact.png");
                             }
                         }
                         images.remove(images.get(i));                                                                   //supprimer l'image de la Liste d'Images
