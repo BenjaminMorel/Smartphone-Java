@@ -37,7 +37,7 @@ public class GalleryWindow extends JPanel{
 
     private JButton buttonAdd = new JButton("Add");
 
-    private JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon("src/main/resources/Images/ContactApp/BackButton.png").getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
+    private JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("Images/ContactApp/BackButton.png")).getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
 
     private int nbImages;
 
@@ -146,12 +146,12 @@ public class GalleryWindow extends JPanel{
 
         public void loadImage()
         {
-            images = jsonStorage.readImages(new File("Data/Images.json"), images);
+            images = jsonStorage.readImages(new File(System.getenv("HOME") + "\\Images.json"), images);
         }
 
         public void saveImage()
         {
-            jsonStorage.writeImages(new File("Data/Images.json"), images);
+            jsonStorage.writeImages(new File(System.getenv("HOME") + "\\Images.json"), images);
         }
 
 
@@ -198,7 +198,7 @@ public class GalleryWindow extends JPanel{
 
         public void setSmartphoneShape() {
         // Ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png");
+        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
         JLabel labelContourSmartphone = new JLabel();
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);

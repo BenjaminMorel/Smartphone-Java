@@ -40,7 +40,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
         setLayout(null); // permet d'ajouter des labels et panels avec setBounds
 
         // ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png") ;
+        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
         JLabel labelContourSmartphone = new JLabel() ;
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);
@@ -61,7 +61,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
         searchButton = new JButton() ;
         searchButton.addActionListener(this);
         searchButton.setBounds(275, 4, 40, 40);
-        ImageIcon iconSearchButton = new ImageIcon("src/main/resources/Images/WeatherIcon/searchBar.png") ;
+        ImageIcon iconSearchButton = new ImageIcon(ClassLoader.getSystemResource("Images/WeatherIcon/searchBar.png"));
         searchButton.setIcon(iconSearchButton);
         searchButton.setBorderPainted(false);
         searchButton.setFocusPainted(false);
@@ -119,7 +119,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
         String[] contentStringIcon = weather.getWeather() ;
         String stringIcon = contentStringIcon[3] ;
         stringIcon = stringIcon.substring(6) ;                                  // découpage du string de l'image à choisir
-        String stringIconPath = "src/main/resources/Images/WeatherIcon/" ;          // path sans l'image
+        String stringIconPath = String.valueOf(ClassLoader.getSystemResource("Images/WeatherIcon/")) ;          // path sans l'image
         stringIconPath += stringIcon ;                                          // rajout de l'image à choisir et du .png
         stringIconPath += ".png" ;
         ImageIcon image = new ImageIcon(stringIconPath);                        // on va chercher l'image avec le lien que l'on vient de créer
@@ -168,7 +168,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
         // Texte + icone sunrise et sunset
         // icone sunrise
         JLabel labelSunrise = new JLabel();
-        ImageIcon imageSunrise = new ImageIcon("src/main/resources/Images/WeatherIcon/sunrise.png");
+        ImageIcon imageSunrise = new ImageIcon(ClassLoader.getSystemResource("Images/WeatherIcon/sunrise.png"));
         labelSunrise.setIcon(imageSunrise);
         labelSunrise.setBounds(40, 275, 100, 100);
         add(labelSunrise) ;
@@ -187,7 +187,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
 
         // icone sunset
         JLabel labelSet = new JLabel();
-        ImageIcon imageSet = new ImageIcon("src/main/resources/Images/WeatherIcon/sunset.png");
+        ImageIcon imageSet = new ImageIcon(ClassLoader.getSystemResource("Images/WeatherIcon/sunset.png"));
         labelSet.setIcon(imageSet);
         labelSet.setBounds(40, 322, 100, 100);
         add(labelSet) ;
@@ -206,7 +206,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
         // label + icone humidité
         // icone humidité
         JLabel labelHumidite = new JLabel() ;
-        ImageIcon iconHumidite = new ImageIcon("src/main/resources/Images/WeatherIcon/humidity.png") ;
+        ImageIcon iconHumidite = new ImageIcon(ClassLoader.getSystemResource("Images/WeatherIcon/humidity.png"));
         labelHumidite.setIcon(iconHumidite);
         labelHumidite.setBounds(52, 390, 50, 50);
         add(labelHumidite);
@@ -265,7 +265,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
 
         for(int i = 0 ; i < 5 ; i++){
             labelImagesDuBas = new JLabel() ;
-            stringGetIconPath = "src/main/resources/Images/WeatherIcon/" ; // on reset le path
+            stringGetIconPath = String.valueOf(ClassLoader.getSystemResource("Images/WeatherIcon/")); // on reset le path
             if((intActualHour>=intGetHoursSunrise) && (intActualHour<=intGetHoursSunset)){   // on choisit le mode jour ou nuit de l'icone en fonction du lever/coucher du soleil
                 // icone jour
                 stringGetIconPath += stringIcon + "d.png" ;
@@ -302,21 +302,21 @@ public class WeatherWindow extends JPanel implements ActionListener {
         //ajout du background
         //label background top
         JLabel backgroundTop = new JLabel();
-        ImageIcon imageBT = new ImageIcon("src/main/resources/Images/WeatherIcon/backgroundTop.png");
+        ImageIcon imageBT = new ImageIcon(ClassLoader.getSystemResource("Images/WeatherIcon/backgroundTop.png"));
         backgroundTop.setIcon(imageBT);
         backgroundTop.setBounds(28, 195, 303, 350);
         add(backgroundTop);
 
         // label background bottom
         JLabel backgroundBottom = new JLabel();
-        ImageIcon imageBB = new ImageIcon("src/main/resources/Images/WeatherIcon/backgroundBottom.png");
+        ImageIcon imageBB = new ImageIcon(ClassLoader.getSystemResource("Images/WeatherIcon/backgroundBottom.png"));
         backgroundBottom.setIcon(imageBB);
         backgroundBottom.setBounds(28, 335, 303, 350);
         add(backgroundBottom);
 
         // background image
         JLabel backgroundImage = new JLabel();
-        ImageIcon iconBackgroundImage = new ImageIcon("src/main/resources/Images/WeatherIcon/meteoBackground.png") ;
+        ImageIcon iconBackgroundImage = new ImageIcon(ClassLoader.getSystemResource("Images/WeatherIcon/meteoBackground.png"));
         backgroundImage.setIcon(iconBackgroundImage);
         backgroundImage.setBounds(10, 0, 330, 600);
         add(backgroundImage);

@@ -65,7 +65,7 @@ public class InfoContact extends JPanel {
         panelInfoContact.setBounds(40, 230, 300, 180);
 
         // Ajout du bouton pour retourner sur la page des contacts
-        buttonReturn = new JButton(new ImageIcon(new ImageIcon("src/main/resources/Images/ContactApp/BackButton.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+        buttonReturn = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("Images/ContactApp/BackButton.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
         buttonReturn.addActionListener(new InfoContactListener());
         buttonReturn.setBounds(15, -12, 80, 80);
         setButtonShape(buttonReturn);
@@ -92,7 +92,7 @@ public class InfoContact extends JPanel {
 
     public void setSmartphoneShape() {
         // Ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png");
+        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
         JLabel labelContourSmartphone = new JLabel();
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);
@@ -115,7 +115,7 @@ public class InfoContact extends JPanel {
         }
 
         // Enregistrement des modifications dans le fichier JSON
-        jsonStorage.write(new File("Data/Contacts.json"), contacts);
+        jsonStorage.write(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);
     }
 
     class InfoContactListener implements ActionListener {

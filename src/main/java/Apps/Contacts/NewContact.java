@@ -26,7 +26,7 @@ public class NewContact extends JPanel implements ContactInterace {
 
     private ArrayList<Contact> contacts;
     private JSONStorage storable = new JSONStorage();
-    private File jsonFile = new File("Data/Contacts.json");
+    private File jsonFile = new File(System.getenv("HOME") + "\\Contacts.json");
     private int nbContacts;
 
     private Smartphone switchApp;
@@ -43,7 +43,7 @@ public class NewContact extends JPanel implements ContactInterace {
         panelImage = new JPanel();
         panelImage.setLayout(new BorderLayout());
         labelImage = new JLabel();
-        labelImage.setIcon(new ImageIcon("src/main/resources/Images/ContactApp/Contact.png"));
+        labelImage.setIcon(new ImageIcon(ClassLoader.getSystemResource("Images/ContactApp/Contact.png")));
         panelImage.setBounds(55, 50, 300, 150);
         panelImage.add(labelImage);
 
@@ -99,7 +99,7 @@ public class NewContact extends JPanel implements ContactInterace {
 
     public void setSmartphoneShape() {
         // Ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png");
+        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
         JLabel labelContourSmartphone = new JLabel();
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);
@@ -165,10 +165,9 @@ public class NewContact extends JPanel implements ContactInterace {
 //        SimpleDateFormat formatter = new SimpleDateFormat("\"dd.mm.yyyy\"");
 //        String strDate = formatter.format(birthDateText.getText());
 
-
         try {
             // Création du nouveau contact en prenant les infos des textFields et image par défaut
-            contacts.add(new Contact(strFirstName, strLastName, telNumberText.getText(), birthDateText.getText(), "src/main/java/Images/ContactApp/Contact.png"));
+            contacts.add(new Contact(strFirstName, strLastName, telNumberText.getText(), birthDateText.getText(), String.valueOf(ClassLoader.getSystemResource("Images/ContactApp/Contact.png"))));
 
             // Appel du jsonStorage et modifications de l'arrayList des contacts en y ajoutant le nouveau contact
             storable.write(destination, contacts);

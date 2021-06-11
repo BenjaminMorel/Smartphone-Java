@@ -6,7 +6,6 @@ import General.Google;
 import General.Time;
 import Apps.Weather.WeatherWindow;
 import TopBar.TopBarColor;
-import TopBar.TopBarHomeScreen;
 import TopBar.TopBarWeatherApp;
 
 import javax.swing.*;
@@ -25,129 +24,130 @@ public class HomeScreen extends JPanel implements ActionListener {
     private JButton buttonContact ;
     private JButton buttonGallery ;
     private JButton searchBar ;
-    private TopBarHomeScreen topBar ;
+    private ImageIcon iconeGallery;
 
-    // fonts
+    // Fonts
     private Font timeGrisMini = new Font("Roboto", Font.PLAIN, 12) ;
     private Font timeGrisGrand = new Font("Roboto", Font.PLAIN, 26) ;
+    private Color black = Color.BLACK;
 
     public HomeScreen() {
         setLayout(null);
 
-        // ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png") ;
-        JLabel labelContourSmartphone = new JLabel() ;
-        labelContourSmartphone.setIcon(iconContourSmartphone);
-        labelContourSmartphone.setBounds(9, -8, 320, 600);
-        add(labelContourSmartphone) ;
+        // Ajout du contour du smartphone
+        setSmartphoneShape();
 
-
-
-
-        // date et heure panel grisé
-        // jour gauche
-        JLabel labelJourGauche = new JLabel(timeGeneral.getDate()) ;
-        labelJourGauche.setForeground(Color.black);
+        // Date et heure panel grisé
+        // Jour gauche
+        JLabel labelJourGauche = new JLabel(timeGeneral.getDate());
+        labelJourGauche.setForeground(black);
         labelJourGauche.setFont(timeGrisMini);
         labelJourGauche.setBounds(50,55, 100, 20);
-        add(labelJourGauche) ;
+        add(labelJourGauche);
 
-        // date gauche
-        JLabel labelDateGauche = new JLabel(timeGeneral.getMonth()) ;
-        labelDateGauche.setForeground(Color.black);
+        // Date gauche
+        JLabel labelDateGauche = new JLabel(timeGeneral.getMonth());
+        labelDateGauche.setForeground(black);
         labelDateGauche.setFont(timeGrisMini);
         labelDateGauche.setBounds(50,72, 100, 20);
-        add(labelDateGauche) ;
+        add(labelDateGauche);
 
-        // heure droite
-        JLabel labelHeureDroite = new JLabel(timeGeneral.getTime()) ;
-        labelHeureDroite.setForeground(Color.black);
+        // Heure droite
+        JLabel labelHeureDroite = new JLabel(timeGeneral.getTime());
+        labelHeureDroite.setForeground(black);
         labelHeureDroite.setFont(timeGrisGrand);
         labelHeureDroite.setBounds(220,65, 100, 20);
-        add(labelHeureDroite) ;
+        add(labelHeureDroite);
 
-        // bouton Apps.Gallery
-        ImageIcon iconeGallery = new ImageIcon("src/main/resources/Images/HomeScreen/iconeGallery.png") ;
-        buttonGallery = new JButton() ;
-        buttonGallery.setBorderPainted(false);
-        buttonGallery.setFocusPainted(false);
-        buttonGallery.setContentAreaFilled(false);
+        // Bouton GalleryApp
+        iconeGallery = new ImageIcon(ClassLoader.getSystemResource("Images/HomeScreen/iconeGallery.png"));
+        buttonGallery = new JButton();
+        setButtonShape(buttonGallery);
         buttonGallery.addActionListener(this);
         buttonGallery.setIcon(iconeGallery);
         buttonGallery.setBounds(60, 340, 50, 50);
-        add(buttonGallery) ;
+        add(buttonGallery);
 
-        // bouton ContactsApp
-        ImageIcon iconeContact = new ImageIcon("src/main/resources/Images/HomeScreen/iconeContact.png") ;
-        buttonContact = new JButton() ;
-        buttonContact.setBorderPainted(false);
-        buttonContact.setFocusPainted(false);
-        buttonContact.setContentAreaFilled(false);
+        // Bouton ContactsApp
+        ImageIcon iconeContact = new ImageIcon(ClassLoader.getSystemResource("Images/HomeScreen/iconeContact.png"));
+        buttonContact = new JButton();
+        setButtonShape(buttonContact);
         buttonContact.addActionListener(this);
         buttonContact.setIcon(iconeContact);
         buttonContact.setBounds(230, 340, 50, 50);
-        add(buttonContact) ;
+        add(buttonContact);
 
-        // bouton weatherapp
-        ImageIcon iconeWeather = new ImageIcon("src/main/resources/Images/HomeScreen/iconeWeather.png") ;
-        buttonWeather = new JButton() ;
-        buttonWeather.setBorderPainted(false);
-        buttonWeather.setFocusPainted(false);
-        buttonWeather.setContentAreaFilled(false);
+        // Bouton WeatherApp
+        ImageIcon iconeWeather = new ImageIcon(ClassLoader.getSystemResource("Images/HomeScreen/iconeWeather.png"));
+        buttonWeather = new JButton();
+        setButtonShape(buttonWeather);
         buttonWeather.addActionListener(this);
         buttonWeather.setIcon(iconeWeather);
         buttonWeather.setBounds(147, 340, 50, 50);
-        add(buttonWeather) ;
+        add(buttonWeather);
 
-
-        // bouton google search
-        ImageIcon iconSearchBar = new ImageIcon("src/main/resources/Images/googleSearchBar_PNG.png") ;
-        searchBar = new JButton() ;
-        searchBar.setBorderPainted(false);
-        searchBar.setFocusPainted(false);
-        searchBar.setContentAreaFilled(false);
+        // Bouton google search
+        ImageIcon iconSearchBar = new ImageIcon(ClassLoader.getSystemResource("Images/googleSearchBar_PNG.png"));
+        searchBar = new JButton();
+        setButtonShape(searchBar);
         searchBar.addActionListener(this);
         searchBar.setIcon(iconSearchBar);
         searchBar.setBounds(22, 450, 300, 50);
-        add(searchBar) ;
+        add(searchBar);
 
-        // ajout du texte du nom des applications, sous les applications.
-        // application Apps.Weather
-        JLabel labelTexteAppWeather = new JLabel("Weather") ;
+        // Ajout du texte du nom des applications, sous les applications
+        // Texte Application WeatherApp
+        JLabel labelTexteAppWeather = new JLabel("Weather");
         labelTexteAppWeather.setForeground(Color.white);
         labelTexteAppWeather.setFont(timeGrisMini);
         labelTexteAppWeather.setBounds(150, 370, 50, 50);
-        add(labelTexteAppWeather) ;
+        add(labelTexteAppWeather);
 
-        //application Apps.Contacts
-        JLabel labelTexteAppContacts = new JLabel("Contacts") ;
+        // Texte Application ContactsApp
+        JLabel labelTexteAppContacts = new JLabel("Contacts");
         labelTexteAppContacts.setForeground(Color.white);
         labelTexteAppContacts.setFont(timeGrisMini);
         labelTexteAppContacts.setBounds(230, 370, 50, 50);
-        add(labelTexteAppContacts) ;
+        add(labelTexteAppContacts);
 
-        // application Apps.Gallery
-        JLabel labelTexteAppGallery = new JLabel("Gallery") ;
+        // Texte Application GalleryApp
+        JLabel labelTexteAppGallery = new JLabel("Gallery");
         labelTexteAppGallery.setForeground(Color.white);
         labelTexteAppGallery.setFont(timeGrisMini);
         labelTexteAppGallery.setBounds(66, 370, 50, 50);
-        add(labelTexteAppGallery) ;
+        add(labelTexteAppGallery);
 
-
-        // set background
-        //forme grise au top
-        ImageIcon iconThingOnTop = new ImageIcon("src/main/resources/Images/HomeScreen/grayThingOnTop.png") ;
-        JLabel labelThingOnTop = new JLabel() ;
+        // Set background
+        // Forme grise en haut
+        ImageIcon iconThingOnTop = new ImageIcon(ClassLoader.getSystemResource("Images/HomeScreen/grayThingOnTop.png"));
+        JLabel labelThingOnTop = new JLabel();
         labelThingOnTop.setIcon(iconThingOnTop);
         labelThingOnTop.setBounds(42, 0, 290, 150);
-        add(labelThingOnTop) ;
+        add(labelThingOnTop);
 
-        //image background
-        imageBackround = new ImageIcon("src/main/resources/Images/wallpaper_PNG.png");
-        JLabel labelBackground = new JLabel() ;
+        // Image background
+        imageBackround = new ImageIcon(ClassLoader.getSystemResource("Images/wallpaper_PNG.png"));
+        JLabel labelBackground = new JLabel();
         labelBackground.setIcon(imageBackround);
-        labelBackground.setBounds(16,0 , 304, 600);
-        add(labelBackground) ;
+        labelBackground.setBounds(16,0, 304, 600);
+        add(labelBackground);
+
+    }
+
+    public void setSmartphoneShape() {
+        // Ajout du contour du smartphone
+        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
+        JLabel labelContourSmartphone = new JLabel();
+        labelContourSmartphone.setIcon(iconContourSmartphone);
+        labelContourSmartphone.setBounds(9, -8, 320, 600);
+        add(labelContourSmartphone);
+    }
+
+    public void setButtonShape(JButton button) {
+        // Méthode pour modifier l'apparence des boutons (évite d'écrire ces 3 lignes plusieurs fois)
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
     }
 
     @Override
