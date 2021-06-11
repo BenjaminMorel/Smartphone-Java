@@ -19,24 +19,29 @@ public class BottomBar extends JPanel implements ActionListener {
 
     public BottomBar() {
         setLayout(null);
-       setPreferredSize(dimension);
+        setPreferredSize(dimension);
 
-       // ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png") ;
-        JLabel labelContourSmartphone = new JLabel() ;
+        // Ajout du contour du smartphone
+        setSmartphoneShape();
+
+        // Ajout du bouton, il est en setBorder/Focus/ContentAreaFilled false pour paraitre invisible mais reste cliquable
+        button = new JButton();
+        button.addActionListener(this);
+        button.setBounds(135, 7, 70, 23);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
+        button.setOpaque(false);
+        add(button);
+    }
+
+    public void setSmartphoneShape() {
+        // Ajout du contour du smartphone
+        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
+        JLabel labelContourSmartphone = new JLabel();
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -609, 320, 660);
-        add(labelContourSmartphone) ;
-
-        // ajout du bouton, il est en setBorder/Focus/ContentAreaFilled false pour paraitre invisible mais reste cliquable
-       button = new JButton() ;
-       button.addActionListener(this);
-       button.setBounds(135, 7, 70, 23);
-       button.setBorderPainted(false);
-       button.setFocusPainted(false);
-       button.setContentAreaFilled(false);
-       button.setOpaque(false);
-       add(button) ;
+        add(labelContourSmartphone);
     }
 
 

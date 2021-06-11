@@ -27,7 +27,7 @@ public class ImageGrand extends JPanel {
     private Smartphone switchApp;                                                                                       //pouvoir changer de classe
 
     //button retour, qui contient une icone dimensionnée à la taille du bouton
-    private JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon("src/main/resources/Images/ContactApp/BackButton.png").getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
+    private JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("Images/ContactApp/BackButton.png")).getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
 
     protected JButton buttonDelete = new JButton("Delete");                                                         //création du bouton delete
 
@@ -104,7 +104,7 @@ public class ImageGrand extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            contacts = jsonStorage.read(new File("Data/Contacts.json"), contacts);
+            contacts = jsonStorage.read(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);
 
             if(e.getSource() == buttonDelete)
             {
@@ -113,7 +113,7 @@ public class ImageGrand extends JPanel {
                     {
                         for (int j = 0; j < contacts.size(); j++) {
                             if ((contacts.get(j).getImagePath().equals(images.get(i).getName()))) {
-                                contacts.get(j).setImagePath("src/main/resources/Images/ContactApp/Contact.png");
+                                contacts.get(j).setImagePath(String.valueOf(ClassLoader.getSystemResource("ImagesGallery/dents-du-midi-lever-de-soleil-202012_dsc0226.jpg")));
                             }
                         }
                         images.remove(images.get(i));                                                                   //supprimer l'image de la Liste d'Images
@@ -123,7 +123,7 @@ public class ImageGrand extends JPanel {
 
                 try
                 {
-                    jsonStorage.write(new File("Data/Contacts.json"), contacts);
+                    jsonStorage.write(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);
                 }
                 catch (Exception exception) {
                     exception.printStackTrace();
@@ -135,7 +135,7 @@ public class ImageGrand extends JPanel {
                 //mettre à jour le fichier JSon avec tous les paths
                 try
                 {
-                    jsonStorage.writeImages(new File("Data/Images.json"), images);
+                    jsonStorage.writeImages(new File(System.getenv("HOME") + "\\Images.json"), images);
                 }
                 catch (Exception exception)
                 {
@@ -153,7 +153,7 @@ public class ImageGrand extends JPanel {
      */
     public void setSmartphoneShape() {
         // Ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon("src/main/resources/Images/smartphone_PNG.png");
+        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
         JLabel labelContourSmartphone = new JLabel();
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);
