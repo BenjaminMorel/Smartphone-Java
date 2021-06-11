@@ -167,7 +167,7 @@ public class NewContact extends JPanel implements ContactInterace {
 
         try {
             // Création du nouveau contact en prenant les infos des textFields et image par défaut
-            contacts.add(new Contact(strFirstName, strLastName, telNumberText.getText(), birthDateText.getText(), String.valueOf(ClassLoader.getSystemResource("Images/ContactApp/Contact.png"))));
+            contacts.add(new Contact(strFirstName, strLastName, telNumberText.getText(), birthDateText.getText(), "Images/ContactApp/Contact.png"));
 
             // Appel du jsonStorage et modifications de l'arrayList des contacts en y ajoutant le nouveau contact
             storable.write(destination, contacts);

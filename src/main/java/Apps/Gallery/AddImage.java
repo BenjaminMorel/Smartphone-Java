@@ -66,7 +66,7 @@ public class AddImage extends JPanel {
             if (e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION))
             {
                 f = fileChooser.getSelectedFile();
-                String path = System.getenv("HOME") + "\\ImagesGallery/" + f.getName();
+                String path = "ImagesGallery/" + f.getName();
                 images.add(new Images(path));
                 try {
                     storable.writeImages(jsonFile, images);
