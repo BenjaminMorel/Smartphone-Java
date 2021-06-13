@@ -56,7 +56,7 @@ public class ImageGrand extends JPanel {
         panel = new JPanel();
         panel.setOpaque(false);
 
-        image = new ImageIcon(name).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);                   //redimenssionner l'image en allant chercher le path qui est donné en paramètre
+        image = new ImageIcon(ClassLoader.getSystemResource(name)).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);                   //redimenssionner l'image en allant chercher le path qui est donné en paramètre
 
         label = new JLabel(new ImageIcon(image));                                                                       //ajouter l'image à un Jlabel
         panel.add(label);                                                                                               //ajouter le label au panel

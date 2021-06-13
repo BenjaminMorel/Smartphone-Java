@@ -8,6 +8,15 @@ public class Contact {
 
     private String firstName, lastName, fullName, telNumber, birthDate, imagePath;
 
+    /**
+     * @param firstName String qui contient le prénom du contact
+     * @param lastName String qui contient le nom du contatc
+     * @param telNumber String qui contient le téléphone du contact
+     * @param birthDate String qui contient la date de naissance du contact
+     * @param imagePath String qui contient le path de l'image du contact
+     * @throws SmartphoneException
+     */
+
     public Contact(String firstName, String lastName, String telNumber, String birthDate, String imagePath) throws SmartphoneException {
         setFirstName(firstName);
         setLastName(lastName);
@@ -26,12 +35,13 @@ public class Contact {
     }
 
     public void setFirstName(String firstName) throws SmartphoneException {
-        if (firstName.isEmpty()) {
-            System.out.println("ErrorCode.FIRSTNAME_EMPTY");
-            throw new SmartphoneException("FirstName is empty", ErrorCode.FIRSTNAME_EMPTY);
-        }
+        if (firstName.isEmpty())
+            throw new SmartphoneException("Le prénom est vide", ErrorCode.FIRSTNAME_EMPTY);
+
         else {
-            this.firstName = firstName;
+            String strFirstName = firstName;                                                                            // Mise en forme du prénom, avec 1ère lettre en majuscule et le reste en minuscule
+            strFirstName = strFirstName.substring(0, 1).toUpperCase() + strFirstName.substring(1).toLowerCase();
+            this.firstName = strFirstName;
         }
     }
 
@@ -39,8 +49,15 @@ public class Contact {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String lastName) throws SmartphoneException {
+        if (lastName.isEmpty())
+            throw new SmartphoneException("Le nom est vide", ErrorCode.LASTNAME_EMPTY);
+
+        else {
+            String strLastName = lastName;                                                                              // Mise en forme du nom, avec 1ère lettre en majuscule et le reste en minuscule
+            strLastName = strLastName.substring(0, 1).toUpperCase() + strLastName.substring(1).toLowerCase();
+            this.lastName = lastName;
+        }
     }
 
     public void setFullName(String fullName) {
