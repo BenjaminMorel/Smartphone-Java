@@ -93,8 +93,8 @@ public class GalleryWindow extends JPanel{
         {
             System.out.println(images.size());
             System.out.println(images.get(i).getName());
-//            buttonImages[i] = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("") + images.get(i).getName()).getImage().getScaledInstance(WIDTH/3, WIDTH/3, Image.SCALE_DEFAULT)));
-            buttonImages[i] = new JButton(new ImageIcon(new ImageIcon(images.get(i).getName()).getImage().getScaledInstance(WIDTH/3, WIDTH/3, Image.SCALE_DEFAULT)));
+            buttonImages[i] = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource(images.get(i).getName())).getImage().getScaledInstance(WIDTH/3, WIDTH/3, Image.SCALE_DEFAULT)));
+//            buttonImages[i] = new JButton(new ImageIcon(new ImageIcon(images.get(i).getName()).getImage().getScaledInstance(WIDTH/3, WIDTH/3, Image.SCALE_DEFAULT)));
            // buttonImages[i].setSize(50, 50);
             buttonImages[i].setBorderPainted(false);
             buttonImages[i].setFocusPainted(false);

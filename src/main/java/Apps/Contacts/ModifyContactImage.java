@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class ModifyContactImage extends GalleryWindow {
 
-    private Contact contact;                    // Instance de contact, afin de savoir de quel contact on veut changer l'image
-    private ArrayList<Contact> contacts;        // Import de l'arrayListe des contacts
-    private Smartphone switchApp;               // Instance de smartphone qui permettra de recréer un panel central
+    private Contact contact;
+    private ArrayList<Contact> contacts;
+    private Smartphone switchApp;
 
     /**
      * Classe utilisée pour modifier l'image du contact passé en paramètre
@@ -25,8 +25,11 @@ public class ModifyContactImage extends GalleryWindow {
         this.contact = contact;
         this.contacts = contacts;
         buttonsAddDeletePanel.setVisible(false);
-
     }
+
+    /**
+     * Ajout d'un actionListener pour choisir l'image du contact
+     */
 
     @Override
     public void setListener()  {
@@ -34,6 +37,10 @@ public class ModifyContactImage extends GalleryWindow {
             buttonImages[i].addActionListener(new ChooseImage());
         }
     }
+
+    /**
+     * Classe interne pour modifier l'image d'un contact
+     */
 
     class ChooseImage implements ActionListener {
 
@@ -43,7 +50,7 @@ public class ModifyContactImage extends GalleryWindow {
                 if (e.getSource() == buttonImages[i]) {
                     contact.setImagePath(images.get(i).getName());
                     System.out.println(images.get(i).getName());
-                    switchApp = new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(new Color(0,0,0)));
+                    switchApp = new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(Color.BLACK));
                 }
             }
         }
