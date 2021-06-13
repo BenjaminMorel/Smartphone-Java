@@ -19,27 +19,26 @@ import java.util.ArrayList;
 
 public class ModifyContact extends InfoContact {
 
+    // Variables générales
     private JButton buttonChangeImage, buttonConfirm, buttonCancel;
-
     private JTextField firstNameText, lastNameText, telNumberText, birthDateText;
+    private final ArrayList<Contact> contacts;
+    private final Contact contact;
+    private final JSONStorage storable = new JSONStorage();
+    private final File jsonFile = new File(System.getenv("HOME") + "\\Contacts.json");
 
-    private ArrayList<Contact> contacts;
-    private Contact contact;
-    private JSONStorage storable = new JSONStorage();
-    private File jsonFile = new File(System.getenv("HOME") + "\\Contacts.json");
-
+    // Dimensions
     private static final int dimensionTextFieldWidth = 100;
     private static final int dimensionTextFieldHeight = 25;
 
-    private Font font = new Font("Roboto", Font.BOLD, 11);
-    private Color black = Color.black;
-
-    private Smartphone switchApp;
+    // Fonts et Couleurs
+    private final Font font = new Font("Roboto", Font.BOLD, 11);
+    private final Color black = Color.black;
 
     /**
      *
-     * @param contact
-     * @param contacts
+     * @param contact Contact à modifier
+     * @param contacts ArrayList des contacts
      */
 
     public ModifyContact(Contact contact, ArrayList<Contact> contacts) {
@@ -53,32 +52,8 @@ public class ModifyContact extends InfoContact {
         buttonModify.setVisible(false);                                                                                 // Rendre invisible les autres boutons
         buttonDelete.setVisible(false);
 
-        buttonChangeImage = new JButton("Changer image");                                                           // Changer image de contact
-        buttonChangeImage.addActionListener(new ModifyContactListener());
-        buttonChangeImage.setBounds(105, 205, 130, dimensionTextFieldHeight);
-        buttonChangeImage.setFont(font);
-        setButtonShape(buttonChangeImage);
-        buttonChangeImage.setBorderPainted(true);
-        add(buttonChangeImage);
-
-        firstName.setText("Prénom:");                                                                                   // Modification des labels
-        lastName.setText("Nom:");
-        telNumber.setText("Numéro de téléphone:");
-        birthDate.setText("Date de naissance:");
-
-        firstNameText = new JTextField(contact.getFirstName());                                                         // Création textField pour recevoir les infos de l'utilisateur
-        firstNameText.setBounds(180, 240, dimensionTextFieldWidth, dimensionTextFieldHeight);
-        add(firstNameText);
-        lastNameText = new JTextField(contact.getLastName());
-        lastNameText.setBounds(180, 282, dimensionTextFieldWidth, dimensionTextFieldHeight);
-        add(lastNameText);
-        telNumberText = new JTextField(contact.getTelNumber());
-        telNumberText.setBounds(180, 330, dimensionTextFieldWidth, dimensionTextFieldHeight);
-        add(telNumberText);
-        birthDateText = new JTextField(contact.getBirthDate());
-        birthDateText.setBounds(180, 375, dimensionTextFieldWidth, dimensionTextFieldHeight);
-        add(birthDateText);
-
+        creationJTextFields();
+        creationButtonChangeImage();
         creationButtonConfirm();
         creationButtonCancel();
 
@@ -97,7 +72,46 @@ public class ModifyContact extends InfoContact {
     }
 
     /**
-     * Button pour confirmer les informations entrées
+     * Création des différents JTextFields qui vont contenir les infos du contact (prénom, nom, num téléphone et date de naissance)
+     */
+
+    public void creationJTextFields() {
+        firstName.setText("Prénom:");                                                                                   // Modification des labels
+        lastName.setText("Nom:");
+        telNumber.setText("Numéro de téléphone:");
+        birthDate.setText("Date de naissance:");
+
+        firstNameText = new JTextField(contact.getFirstName());                                                         // Création textField pour recevoir les infos de l'utilisateur
+        firstNameText.setBounds(180, 240, dimensionTextFieldWidth, dimensionTextFieldHeight);
+        add(firstNameText);
+        lastNameText = new JTextField(contact.getLastName());
+        lastNameText.setBounds(180, 282, dimensionTextFieldWidth, dimensionTextFieldHeight);
+        add(lastNameText);
+        telNumberText = new JTextField(contact.getTelNumber());
+        telNumberText.setBounds(180, 330, dimensionTextFieldWidth, dimensionTextFieldHeight);
+        add(telNumberText);
+        birthDateText = new JTextField(contact.getBirthDate());
+        birthDateText.setBounds(180, 375, dimensionTextFieldWidth, dimensionTextFieldHeight);
+        add(birthDateText);
+    }
+
+    /**
+     * Création du bouton pour pouvoir changer l'image du contact
+     */
+
+    public void creationButtonChangeImage() {
+        buttonChangeImage = new JButton("Changer image");                                                           // Changer image de contact
+        buttonChangeImage.addActionListener(new ModifyContactListener());
+        buttonChangeImage.setBounds(105, 205, 130, dimensionTextFieldHeight);
+        buttonChangeImage.setFont(font);
+        setButtonShape(buttonChangeImage);
+        buttonChangeImage.setBorderPainted(true);
+        add(buttonChangeImage);
+    }
+
+
+    /**
+     * Création du button pour confirmer les informations entrées
      */
 
     public void creationButtonConfirm() {
@@ -109,7 +123,7 @@ public class ModifyContact extends InfoContact {
     }
 
     /**
-     * Bouton pour annuler et revenir sur la page des contacts
+     * Création du bouton pour annuler et revenir sur la page des contacts
      */
 
     public void creationButtonCancel() {
@@ -121,9 +135,9 @@ public class ModifyContact extends InfoContact {
     }
 
     /**
-     *
-     * @param destination
-     * @throws SmartphoneException
+     * Méthode pour sauver les modifications dans le fichier JSON
+     * @param destination Spécifier le fichier de destination
+     * @throws SmartphoneException Ajout des exceptions à la méthode
      */
 
     public void saveInJsonStorage(File destination) throws SmartphoneException {
@@ -158,17 +172,20 @@ public class ModifyContact extends InfoContact {
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
-                    switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
+                    new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
                 }
                 if (e.getSource() == buttonCancel) {
-                    contact.setImagePath(ClassLoader.getSystemResource("Images/ContactApp/Contact.png").getPath());
-                    switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
+                    if (contact.getImagePath().equals("Images/ContactApp/Contact.png"))
+                        contact.setImagePath("Images/ContactApp/Contact.png");
+                    else
+                        contact.setImagePath(contact.getImagePath());
+                    new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
                 }
                 if (e.getSource() == buttonChangeImage) {
-                    switchApp = new Smartphone(new ModifyContactImage(contact, contacts), new TopBarColor(black));
+                    new Smartphone(new ModifyContactImage(contact, contacts), new TopBarColor(black));
                     System.out.println("Changement de l'image du contact: " + contact.getFullName());
                 }
-            }catch (SmartphoneException sme) {
+            } catch (SmartphoneException sme) {
                 System.out.println(sme.getErrorMessage());
                 System.out.println(sme.getErrorCode());
             }
