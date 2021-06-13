@@ -30,7 +30,6 @@ public class TopBar extends JPanel {
         labelHours.setFont(fontTime);
         labelHours.setBounds(42, 17, 70, 30);
         add(labelHours);
-
     }
 
 }

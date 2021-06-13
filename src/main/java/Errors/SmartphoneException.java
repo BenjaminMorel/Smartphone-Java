@@ -7,10 +7,15 @@ public class SmartphoneException extends Exception {
 
     public SmartphoneException(String errorMessage, ErrorCode errorCode) {
         super(errorMessage) ;
+        this.errorMessage=errorMessage ;
         this.errorCode = errorCode;
     }
 
-    public ErrorCode getErrorCode() {
-        return errorCode;
+    public int getErrorCode() {
+        return errorCode.getCode();
+    }
+
+    public String getErrorMessage(){
+        return errorMessage ;
     }
 }

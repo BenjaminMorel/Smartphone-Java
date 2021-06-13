@@ -1,5 +1,7 @@
 package Apps.Weather;
 
+import Errors.ErrorCode;
+import Errors.SmartphoneException;
 import Storable.JSONStorage;
 
 import java.io.IOException;
@@ -14,7 +16,7 @@ public class Weather {
     private String[] keySet ;
     private String ville ;
 
-    public Weather(String sVille) throws IOException {
+    public Weather(String sVille) throws SmartphoneException {
 
         // on gère si la recherche est nulle
         if(sVille== null){
@@ -30,7 +32,11 @@ public class Weather {
         String sURL = preURL + ville + postURL ;
 
         // appel de la méthode qui va retourner le map selon l'url donnée
-        map = jsonStorage.readFromUrl(sURL) ;
+        try {
+            map = jsonStorage.readFromUrl(sURL) ;
+        } catch (IOException e) {
+            throw new SmartphoneException("Erreur lors de l'accès à l'URL", ErrorCode.CONNEXION_ERROR) ;
+        }
 
         // création d'un tableau de string depuis un keyset
         keySetNotSorted = String.join(",",map.keySet()) ;

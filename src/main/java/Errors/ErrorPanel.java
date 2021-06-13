@@ -30,7 +30,7 @@ public class ErrorPanel extends JDialog {
             case 110 :
                 errorMessage.setText("The lastname could not be empty");
                 break;
-            case 120:
+            case 120 :
                 errorMessage.setText("The phone number could not be empty");
                 break;
             case 121 :

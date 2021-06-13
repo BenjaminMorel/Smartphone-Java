@@ -1,6 +1,8 @@
 package Apps.Weather;
 
 import Demo.Smartphone;
+import Errors.ErrorCode;
+import Errors.SmartphoneException;
 import General.Time;
 import TopBar.TopBarHomeScreen;
 import TopBar.TopBarWeatherApp;
@@ -35,7 +37,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
     private JPanel panelDescription = new JPanel() ;
 
 
-    public WeatherWindow(String setVille) throws IOException {
+    public WeatherWindow(String setVille) throws SmartphoneException {
         this.setVille=setVille ;
         setLayout(null); // permet d'ajouter des labels et panels avec setBounds
 
@@ -119,10 +121,10 @@ public class WeatherWindow extends JPanel implements ActionListener {
         String[] contentStringIcon = weather.getWeather() ;
         String stringIcon = contentStringIcon[3] ;
         stringIcon = stringIcon.substring(6) ;                                  // découpage du string de l'image à choisir
-        String stringIconPath = String.valueOf(ClassLoader.getSystemResource("Images/WeatherIcon/")) ;          // path sans l'image
+        String stringIconPath = "Images/WeatherIcon/" ;                         // path sans l'image
         stringIconPath += stringIcon ;                                          // rajout de l'image à choisir et du .png
         stringIconPath += ".png" ;
-        ImageIcon image = new ImageIcon(stringIconPath);                        // on va chercher l'image avec le lien que l'on vient de créer
+        ImageIcon image = new ImageIcon(ClassLoader.getSystemResource(stringIconPath));                        // on va chercher l'image avec le lien que l'on vient de créer
         labelImage.setIcon(image);
         labelImage.setBounds(55, 100, 120, 100);
         add(labelImage);
@@ -265,11 +267,11 @@ public class WeatherWindow extends JPanel implements ActionListener {
 
         for(int i = 0 ; i < 5 ; i++){
             labelImagesDuBas = new JLabel() ;
-            stringGetIconPath = String.valueOf(ClassLoader.getSystemResource("Images/WeatherIcon/")); // on reset le path
+            stringGetIconPath = "Images/WeatherIcon/"; // on reset le path
             if((intActualHour>=intGetHoursSunrise) && (intActualHour<=intGetHoursSunset)){   // on choisit le mode jour ou nuit de l'icone en fonction du lever/coucher du soleil
                 // icone jour
                 stringGetIconPath += stringIcon + "d.png" ;
-                iconImageDuBas = new ImageIcon(stringGetIconPath) ;
+                iconImageDuBas = new ImageIcon(ClassLoader.getSystemResource(stringGetIconPath)) ;
                 Image imageDuBas = iconImageDuBas.getImage();           // changer la taille de l'icone (la rétrécir)
                 Image newimg = imageDuBas.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
                 iconImageDuBas = new ImageIcon(newimg);
@@ -277,7 +279,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
             else{
                 // icone nuit
                 stringGetIconPath += stringIcon + "n.png" ;
-                iconImageDuBas = new ImageIcon(stringGetIconPath) ;
+                iconImageDuBas = new ImageIcon(ClassLoader.getSystemResource(stringGetIconPath)) ;
                 Image imageDuBas = iconImageDuBas.getImage();
                 Image newimg = imageDuBas.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
                 iconImageDuBas = new ImageIcon(newimg);
@@ -295,8 +297,6 @@ public class WeatherWindow extends JPanel implements ActionListener {
                 intActualHour += 3 ; // incrémentation des heures (+3)
             }
         }
-
-
 
 
         //ajout du background
@@ -325,22 +325,22 @@ public class WeatherWindow extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == searchButton){
-            System.out.println("button check");
-            if(textField.getText().equals("")){
-                textField.setVisible(true);
-            }
-            else{
-                try {
+        try {
+            if (e.getSource() == searchButton) {
+                System.out.println("button check");
+                if (textField.getText().equals("")) {
+                    textField.setVisible(true);
+                } else {
                     System.out.println(textField.getText());
-                    switchApp = new Smartphone(new WeatherWindow(textField.getText()), new TopBarWeatherApp()) ;
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                    switchApp = new Smartphone(new WeatherWindow(textField.getText()), new TopBarWeatherApp());
                 }
             }
-        }
-        if(e.getSource() == textField){
-            setVille = textField.getText() ;
+            if (e.getSource() == textField) {
+                setVille = textField.getText();
+            }
+        }catch (SmartphoneException sme) {
+            System.out.println(sme.getErrorMessage());
+            System.out.println(sme.getErrorCode());
         }
     }
 
