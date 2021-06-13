@@ -14,52 +14,81 @@ import java.util.ArrayList;
 
 public class NewContact extends JPanel {
 
-    private JPanel panelInfoContact;
-    private JLabel firstName, lastName, telNumber, birthDate;
+    // Variables générales
     private JTextField firstNameText, lastNameText, telNumberText, birthDateText;
-
-    private JPanel panelImage;
-    private JLabel labelImage;
-
     private JButton buttonConfirm, buttonCancel;
 
+    // Dimensions
     private static final int dimensionTextFieldHeight = 25;
     private static final int dimensionTextFieldWidth = 100;
 
-    private Color black = Color.BLACK;
-    private Font font = new Font("Roboto", Font.BOLD, 11);
+    // Fonts et couleurs
+    private final Color black = Color.BLACK;
+    private final Font font = new Font("Roboto", Font.BOLD, 11);
 
-    private ArrayList<Contact> contacts;
-    private JSONStorage storable = new JSONStorage();
-    private File jsonFile = new File(System.getenv("HOME") + "\\Contacts.json");
-    private int nbContacts;
+    private final ArrayList<Contact> contacts;
+    private final JSONStorage storable = new JSONStorage();
+    private final File jsonFile = new File(System.getenv("HOME") + "\\Contacts.json");
 
-    private Smartphone switchApp;
+    /**
+     *
+     * @param contacts ArrayList contentant les contacts
+     */
 
     public NewContact(ArrayList<Contact> contacts) {
         this.contacts = contacts;
-
         setLayout(null);
         setSmartphoneShape();                                                                                           // Ajout du contour du smartphone
 
-        panelImage = new JPanel();                                                                                      // Panel image
+        creationPanelImage();                                                                                           // Création du panel contenant l'image par défaut
+        creationMainPanel();                                                                                            // Création du panel principal
+        creationButtonConfirm();                                                                                        // Création du bouton pour confirmer les données entrées
+        creationButtonCancel();                                                                                         // Création du bouton pour annuler les données entrées
+    }
+
+    /**
+     * Ajout du contour du smartphone
+     */
+
+    public void setSmartphoneShape() {
+        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
+        JLabel labelContourSmartphone = new JLabel();
+        labelContourSmartphone.setIcon(iconContourSmartphone);
+        labelContourSmartphone.setBounds(9, -8, 320, 600);
+        add(labelContourSmartphone);
+    }
+
+    /**
+     * Création du panel qui contient l'image du contact par défaut
+     */
+
+    public void creationPanelImage() {
+        JPanel panelImage = new JPanel();                                                                                      // Panel image
         panelImage.setLayout(new BorderLayout());
-        labelImage = new JLabel();
+        JLabel labelImage = new JLabel();
         labelImage.setIcon(new ImageIcon(ClassLoader.getSystemResource("Images/ContactApp/Contact.png")));
         panelImage.setBounds(55, 50, 300, 150);
         panelImage.add(labelImage);
+        add(panelImage);
+    }
 
-        panelInfoContact = new JPanel();                                                                                // Création du panel
+    /**
+     * Création du panel principal contenant les label et texts fields à remplir
+     */
+
+    public void creationMainPanel() {
+        // Variables générales
+        JPanel panelInfoContact = new JPanel();                                                                                // Création du panel
         panelInfoContact.setLayout(new GridLayout(4,1));
         panelInfoContact.setBounds(40, 230, 300, 180);
 
-        firstName = new JLabel("Prénom:");                                                                          // Création des labels contenants les infos du contacts
+        JLabel firstName = new JLabel("Prénom:");                                                                          // Création des labels contenants les infos du contacts
         panelInfoContact.add(firstName);
-        lastName = new JLabel("Nom:");
+        JLabel lastName = new JLabel("Nom:");
         panelInfoContact.add(lastName);
-        telNumber = new JLabel("Numéro de téléphone:");
+        JLabel telNumber = new JLabel("Numéro de téléphone:");
         panelInfoContact.add(telNumber);
-        birthDate = new JLabel("Date de naissance:");
+        JLabel birthDate = new JLabel("Date de naissance:");
         panelInfoContact.add(birthDate);
 
         firstNameText = new JTextField();                                                                               // Création textField pour recevoir les infos de l'utilisateur
@@ -75,10 +104,6 @@ public class NewContact extends JPanel {
         birthDateText.setBounds(180, 375, dimensionTextFieldWidth, dimensionTextFieldHeight);
         add(birthDateText);
 
-        creationButtonConfirm();
-        creationButtonCancel();
-
-        add(panelImage);
         add(panelInfoContact);
     }
 
@@ -107,21 +132,9 @@ public class NewContact extends JPanel {
     }
 
     /**
-     * Ajout du contour du smartphone
-     */
-
-    public void setSmartphoneShape() {
-        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
-        JLabel labelContourSmartphone = new JLabel();
-        labelContourSmartphone.setIcon(iconContourSmartphone);
-        labelContourSmartphone.setBounds(9, -8, 320, 600);
-        add(labelContourSmartphone);
-    }
-
-    /**
-     *
-     * @param destination
-     * @throws SmartphoneException
+     * Méthode pour sauver les modifications dans le fichier JSON
+     * @param destination Spécifier le fichier de destination
+     * @throws SmartphoneException Ajout des exceptions à la méthode
      */
 
     public void saveInJsonStorage(File destination) throws SmartphoneException {
@@ -129,14 +142,14 @@ public class NewContact extends JPanel {
             contacts.add(new Contact(firstNameText.getText(), lastNameText.getText(), telNumberText.getText(), birthDateText.getText(), "Images/ContactApp/Contact.png"));
             storable.write(destination, contacts);
         } catch (SmartphoneException e) {
-            throw new SmartphoneException("Erreur lors de l'enregistrement des données dans le fichier JSON", ErrorCode.SAVE_ERROR);
+            throw new SmartphoneException(e.getErrorMessage(), ErrorCode.BAD_PARAMETER);
         }
     }
 
     /**
      * Classe contenant des actions listener pour :
      *   - Confirmer les infos du nouveau contact
-     *   - Annuler et revenu à la classe ContactWindow avec la liste des contacts
+     *   - Annuler et revenir à la classe ContactWindow avec la liste des contacts
      */
 
     class NewContactListener implements ActionListener {
@@ -145,20 +158,15 @@ public class NewContact extends JPanel {
         public void actionPerformed(ActionEvent e) {
             try {
                 if (e.getSource() == buttonConfirm) {
-                    try {
-                        saveInJsonStorage(jsonFile);
-                        System.out.println("Enregistrement du nouveau contact");
-                    } catch (Exception exception) {
-                        throw new SmartphoneException("Erreur lors de la confirmation", ErrorCode.SAVE_ERROR) ;
-                    }
-                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));
+                    saveInJsonStorage(jsonFile);
+                    System.out.println("Enregistrement du nouveau contact");
+                    new Smartphone(new ContactWindow(), new TopBarColor(black));
                 }
-
                 if (e.getSource() == buttonCancel) {
                     System.out.println("Annulation");
-                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));
+                    new Smartphone(new ContactWindow(), new TopBarColor(black));
                 }
-            }catch (SmartphoneException sme) {
+            } catch (SmartphoneException sme) {
                 System.out.println(sme.getErrorMessage());
                 System.out.println(sme.getErrorCode());
             }

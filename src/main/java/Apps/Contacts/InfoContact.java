@@ -14,25 +14,25 @@ import java.util.ArrayList;
 
 public class InfoContact extends JPanel {
 
+    // Variables générales
     protected JPanel panelInfoContact;
     protected JLabel firstName, lastName, telNumber, birthDate;
-
-    private JPanel panelImage;
-    private JLabel labelImage;
-
     protected JButton buttonModify, buttonDelete, buttonReturn;
+    private final JSONStorage jsonStorage = new JSONStorage();
 
-    private Color black = Color.black;
-    private Font font = new Font("Roboto", Font.BOLD, 11);
+    // Fonts et couleurs
+    private final Color black = Color.black;
+    private final Font font = new Font("Roboto", Font.BOLD, 11);
 
-    private ImageIcon imageContact;
+    // Contacts
+    private final ArrayList<Contact> contacts;
+    private final Contact contact;
 
-    private ArrayList<Contact> contacts;
-    private Contact contact;
-
-    private Smartphone switchApp;
-
-    private JSONStorage jsonStorage = new JSONStorage();
+    /**
+     *
+     * @param contact Contact à afficher
+     * @param contacts ArrayList des contacts
+     */
 
     public InfoContact(Contact contact, ArrayList<Contact> contacts) {
         this.contact = contact;
@@ -41,40 +41,12 @@ public class InfoContact extends JPanel {
         setLayout(null);
         setSmartphoneShape();                                                                                           // Ajout du contour du smartphone
 
-        panelImage = new JPanel();
-        panelImage.setLayout(new BorderLayout());
-        labelImage = new JLabel();
+        creationPanelImage();                                                                                           // Création du panel de l'image
+        creationMainPanel();                                                                                            // Création du panel principal
 
-        if (contact.getImagePath().equals("Images/ContactApp/Contact.png"))
-        labelImage.setIcon(new ImageIcon(ClassLoader.getSystemResource(contact.getImagePath())));
-        else
-        labelImage.setIcon(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource(contact.getImagePath())).getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH)));
-
-        panelImage.setBounds(50, 50, 230, 150);
-        panelImage.add(labelImage);
-        add(panelImage);
-
-        panelInfoContact = new JPanel();
-        panelInfoContact.setLayout(new GridLayout(4, 1));
-
-        firstName = new JLabel("Prénom: " + contact.getFirstName());                                                // Création label prénom
-        lastName = new JLabel("Nom: " + contact.getLastName());                                                     // Création label nom
-        telNumber = new JLabel("Numéro de téléphone: " + contact.getTelNumber());                                   // Création label numéro de téléphone
-        birthDate = new JLabel("Date de naissance: " + contact.getBirthDate());                                     // Création label date de naissance
-        panelInfoContact.add(firstName); panelInfoContact.add(lastName);
-        panelInfoContact.add(telNumber); panelInfoContact.add(birthDate);
-        panelInfoContact.setBounds(40, 230, 300, 180);
-
-        buttonReturn = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("Images/ContactApp/BackButton.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-        buttonReturn.addActionListener(new InfoContactListener());                                                      // Ajout du bouton pour retourner sur la page des contacts
-        buttonReturn.setBounds(15, -12, 80, 80);
-        setButtonShape(buttonReturn);
-        add(buttonReturn);
-
-        creationButtonModify();
-        creationButtonDelete();
-
-        add(panelInfoContact);                                                                                          // Ajout du panel panelInfoContact au panel principal
+        creationButtonReturn();                                                                                         // Création du bouton retour à la liste des contacts
+        creationButtonModify();                                                                                         // Création du bouton modifier le contact
+        creationButtonDelete();                                                                                         // Création du bouton pour supprimer le contact
 
     }
 
@@ -88,6 +60,55 @@ public class InfoContact extends JPanel {
         labelContourSmartphone.setIcon(iconContourSmartphone);
         labelContourSmartphone.setBounds(9, -8, 320, 600);
         add(labelContourSmartphone);
+    }
+
+    /**
+     * Création du panel qui contient l'image du contact
+     */
+
+    public void creationPanelImage() {
+        JPanel panelImage = new JPanel();
+        panelImage.setLayout(new BorderLayout());
+        JLabel labelImage = new JLabel();
+
+        if (contact.getImagePath().equals("Images/ContactApp/Contact.png"))
+            labelImage.setIcon(new ImageIcon(ClassLoader.getSystemResource(contact.getImagePath())));
+        else
+            labelImage.setIcon(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource(contact.getImagePath())).getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH)));
+
+        panelImage.setBounds(50, 50, 230, 150);
+        panelImage.add(labelImage);
+        add(panelImage);
+    }
+
+    /**
+     * Création du panel principal contenant les différents labels des infos du contact
+     */
+
+    public void creationMainPanel() {
+        panelInfoContact = new JPanel();
+        panelInfoContact.setLayout(new GridLayout(4, 1));
+
+        firstName = new JLabel("Prénom: " + contact.getFirstName());                                                // Création label prénom
+        lastName = new JLabel("Nom: " + contact.getLastName());                                                     // Création label nom
+        telNumber = new JLabel("Numéro de téléphone: " + contact.getTelNumber());                                   // Création label numéro de téléphone
+        birthDate = new JLabel("Date de naissance: " + contact.getBirthDate());                                     // Création label date de naissance
+        panelInfoContact.add(firstName); panelInfoContact.add(lastName);
+        panelInfoContact.add(telNumber); panelInfoContact.add(birthDate);
+        panelInfoContact.setBounds(40, 230, 300, 180);
+        add(panelInfoContact);                                                                                          // Ajout du panel panelInfoContact au panel principal
+    }
+
+    /**
+     * Création du bouton pour retourner à la page des contacts
+     */
+
+    public void creationButtonReturn() {
+        buttonReturn = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("Images/ContactApp/BackButton.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+        buttonReturn.addActionListener(new InfoContactListener());                                                      // Ajout du bouton pour retourner sur la page des contacts
+        buttonReturn.setBounds(15, -12, 80, 80);
+        setButtonShape(buttonReturn);
+        add(buttonReturn);
     }
 
     /**
@@ -127,7 +148,7 @@ public class InfoContact extends JPanel {
 
     /**
      *
-     * @param fullName
+     * @param fullName Prend le fullname (prénom + nom) du contact à supprimer
      */
 
     public void deleteContact(String fullName) {                                                                            // Méthode pour supprimer les contacts, elle prend en paramètre le "fullName" du contact affiché à l'écran
@@ -154,16 +175,16 @@ public class InfoContact extends JPanel {
         public void actionPerformed(ActionEvent e) {
             try {
                 if (e.getSource() == buttonReturn) {                                                                        // Listener pour retourner sur la classe ContactWindow
-                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));
+                    new Smartphone(new ContactWindow(), new TopBarColor(black));
                 }
                 if (e.getSource() == buttonModify) {                                                                        // Listener pour modifier un contact
                     System.out.println("Modification du contact " + contact.getFullName());
-                    switchApp = new Smartphone(new Apps.Contacts.ModifyContact(contact, contacts), new TopBarColor(black));
+                    new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(black));
                 }
                 if (e.getSource() == buttonDelete) {                                                                        // Listener pour supprimer un contact
                     deleteContact(contact.getFullName());                                                                   // Appel de la méthode deleteContact
                     System.out.println("Supprime le contact: " + contact.getFullName());
-                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));                                // Puis on recréé un panel et retour sur la classe ContactWindow
+                    new Smartphone(new ContactWindow(), new TopBarColor(black));
                 }
             }catch (SmartphoneException sme) {
                 System.out.println(sme.getErrorMessage());

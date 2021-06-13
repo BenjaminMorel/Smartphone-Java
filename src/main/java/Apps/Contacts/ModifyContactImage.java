@@ -5,6 +5,7 @@ import Apps.Gallery.GalleryWindow;
 import Errors.SmartphoneException;
 import TopBar.TopBarColor;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,13 +13,13 @@ import java.util.ArrayList;
 
 public class ModifyContactImage extends GalleryWindow {
 
-    private Contact contact;
-    private ArrayList<Contact> contacts;
-    private Smartphone switchApp;
+    private final Contact contact;
+    private final ArrayList<Contact> contacts;
 
     /**
      * Classe utilisée pour modifier l'image du contact passé en paramètre
-     * @param contact
+     * @param contact Contact pour lequel l'image va être modifiée
+     * @param contacts ArrayList contenant les contacts
      */
 
     public ModifyContactImage(Contact contact, ArrayList<Contact> contacts) {
@@ -34,8 +35,8 @@ public class ModifyContactImage extends GalleryWindow {
 
     @Override
     public void setListener()  {
-        for (int i = 0; i < buttonImages.length; i++) {
-            buttonImages[i].addActionListener(new ChooseImage());
+        for (JButton b : buttonImages) {
+            b.addActionListener(new ChooseImage());
         }
     }
 
@@ -52,7 +53,7 @@ public class ModifyContactImage extends GalleryWindow {
                     if (e.getSource() == buttonImages[i]) {
                         contact.setImagePath(images.get(i).getName());
                         System.out.println(images.get(i).getName());
-                        switchApp = new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(Color.BLACK));
+                        new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(Color.BLACK));
                     }
                 }
             }catch (SmartphoneException sme) {
