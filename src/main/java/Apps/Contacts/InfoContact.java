@@ -1,6 +1,7 @@
 package Apps.Contacts;
 
 import Demo.Smartphone;
+import Errors.SmartphoneException;
 import Storable.JSONStorage;
 import TopBar.TopBarColor;
 
@@ -135,7 +136,12 @@ public class InfoContact extends JPanel {
                 contacts.remove(i);
             }
         }
-        jsonStorage.write(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);                // Enregistrement des modifications dans le fichier JSON
+        try {
+            jsonStorage.write(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);                // Enregistrement des modifications dans le fichier JSON
+        }catch(SmartphoneException sm){
+            System.out.println(sm.getErrorMessage());
+            System.out.println(sm.getErrorCode());
+        }
     }
 
     /**
@@ -146,18 +152,22 @@ public class InfoContact extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            if (e.getSource() == buttonReturn) {                                                                        // Listener pour retourner sur la classe ContactWindow
-                switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));
-            }
-            if (e.getSource() == buttonModify) {                                                                        // Listener pour modifier un contact
-                System.out.println("Modification du contact " + contact.getFullName());
-                switchApp = new Smartphone(new Apps.Contacts.ModifyContact(contact, contacts), new TopBarColor(black));
-            }
-            if (e.getSource() == buttonDelete) {                                                                        // Listener pour supprimer un contact
-                deleteContact(contact.getFullName());                                                                   // Appel de la méthode deleteContact
-                System.out.println("Supprime le contact: " + contact.getFullName());
-                switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));                                // Puis on recréé un panel et retour sur la classe ContactWindow
+            try {
+                if (e.getSource() == buttonReturn) {                                                                        // Listener pour retourner sur la classe ContactWindow
+                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));
+                }
+                if (e.getSource() == buttonModify) {                                                                        // Listener pour modifier un contact
+                    System.out.println("Modification du contact " + contact.getFullName());
+                    switchApp = new Smartphone(new Apps.Contacts.ModifyContact(contact, contacts), new TopBarColor(black));
+                }
+                if (e.getSource() == buttonDelete) {                                                                        // Listener pour supprimer un contact
+                    deleteContact(contact.getFullName());                                                                   // Appel de la méthode deleteContact
+                    System.out.println("Supprime le contact: " + contact.getFullName());
+                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));                                // Puis on recréé un panel et retour sur la classe ContactWindow
+                }
+            }catch (SmartphoneException sme) {
+                System.out.println(sme.getErrorMessage());
+                System.out.println(sme.getErrorCode());
             }
         }
     }

@@ -36,7 +36,7 @@ public class Contact {
 
     public void setFirstName(String firstName) throws SmartphoneException {
         if (firstName.isEmpty())
-            throw new SmartphoneException("Le prénom est vide", ErrorCode.FIRSTNAME_EMPTY);
+            throw new SmartphoneException("Le prénom est vide", ErrorCode.BAD_PARAMETER);
 
         else {
             String strFirstName = firstName;                                                                            // Mise en forme du prénom, avec 1ère lettre en majuscule et le reste en minuscule
@@ -51,7 +51,7 @@ public class Contact {
 
     public void setLastName(String lastName) throws SmartphoneException {
         if (lastName.isEmpty())
-            throw new SmartphoneException("Le nom est vide", ErrorCode.LASTNAME_EMPTY);
+            throw new SmartphoneException("Le nom est vide", ErrorCode.BAD_PARAMETER);
 
         else {
             String strLastName = lastName;                                                                              // Mise en forme du nom, avec 1ère lettre en majuscule et le reste en minuscule

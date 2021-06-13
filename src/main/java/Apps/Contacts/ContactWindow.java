@@ -1,6 +1,7 @@
 package Apps.Contacts;
 
 import Demo.Smartphone;
+import Errors.SmartphoneException;
 import Storable.JSONStorage;
 import TopBar.TopBarColor;
 
@@ -92,7 +93,12 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
 
     public void loadContact() {
         System.out.println("Chargement des contacts");
-        contacts = jsonStorage.read(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);
+        try {
+            contacts = jsonStorage.read(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);
+        }catch(SmartphoneException sm){
+            System.out.println(sm.getErrorMessage());
+            System.out.println(sm.getErrorCode());
+        }
     }
 
     /**
@@ -140,15 +146,20 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
     class ContactActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == buttonAdd) {                                                                           // Listener pour l'ajout d'un nouveau contact
-                System.out.println("Ajout d'un nouveau contact");
-                switchApp = new Smartphone(new NewContact(contacts), new TopBarColor(colorBlack));
-            }
-            for (int i = 0; i < contacts.size(); i++) {                                                                 // Listener pour afficher un contact déjà existant
-                if (e.getSource() == buttonsContact[i]) {
-                    System.out.println("Affiche le contact: " + contacts.get(i).getFullName());
-                    switchApp = new Smartphone(new InfoContact(contacts.get(i), contacts), new TopBarColor(colorBlack));
+            try {
+                if (e.getSource() == buttonAdd) {                                                                           // Listener pour l'ajout d'un nouveau contact
+                    System.out.println("Ajout d'un nouveau contact");
+                    switchApp = new Smartphone(new NewContact(contacts), new TopBarColor(colorBlack));
                 }
+                for (int i = 0; i < contacts.size(); i++) {                                                                 // Listener pour afficher un contact déjà existant
+                    if (e.getSource() == buttonsContact[i]) {
+                        System.out.println("Affiche le contact: " + contacts.get(i).getFullName());
+                        switchApp = new Smartphone(new InfoContact(contacts.get(i), contacts), new TopBarColor(colorBlack));
+                    }
+                }
+            }catch (SmartphoneException sme) {
+                System.out.println(sme.getErrorMessage());
+                System.out.println(sme.getErrorCode());
             }
         }
     }

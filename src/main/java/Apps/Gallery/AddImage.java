@@ -1,6 +1,8 @@
 package Apps.Gallery;
 
 import Demo.Smartphone;
+import Errors.ErrorCode;
+import Errors.SmartphoneException;
 import TopBar.TopBarGalleryApp;
 import Storable.JSONStorage;
 
@@ -63,22 +65,24 @@ public class AddImage extends JPanel {
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION))
-            {
-                f = fileChooser.getSelectedFile();
-                String path = "ImagesGallery/" + f.getName();
-                images.add(new Images(path));
-                try {
-                    storable.writeImages(jsonFile, images);
-                } catch (Exception exception)
-                {
-                    System.out.println("failed to confirm");
+            try {
+                if (e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)) {
+                    f = fileChooser.getSelectedFile();
+                    String path = "ImagesGallery/" + f.getName();
+                    images.add(new Images(path));
+                    try {
+                        storable.writeImages(jsonFile, images);
+                    } catch (Exception exception) {
+                        throw new SmartphoneException("N'a pas réussi a écrire dans le JSONFile", ErrorCode.SAVE_ERROR) ;
+                    }
+                    switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());
                 }
-                switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());
-            }
-            if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
-            {
-                switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());
+                if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) {
+                    switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());
+                }
+            }catch (SmartphoneException sme) {
+                System.out.println(sme.getErrorMessage());
+                System.out.println(sme.getErrorCode());
             }
         }
     }
