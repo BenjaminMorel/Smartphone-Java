@@ -34,8 +34,9 @@ public class Weather {
         // appel de la méthode qui va retourner le map selon l'url donnée
         try {
             map = jsonStorage.readFromUrl(sURL) ;
-        } catch (IOException e) {
-            throw new SmartphoneException("Erreur lors de l'accès à l'URL", ErrorCode.CONNEXION_ERROR) ;
+        } catch(SmartphoneException sm){
+            System.out.println(sm.getErrorMessage());
+            System.out.println(sm.getErrorCode());
         }
 
         // création d'un tableau de string depuis un keyset

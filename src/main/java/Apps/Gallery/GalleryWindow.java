@@ -1,6 +1,7 @@
 package Apps.Gallery;
 
 import Demo.Smartphone;
+import Errors.SmartphoneException;
 import Screen.HomeScreen;
 import TopBar.TopBarGalleryApp;
 import TopBar.TopBarHomeScreen;
@@ -147,12 +148,22 @@ public class GalleryWindow extends JPanel{
 
         public void loadImage()
         {
-            images = jsonStorage.readImages(new File(System.getenv("HOME") + "\\Images.json"), images);
+            try {
+                images = jsonStorage.readImages(new File(System.getenv("HOME") + "\\Images.json"), images);
+            }catch(SmartphoneException sm){
+                System.out.println(sm.getErrorMessage());
+                System.out.println(sm.getErrorCode());
+            }
         }
 
         public void saveImage()
         {
-            jsonStorage.writeImages(new File(System.getenv("HOME") + "\\Images.json"), images);
+            try {
+                jsonStorage.writeImages(new File(System.getenv("HOME") + "\\Images.json"), images);
+            }catch(SmartphoneException sm){
+                System.out.println(sm.getErrorMessage());
+                System.out.println(sm.getErrorCode());
+            }
         }
 
 
@@ -161,10 +172,14 @@ public class GalleryWindow extends JPanel{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == buttonReturn)
-                {
-                    System.out.println(images.size());
-                    switchApp = new Smartphone(new HomeScreen(), new TopBarHomeScreen());
+                try {
+                    if (e.getSource() == buttonReturn) {
+                        System.out.println(images.size());
+                        switchApp = new Smartphone(new HomeScreen(), new TopBarHomeScreen());
+                    }
+                }catch (SmartphoneException sme) {
+                    System.out.println(sme.getErrorMessage());
+                    System.out.println(sme.getErrorCode());
                 }
             }
         }
@@ -174,13 +189,16 @@ public class GalleryWindow extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                for (int i = 0; i < images.size(); i++)
-                {
-                    if(e.getSource() == buttonImages[i])
-                    {
-                       // switchApp = new Smartphone(new ImageGrand((ImageIcon) buttonImages[i].getIcon()));//recuperer path au lieu du getIcon
-                        switchApp = new Smartphone(new ImageGrand(images.get(i).getName(), images), new TopBarGalleryApp());
+                try {
+                    for (int i = 0; i < images.size(); i++) {
+                        if (e.getSource() == buttonImages[i]) {
+                            // switchApp = new Smartphone(new ImageGrand((ImageIcon) buttonImages[i].getIcon()));//recuperer path au lieu du getIcon
+                            switchApp = new Smartphone(new ImageGrand(images.get(i).getName(), images), new TopBarGalleryApp());
+                        }
                     }
+                }catch (SmartphoneException sme) {
+                    System.out.println(sme.getErrorMessage());
+                    System.out.println(sme.getErrorCode());
                 }
             }
         }
@@ -190,9 +208,13 @@ public class GalleryWindow extends JPanel{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == buttonAdd)
-                {
-                    switchApp = new Smartphone(new AddImage(images), new TopBarGalleryApp());
+                try {
+                    if (e.getSource() == buttonAdd) {
+                        switchApp = new Smartphone(new AddImage(images), new TopBarGalleryApp());
+                    }
+                }catch (SmartphoneException sme) {
+                    System.out.println(sme.getErrorMessage());
+                    System.out.println(sme.getErrorCode());
                 }
             }
         }

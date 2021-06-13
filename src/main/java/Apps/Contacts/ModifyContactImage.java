@@ -2,6 +2,7 @@ package Apps.Contacts;
 
 import Demo.Smartphone;
 import Apps.Gallery.GalleryWindow;
+import Errors.SmartphoneException;
 import TopBar.TopBarColor;
 
 import java.awt.*;
@@ -46,12 +47,17 @@ public class ModifyContactImage extends GalleryWindow {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            for (int i = 0; i < buttonImages.length; i++) {
-                if (e.getSource() == buttonImages[i]) {
-                    contact.setImagePath(images.get(i).getName());
-                    System.out.println(images.get(i).getName());
-                    switchApp = new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(Color.BLACK));
+            try {
+                for (int i = 0; i < buttonImages.length; i++) {
+                    if (e.getSource() == buttonImages[i]) {
+                        contact.setImagePath(images.get(i).getName());
+                        System.out.println(images.get(i).getName());
+                        switchApp = new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(Color.BLACK));
+                    }
                 }
+            }catch (SmartphoneException sme) {
+                System.out.println(sme.getErrorMessage());
+                System.out.println(sme.getErrorCode());
             }
         }
     }

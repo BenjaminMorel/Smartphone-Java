@@ -151,22 +151,26 @@ public class ModifyContact extends InfoContact {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            if (e.getSource() == buttonConfirm) {
-                try {
-                    saveInJsonStorage(jsonFile);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+            try {
+                if (e.getSource() == buttonConfirm) {
+                    try {
+                        saveInJsonStorage(jsonFile);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                    switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
                 }
-                switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
-            }
-            if (e.getSource() == buttonCancel) {
-                contact.setImagePath(ClassLoader.getSystemResource("Images/ContactApp/Contact.png").getPath());
-                switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
-            }
-            if (e.getSource() == buttonChangeImage) {
-                switchApp = new Smartphone(new ModifyContactImage(contact, contacts), new TopBarColor(black));
-                System.out.println("Changement de l'image du contact: " + contact.getFullName());
+                if (e.getSource() == buttonCancel) {
+                    contact.setImagePath(ClassLoader.getSystemResource("Images/ContactApp/Contact.png").getPath());
+                    switchApp = new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
+                }
+                if (e.getSource() == buttonChangeImage) {
+                    switchApp = new Smartphone(new ModifyContactImage(contact, contacts), new TopBarColor(black));
+                    System.out.println("Changement de l'image du contact: " + contact.getFullName());
+                }
+            }catch (SmartphoneException sme) {
+                System.out.println(sme.getErrorMessage());
+                System.out.println(sme.getErrorCode());
             }
         }
     }

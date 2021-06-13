@@ -3,6 +3,8 @@ package Apps.Gallery;
 import Apps.Contacts.Contact;
 import Apps.Contacts.ContactWindow;
 import Demo.Smartphone;
+import Errors.ErrorCode;
+import Errors.SmartphoneException;
 import TopBar.TopBarGalleryApp;
 import Storable.JSONStorage;
 
@@ -11,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImageGrand extends JPanel {
@@ -86,9 +89,13 @@ public class ImageGrand extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == buttonReturn)
-            {
-                switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());                            //revient à la page Apps.Gallery Window
+            try {
+                if (e.getSource() == buttonReturn) {
+                    switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());                            //revient à la page Apps.Gallery Window
+                }
+            }catch (SmartphoneException sme) {
+                System.out.println(sme.getErrorMessage());
+                System.out.println(sme.getErrorCode());
             }
         }
     }
@@ -103,8 +110,12 @@ public class ImageGrand extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            contacts = jsonStorage.read(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);
+            try {
+                contacts = jsonStorage.read(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);
+            }catch(SmartphoneException sm){
+                System.out.println(sm.getErrorMessage());
+                System.out.println(sm.getErrorCode());
+            }
 
             if(e.getSource() == buttonDelete)
             {
@@ -124,26 +135,19 @@ public class ImageGrand extends JPanel {
                 try
                 {
                     jsonStorage.write(new File(System.getenv("HOME") + "\\Contacts.json"), contacts);
-                }
-                catch (Exception exception) {
-                    exception.printStackTrace();
-                    System.out.println("Erreur lors de la confirmation");
-                }
-
-                System.out.println("remove " + name);
-
-                //mettre à jour le fichier JSon avec tous les paths
-                try
-                {
-                    jsonStorage.writeImages(new File(System.getenv("HOME") + "\\Images.json"), images);
-                }
-                catch (Exception exception)
-                {
-                    exception.printStackTrace();
-                    System.out.println("Erreur lors de la confirmation");
+                    System.out.println("remove " + name);
+                    jsonStorage.writeImages(new File(System.getenv("HOME") + "\\Images.json"), images);     //mettre à jour le fichier JSon avec tous les paths
+                } catch(SmartphoneException sm){
+                    System.out.println(sm.getErrorMessage());
+                    System.out.println(sm.getErrorCode());
                 }
 
-                switchApp = new Smartphone((new GalleryWindow()), new TopBarGalleryApp());
+                try {
+                    switchApp = new Smartphone((new GalleryWindow()), new TopBarGalleryApp());
+                }catch (SmartphoneException sme) {
+                    System.out.println(sme.getErrorMessage());
+                    System.out.println(sme.getErrorCode());
+                }
             }
         }
     }

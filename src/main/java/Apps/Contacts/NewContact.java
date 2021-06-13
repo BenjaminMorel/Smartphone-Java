@@ -143,21 +143,24 @@ public class NewContact extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            if (e.getSource() == buttonConfirm) {
-                try {
-                    saveInJsonStorage(jsonFile);
-                    System.out.println("Enregistrement du nouveau contact");
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    System.out.println("Erreur lors de la confirmation");
+            try {
+                if (e.getSource() == buttonConfirm) {
+                    try {
+                        saveInJsonStorage(jsonFile);
+                        System.out.println("Enregistrement du nouveau contact");
+                    } catch (Exception exception) {
+                        throw new SmartphoneException("Erreur lors de la confirmation", ErrorCode.SAVE_ERROR) ;
+                    }
+                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));
                 }
-                switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));
-            }
 
-            if (e.getSource() == buttonCancel) {
-                System.out.println("Annulation");
-                switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));
+                if (e.getSource() == buttonCancel) {
+                    System.out.println("Annulation");
+                    switchApp = new Smartphone(new ContactWindow(), new TopBarColor(black));
+                }
+            }catch (SmartphoneException sme) {
+                System.out.println(sme.getErrorMessage());
+                System.out.println(sme.getErrorCode());
             }
         }
     }
