@@ -2,6 +2,7 @@ package Screen;
 import Apps.Contacts.ContactWindow;
 import Demo.Smartphone ;
 import Apps.Gallery.GalleryWindow;
+import Errors.SmartphoneException;
 import General.Google;
 import General.Time;
 import Apps.Weather.WeatherWindow;
@@ -152,23 +153,22 @@ public class HomeScreen extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == buttonWeather){
-            try {
+        try {
+            if (e.getSource() == buttonWeather) {
                 switchApp = new Smartphone(new WeatherWindow("Sierre"), new TopBarWeatherApp());
-            } catch (MalformedURLException malformedURLException) {
-                malformedURLException.printStackTrace();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
             }
-        }
-        if(e.getSource() == buttonContact){
-            switchApp = new Smartphone(new ContactWindow(), new TopBarColor(new Color(0,0,0)));
-        }
-        if(e.getSource() == buttonGallery){
-            switchApp = new Smartphone(new GalleryWindow(), new TopBarWeatherApp());
-        }
-        if(e.getSource() == searchBar){
-            switchApp = new Smartphone(new Google(), new TopBarWeatherApp()) ;
+            if (e.getSource() == buttonContact) {
+                switchApp = new Smartphone(new ContactWindow(), new TopBarColor(new Color(0, 0, 0)));
+            }
+            if (e.getSource() == buttonGallery) {
+                switchApp = new Smartphone(new GalleryWindow(), new TopBarWeatherApp());
+            }
+            if (e.getSource() == searchBar) {
+                switchApp = new Smartphone(new Google(), new TopBarWeatherApp());
+            }
+        }catch (SmartphoneException sme) {
+            System.out.println(sme.getErrorMessage());
+            System.out.println(sme.getErrorCode());
         }
     }
 

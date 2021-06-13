@@ -1,6 +1,7 @@
 package Screen;
 
 import Demo.Smartphone;
+import Errors.SmartphoneException;
 import TopBar.TopBarHomeScreen;
 
 import javax.swing.*;
@@ -49,7 +50,12 @@ public class BottomBar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == button){
             // changement de panel principal par le homescreen
-            switchapp = new Smartphone(new HomeScreen(), new TopBarHomeScreen()) ;
+            try {
+                switchapp = new Smartphone(new HomeScreen(), new TopBarHomeScreen());
+            } catch (SmartphoneException sme) {
+                System.out.println(sme.getErrorMessage());
+                System.out.println(sme.getErrorCode());
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 package Demo;
 
 
+import Errors.SmartphoneException;
 import General.Time;
 import Screen.BottomBar;
 import TopBar.TopBarHomeScreen;
@@ -33,7 +34,7 @@ public class Smartphone extends JFrame {
     private InitialisationSmartphone initialisationSmartphone = new InitialisationSmartphone();
 
 
-    public Smartphone(JPanel newApp, JPanel newTopBar) {
+    public Smartphone(JPanel newApp, JPanel newTopBar) throws SmartphoneException {
         if(newApp == null){
             // initialise le panel de base
             app = initialisationSmartphone.getHomeScreen() ;
