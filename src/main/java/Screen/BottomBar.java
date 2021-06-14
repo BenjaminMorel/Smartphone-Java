@@ -10,23 +10,41 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BottomBar extends JPanel implements ActionListener {
+    // Création de variables générales
     private JPanel panel ;
     private JLabel label1 ;
     private Dimension dimension = new Dimension(300, 78) ;
     private Smartphone switchapp ;
     private JButton button ;
+    private JButton closeButton ;
     private TopBarHomeScreen topBar ;
-    int cmpt = 0 ;
+
+    /**
+     * Constructeur créant le bouton central ainsi que la shape sud du smartphone
+     */
 
     public BottomBar() {
         setLayout(null);
         setPreferredSize(dimension);
+        setSmartphoneShape();                                                                                               // Ajout du contour du smartphone
+        homeScreenButton();                                                                                                 // appel de la méthode qui va créer le bouton central
 
-        // Ajout du contour du smartphone
-        setSmartphoneShape();
+    }
 
-        // Ajout du bouton, il est en setBorder/Focus/ContentAreaFilled false pour paraitre invisible mais reste cliquable
-        button = new JButton();
+    /**
+     * ajoute le contour du smartphone au panel BottomScreen
+     */
+
+    public void setSmartphoneShape() {
+        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
+        JLabel labelContourSmartphone = new JLabel();
+        labelContourSmartphone.setIcon(iconContourSmartphone);
+        labelContourSmartphone.setBounds(9, -609, 320, 660);
+        add(labelContourSmartphone);
+    }
+
+    public void homeScreenButton(){
+        button = new JButton();                                                                                             // Ajout du bouton, il est en setBorder/Focus/ContentAreaFilled false pour paraitre invisible mais reste cliquable
         button.addActionListener(this);
         button.setBounds(135, 7, 70, 23);
         button.setBorderPainted(false);
@@ -36,15 +54,14 @@ public class BottomBar extends JPanel implements ActionListener {
         add(button);
     }
 
-    public void setSmartphoneShape() {
-        // Ajout du contour du smartphone
-        ImageIcon iconContourSmartphone = new ImageIcon(ClassLoader.getSystemResource("Images/smartphone_PNG.png"));
-        JLabel labelContourSmartphone = new JLabel();
-        labelContourSmartphone.setIcon(iconContourSmartphone);
-        labelContourSmartphone.setBounds(9, -609, 320, 660);
-        add(labelContourSmartphone);
-    }
 
+
+    /**
+     * Méthode ActionListener
+     * @param e
+     * un bouton permettant de revenir au menu principal
+     * un bouton permettant d'éteindre le smartphone
+     */
 
     @Override
     public void actionPerformed(ActionEvent e) {
