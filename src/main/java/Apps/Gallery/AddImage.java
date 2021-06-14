@@ -1,8 +1,9 @@
 package Apps.Gallery;
 
 import Demo.Smartphone;
-import Errors.ErrorCode;
+
 import Errors.SmartphoneException;
+import TopBar.TopBarColor;
 import TopBar.TopBarGalleryApp;
 import Storable.JSONStorage;
 
@@ -16,19 +17,14 @@ import java.util.ArrayList;
 
 public class AddImage extends JPanel {
 
-    private Smartphone switchApp;
-
-    private JPanel panelChooser ;
     private JFileChooser fileChooser;
 
-    private JSONStorage storable = new JSONStorage();
+    private final JSONStorage storable = new JSONStorage();
 
-    private ArrayList<Images> images;
+    private final ArrayList<Images> images;
 
-    private FileNameExtensionFilter filter;
-
-    private File f;                                                //fichier choisi
-    private File jsonFile = new File(System.getenv("HOME") + "\\Images.json"); //fichier pour stocker les path
+    private final File jsonFile = new File(System.getenv("HOME") + "\\Images.json"); //fichier pour stocker les path
+    private final Color black = new Color(0,0,0);
 
     /**
      * constructeur de la classe Add images qui a en paramètre
@@ -39,46 +35,69 @@ public class AddImage extends JPanel {
         setLayout(null);
 
         this.images = images;
+        creationFileChooser();
+        creationPanelChooser();
 
-        panelChooser = new JPanel();
-        panelChooser.setLayout(null);
-        panelChooser.setBounds(40,40,260,500);
 
+        setSmartphoneShape();
+    }
+
+    /**
+     * methode qui crée un file chooser (chercher les images dans l'ordi)
+     * que jpg, png, gif, jpeg acceptées
+     */
+    public void creationFileChooser()
+    {
         fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getenv("HOME") + "\\ImagesGallery"));
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setBounds(0,-40,260,500);
         fileChooser.setPreferredSize(new Dimension(280,400));
 
-        filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg"); //choisir seulement fichiers type images
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg"); //choisir seulement fichiers type images
         fileChooser.setFileFilter(filter);
 
 
         fileChooser.addActionListener(new ButtonsFileChooser());
-        panelChooser.add(fileChooser);
-        add(panelChooser);
-
-        setSmartphoneShape();
     }
 
+    /**
+     * creation d'un panel, qui va contenir le file chooser
+     */
+    public void creationPanelChooser()
+    {
+        JPanel panelChooser = new JPanel();
+        panelChooser.setLayout(null);
+        panelChooser.setBounds(40,40,260,500);
+
+        panelChooser.add(fileChooser);
+        add(panelChooser);
+    }
+
+    /**
+     * donner des fonctionnalités aux boutons du file chooser(cancel, open)
+     */
     class ButtonsFileChooser implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 if (e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)) {
-                    f = fileChooser.getSelectedFile();
+                    //fichier choisi
+                    File f = fileChooser.getSelectedFile();
+
                     String path = "ImagesGallery/" + f.getName();
                     images.add(new Images(path));
                     try {
                         storable.writeImages(jsonFile, images);
-                    } catch (Exception exception) {
-                        throw new SmartphoneException("N'a pas réussi a écrire dans le JSONFile", ErrorCode.SAVE_ERROR) ;
+                    }catch(SmartphoneException sm){
+                        System.out.println(sm.getErrorMessage());
+                        System.out.println(sm.getErrorCode());
                     }
-                    switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());
+                    new Smartphone(new GalleryWindow(), new TopBarColor(black));
                 }
                 if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) {
-                    switchApp = new Smartphone(new GalleryWindow(), new TopBarGalleryApp());
+                    new Smartphone(new GalleryWindow(), new TopBarColor(black));
                 }
             }catch (SmartphoneException sme) {
                 System.out.println(sme.getErrorMessage());
@@ -87,6 +106,9 @@ public class AddImage extends JPanel {
         }
     }
 
+    /**
+     * donne les contours du natel
+     */
     public void setSmartphoneShape()
     {
         // Ajout du contour du smartphone
