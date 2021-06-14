@@ -27,7 +27,7 @@ public class GalleryWindow extends JPanel{
     private final JSONStorage jsonStorage = new JSONStorage();
 
     protected JButton[] buttonImages;
-    protected final JButton buttonAdd = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("Images/GalleryApp/add-camera-icon.png")).getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
+    protected final JButton buttonAdd = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("Images/GalleryApp/AddIcon.png")).getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
     protected final JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("Images/ContactApp/BackButton.png")).getImage().getScaledInstance(25,25,Image.SCALE_DEFAULT)));
 
     protected ArrayList<Images> images;

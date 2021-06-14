@@ -97,7 +97,7 @@ public class EditImageName extends ImageGrand{
     public void changerLeNom() throws SmartphoneException
     {
         for (int i = 0; i < images.size(); i++) {                                                               //parcourir toute la liste des images
-            if (name == images.get(i).getName())    //regarder adresse                                           //si le nom en parametre est le m'eme sur l'image cliqué
+            if (name.equals(images.get(i).getName()))    //regarder adresse                                           //si le nom en parametre est le m'eme sur l'image cliqué
             {
                 nomPhoto.setText(textField.getText());
 

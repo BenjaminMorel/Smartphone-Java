@@ -82,13 +82,7 @@ public class SmartphoneTests extends TestCase {
     /**
      * Tests application gallerie
      */
-    @Test
-    public void testPathNotEmpty()
-    {
-        int errorCode = 0;
-        Images images = new Images("");
-        assertEquals(100, errorCode);
-    }
+
 
 
 }
