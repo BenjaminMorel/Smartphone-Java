@@ -1,12 +1,18 @@
 import Apps.Contacts.Contact;
+import Apps.Gallery.EditImageName;
 import Apps.Gallery.Images;
 import Apps.Weather.WeatherWindow;
 import Demo.Smartphone;
 import Errors.ErrorCode;
 import Errors.SmartphoneException;
+import TopBar.TopBarColor;
 import TopBar.TopBarWeatherApp;
 import junit.framework.TestCase;
 import org.junit.Test;
+
+import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
 
 public class SmartphoneTests extends TestCase {
 
@@ -123,6 +129,18 @@ public class SmartphoneTests extends TestCase {
      * Tests application gallerie
      */
 
+    @Test
+    public void testRename() {
 
+        String path = "ImagesGallery/Augustine.jpg";
+
+        Images image = new Images("ImagesGallery/dog.png");
+        //créer fichier
+        File f = new File(System.getenv("HOME") + path);
+        f.renameTo(new File(System.getenv("HOME") + image.getName()));
+
+        assertEquals("ImagesGallery/dog.png", image.getName());
+
+    }
 
 }

@@ -2,6 +2,7 @@ package Apps.Weather;
 
 import Demo.Smartphone;
 import Errors.ErrorCode;
+import Errors.ErrorPanel;
 import Errors.SmartphoneException;
 import General.Internet;
 import General.Time;
@@ -431,6 +432,7 @@ public class WeatherWindow extends JPanel implements ActionListener {
         }catch (SmartphoneException sme) {                                                                                  // try catch qui entoure la re-création du smartphone
             System.out.println(sme.getErrorMessage());                                                                      // va chercher les erreurs éventuelles qui pourraient arriver
             System.out.println(sme.getErrorCode());                                                                         // va chercher le code de l'erreur
+            new ErrorPanel(sme.getErrorCode(), sme.getErrorMessage());
         }
     }
 }

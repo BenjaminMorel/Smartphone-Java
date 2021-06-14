@@ -3,6 +3,7 @@ import Apps.Contacts.ContactWindow;
 import Demo.Smartphone ;
 import Apps.Gallery.GalleryWindow;
 import Errors.ErrorCode;
+import Errors.ErrorPanel;
 import Errors.SmartphoneException;
 import General.Google;
 import General.Internet;
@@ -222,6 +223,7 @@ public class HomeScreen extends JPanel implements ActionListener {
         }catch (SmartphoneException sme) {
             System.out.println(sme.getErrorMessage());                                                                      // affiche les possibles messages d'erreurs liés à la création d'un nouveau smartphone
             System.out.println(sme.getErrorCode());                                                                         // affiche les possibles codes d'erreurs liés à la création d'un nouveau smartphone
+            new ErrorPanel(sme.getErrorCode(), sme.getErrorMessage());
         }
     }
 }
