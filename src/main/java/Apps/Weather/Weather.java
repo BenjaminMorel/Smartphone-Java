@@ -10,7 +10,7 @@ public class Weather {
     private final String[] keySet ;
 
     /**
-     *
+     * Constructeur météo
      * @param sVille
      * va chercher les informations selon l'input de la ville
      */
@@ -26,13 +26,14 @@ public class Weather {
         String preURL = "https://api.openweathermap.org/data/2.5/weather?q=";                                               // création d'un string contenant le début de l'URL qui accèdera à l'API
         String postURL = "&units=metric&appid=fcd518773066748f0875a9cd8791dc49";                                            // création d'un string contenant la fin de l'URL
         String sURL = preURL + ville + postURL ;                                                                            // assemblage de l'URL "finale"
+
         try {
-            JSONStorage jsonStorage = new JSONStorage() ;                                                                   // création de la classe JSONStorage
-            map = jsonStorage.readFromUrl(sURL) ;                                                                           // va chercher le map selon l'URL modifiée
-        } catch(SmartphoneException sm){                                                                                    // remonte les erreurs possibles au passage
-            System.out.println(sm.getErrorMessage());                                                                       // affiche le message d'erreur
-            System.out.println(sm.getErrorCode());                                                                          // affiche le conde d'erreur
+            JSONStorage jsonStorage = new JSONStorage();
+            map = jsonStorage.readFromUrl(sURL);
+        }catch (SmartphoneException sm){
+            throw new SmartphoneException("Ville non trouvée", ErrorCode.BAD_PARAMETER) ;
         }
+
         String keySetNotSorted = String.join(",",map.keySet()) ;                                                    // création d'un string contenant le contenu du keyset délimité par une virgule
         keySet = keySetNotSorted.split(",") ;                                                                         // création d'un tableau de string depuis le string du dessus (grâce à la méthode .split)
     }
