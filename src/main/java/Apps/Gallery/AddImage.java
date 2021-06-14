@@ -4,7 +4,6 @@ import Demo.Smartphone;
 
 import Errors.SmartphoneException;
 import TopBar.TopBarColor;
-import TopBar.TopBarGalleryApp;
 import Storable.JSONStorage;
 
 import javax.swing.*;

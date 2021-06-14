@@ -38,14 +38,7 @@ public class Images {
      * @param name
      * @throws SmartphoneException
      */
-    public void setName(String name) throws SmartphoneException {
-        if(name.isEmpty())
-        {
-            throw new SmartphoneException("le path ne peut pas être vide", ErrorCode.BAD_PARAMETER);
-        }
-        else
-        {
-            this.name = name;
-        }
+    public void setName(String name) {
+        this.name = name;
     }
 }
