@@ -47,8 +47,11 @@ public class WeatherWindow extends JPanel implements ActionListener {
 
     public WeatherWindow(String setVille) throws SmartphoneException {
         setLayout(null);                                // permet d'ajouter des labels et panels avec setBounds
-        weather = new Weather(setVille) ;               // va chercher toutes les données météo
-
+        try {
+            weather = new Weather(setVille);            // va chercher toutes les données météo
+        }catch (SmartphoneException sm){
+            throw new SmartphoneException(sm.getErrorMessage(), ErrorCode.BAD_PARAMETER) ;
+        }
 
         // méthodes permettant l'ajout de la partie graphique
         contourSmartphone();                            // ajout du contour du smartphone

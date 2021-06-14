@@ -15,14 +15,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class HomeScreen extends JPanel implements ActionListener {
+
     // Variables générales
     private final Time timeGeneral = new Time();
     private JButton buttonWeather ;
     private JButton buttonContact ;
     private JButton buttonGallery ;
     private JButton searchBar ;
+
 
     // Variables de polices et de couleur
     private final Font timeGrisMini = new Font("Roboto", Font.PLAIN, 12) ;
