@@ -1,7 +1,9 @@
 package Apps.Weather;
 
 import Demo.Smartphone;
+import Errors.ErrorCode;
 import Errors.SmartphoneException;
+import General.Internet;
 import General.Time;
 import TopBar.TopBarWeatherApp;
 import javax.swing.*;
@@ -414,7 +416,13 @@ public class WeatherWindow extends JPanel implements ActionListener {
                 if (textField.getText().equals("")) {                                                                       // premier clic sur le bouton : il affiche la search bar
                     textField.setVisible(true);                                                                             // si la searchBar est vide, elle se rend visible
                 } else {                                                                                                    // sinon (c'est que c'est pas la première fois que l'on appuye sur le bouton)
-                    new Smartphone(new WeatherWindow(textField.getText()), new TopBarWeatherApp());                         // alors on refresh la page avec le nom de la nouvelle ville
+                    Internet internet = new Internet() ;                                                                    // appel de la classe internet
+                    if(internet.isReachableByPing("api.openweathermap.org")){                                          // test d'accès à un site internet
+                        new Smartphone(new WeatherWindow(textField.getText()), new TopBarWeatherApp());                     // si on a accès à internet, on refresh la page avec le nom de la nouvelle ville
+                    }
+                    else{
+                        throw new SmartphoneException("Pas de connexion Internet", ErrorCode.CONNEXION_ERROR) ;             // si pas d'internet, une nouvelle erreur est balancée
+                    }
                 }
             }
         }catch (SmartphoneException sme) {                                                                                  // try catch qui entoure la re-création du smartphone

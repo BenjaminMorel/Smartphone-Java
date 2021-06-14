@@ -2,8 +2,10 @@ package Screen;
 import Apps.Contacts.ContactWindow;
 import Demo.Smartphone ;
 import Apps.Gallery.GalleryWindow;
+import Errors.ErrorCode;
 import Errors.SmartphoneException;
 import General.Google;
+import General.Internet;
 import General.Time;
 import Apps.Weather.WeatherWindow;
 import TopBar.TopBarColor;
@@ -199,7 +201,13 @@ public class HomeScreen extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             if (e.getSource() == buttonWeather) {
-                new Smartphone(new WeatherWindow("Sierre"), new TopBarWeatherApp());                                 // action d'ouvrir l'application météo, ville de base = Sierre
+                Internet internet = new Internet() ;                                                                        // appel de la classe Internet
+                if(internet.isReachableByPing("api.openweathermap.org")){                                              // check si l'ordinateur peut accéder au site api.openweathermap.org
+                    new Smartphone(new WeatherWindow("Sierre"), new TopBarWeatherApp());                             // action d'ouvrir l'application météo, ville de base = Sierre
+                }
+                else{
+                    throw new SmartphoneException("Pas de connexion internet", ErrorCode.CONNEXION_ERROR) ;                 // si pas de connexion, on balance une nouvelle erreur
+                }
             }
             if (e.getSource() == buttonContact) {
                 new Smartphone(new ContactWindow(), new TopBarColor(new Color(0, 0, 0)));                          // action d'ouvrir l'application de contacts

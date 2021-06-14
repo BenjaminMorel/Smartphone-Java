@@ -1,5 +1,6 @@
 package Apps.Weather;
 
+import Errors.ErrorCode;
 import Errors.SmartphoneException;
 import Storable.JSONStorage;
 import java.util.Map;
@@ -14,7 +15,7 @@ public class Weather {
      * va chercher les informations selon l'input de la ville
      */
 
-    public Weather(String sVille) {
+    public Weather(String sVille) throws SmartphoneException {
         String ville ;                                                                                                      // création d'une variable ville
         if(sVille == null){                                                                                                  // si le nom de la ville en input est nul, alors il prend la ville de Sierre
             ville = "Sierre" ;
@@ -36,6 +37,7 @@ public class Weather {
         keySet = keySetNotSorted.split(",") ;                                                                         // création d'un tableau de string depuis le string du dessus (grâce à la méthode .split)
     }
 
+
     /**
      *
      * @return
@@ -47,7 +49,7 @@ public class Weather {
         weatherContent += map.get(keySet[1]) ;                                                                              // création d'un string qui possède le contenu du tableau de string voulu (ici la météo)
         weatherContent = weatherContent.substring(2) ;                                                                      // sélection et tronquage du string (on enlève les "{}")
         weatherContent = weatherContent.substring(0, weatherContent.length()-2) ;
-        return weatherContent.split(",") ;                                                                // séparation du string en tableau de string et retour de l'objet weather
+        return weatherContent.split(",") ;                                                                            // séparation du string en tableau de string et retour de l'objet weather
     }
 
     /**

@@ -4,7 +4,6 @@ import Apps.Gallery.Images;
 import Errors.ErrorCode;
 import Errors.SmartphoneException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +13,14 @@ import java.util.Map;
 
 
 public class JSONStorage{
+
+    /**
+     * Méthode permettant de lire un fichier contacts JSON
+     * @param source
+     * @param contacts
+     * @return
+     * @throws SmartphoneException
+     */
 
     public ArrayList<Contact> read(File source, ArrayList<Contact> contacts) throws SmartphoneException {
         ObjectMapper mapper = new ObjectMapper();
@@ -28,6 +35,13 @@ public class JSONStorage{
         return contacts;
     }
 
+    /**
+     * Méthode permettant d'écrire un fichier de contacts JSON
+     * @param destination
+     * @param contacts
+     * @throws SmartphoneException
+     */
+
     public void write(File destination, ArrayList<Contact> contacts) throws SmartphoneException{
         ObjectMapper mapper = new ObjectMapper();
 
@@ -38,6 +52,16 @@ public class JSONStorage{
         }
     }
 
+    /**
+     * Méthode permettant de lire un API
+     * @param sUrl
+     * prend en paramètre l'URL de l'API
+     * @return
+     * retourne le Map de l'API s'il l'a trouvé
+     * @throws SmartphoneException
+     * si retourne une erreur, c'est que la ville n'existe pas (test de connexion étage plus haut)
+     */
+
     public Map readFromUrl(String sUrl) throws SmartphoneException {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -45,12 +69,18 @@ public class JSONStorage{
             Map<String, Object> map = mapper.readValue(url, Map.class);
             return map ;
         }catch (IOException i){
-            throw new SmartphoneException("Error while reading the URL", ErrorCode.CONNEXION_ERROR) ;
+            throw new SmartphoneException("Ville non trouvée", ErrorCode.BAD_PARAMETER) ;
         }
     }
 
+    /**
+     * Méthode permettant de lire des images sur un JSON
+     * @param source
+     * @param images
+     * @return
+     * @throws SmartphoneException
+     */
 
-    //read and write IMAGES
     public ArrayList<Images> readImages(File source, ArrayList<Images> images) throws SmartphoneException{
         ObjectMapper mapper = new ObjectMapper();
         Images[] imagesArray;
@@ -63,6 +93,13 @@ public class JSONStorage{
 
         return images;
     }
+
+    /**
+     * Méthode permettant d'écrire des images sur un JSON
+     * @param destination
+     * @param images
+     * @throws SmartphoneException
+     */
 
     public void writeImages(File destination, ArrayList<Images> images) throws SmartphoneException{
         ObjectMapper mapper = new ObjectMapper();
