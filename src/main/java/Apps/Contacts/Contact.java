@@ -36,14 +36,13 @@ public class Contact {
 
     public void setFirstName(String firstName) throws SmartphoneException {
 
-        firstName = firstName.replaceAll("\\W", "");
+        firstName = firstName.replaceAll(" ", "");
 
         if (firstName.isEmpty())
             throw new SmartphoneException("Le prénom est vide", ErrorCode.BAD_PARAMETER);
 
         else {
-                                                                         // Mise en forme du prénom, avec 1ère lettre en majuscule et le reste en minuscule
-            firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1).toLowerCase();
+            firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1).toLowerCase();                 // Mise en forme du prénom, avec 1ère lettre en majuscule et le reste en minuscule
             this.firstName = firstName;
         }
     }
@@ -54,13 +53,13 @@ public class Contact {
 
     public void setLastName(String lastName) throws SmartphoneException {
 
-        lastName = lastName.replaceAll("\\W", "");
+        lastName = lastName.replaceAll(" ", "");
 
         if (lastName.isEmpty())
             throw new SmartphoneException("Le nom est vide", ErrorCode.BAD_PARAMETER);
 
-        else {                                                                               // Mise en forme du nom, avec 1ère lettre en majuscule et le reste en minuscule
-            lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();
+        else {
+            lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();                    // Mise en forme du nom, avec 1ère lettre en majuscule et le reste en minuscule
             this.lastName = lastName;
         }
     }
@@ -87,7 +86,7 @@ public class Contact {
                     this.telNumber = telNumber;
                 }
                 else {
-                    throw new SmartphoneException("Erreur dans le numéro de téléphone", ErrorCode.BAD_PARAMETER);
+                    throw new SmartphoneException("Le numéro de téléphone ne peut contenir que des chiffres", ErrorCode.BAD_PARAMETER);
                 }
             }
             // .replace all (/.,)
@@ -107,7 +106,7 @@ public class Contact {
                 if (birthDate.charAt(i) > 47 && birthDate.charAt(i) < 58) {
                     this.birthDate = birthDate;
                 } else {
-                    throw new SmartphoneException("Erreur dans la date", ErrorCode.BAD_PARAMETER);
+                    throw new SmartphoneException("La date ne peut contenir que des chiffres, format DD/MM/YYYY", ErrorCode.BAD_PARAMETER);
                 }
             }
         }

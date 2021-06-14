@@ -2,6 +2,7 @@ package Apps.Contacts;
 
 import Demo.Smartphone;
 import Errors.ErrorCode;
+import Errors.ErrorPanel;
 import Errors.SmartphoneException;
 import Storable.JSONStorage;
 import TopBar.TopBarColor;
@@ -142,6 +143,7 @@ public class NewContact extends JPanel {
             contacts.add(new Contact(firstNameText.getText(), lastNameText.getText(), telNumberText.getText(), birthDateText.getText(), "Images/ContactApp/Contact.png"));
             storable.write(destination, contacts);
         } catch (SmartphoneException e) {
+            new ErrorPanel(e.getErrorMessage());
             throw new SmartphoneException(e.getErrorMessage(), ErrorCode.BAD_PARAMETER);
         }
     }
