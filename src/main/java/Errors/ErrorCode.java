@@ -9,10 +9,9 @@ public enum ErrorCode {
     BAD_PARAMETER(100),
     CONNEXION_ERROR(404),
     SAVE_ERROR(200),
-    JSON_FILE(300) ;
+    JSON_FILE(300);
 
     private final int code;
-
 
     ErrorCode(int code) {
         this.code = code;

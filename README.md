@@ -1,5 +1,10 @@
 # Projet - Simulateur de smartphone
 
+## Information importante
+
+Avant de lancer notre application, il est nécessaire de créer une variable d'environnement utilisateur nommée "HOME", pointant sur "\target\classes"
+
+
 ## Directives générales
 
 Le sujet du projet sera imposé afin de garantir un projet de taille raisonnable

@@ -27,7 +27,8 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
 
 
     /**
-     * Classe principale de l'application contact, où se trouve la liste des contacts
+     * Constructeur de la classe ContactWindow, qui est la classe principale
+     * de l'application contact où se trouve la liste des contacts
      */
 
     public ContactWindow() {
@@ -53,7 +54,7 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
     }
 
     /**
-     * Méthode pour recharger l'arrayList des contacts
+     * Méthode pour recharger l'ArrayList des contacts
      */
 
     public void loadContact() {
@@ -69,19 +70,16 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
     /**
      * Création du panel du sommet, contenant :
      *  - Un label avec le nombre de contacts enregistrés
-     *  - Un bouton permettant d'ajouter un nouveua contact
+     *  - Un bouton permettant d'ajouter un nouveau contact
      */
 
     public void creationTopPanel() {
-        // Variables générales
-        // Panel qui contient le nombre de contacts + bouton ajouter
-        JPanel topPanel = new JPanel();                                                                                        // Top panel qui contient le nombre de contacts, et l'option de créer un nouveau contact
+        JPanel topPanel = new JPanel();                                                                                 // Top panel qui contient le nombre de contacts, et l'option de créer un nouveau contact
         topPanel.setLayout(new FlowLayout());
         topPanel.setBackground(colorPanel);
         topPanel.setBounds(0,0,310,40);
 
-        // Label avec le nombre de contacts
-        JLabel labelNbContacts = new JLabel(contacts.size() + " contacts");                                                // Label qui contient le nombre de contacts
+        JLabel labelNbContacts = new JLabel(contacts.size() + " contacts");                                         // Label qui contient le nombre de contacts
         labelNbContacts.setFont(font);                                                                                  // Modifier la police d'écriture et la taille
         labelNbContacts.setForeground(Color.WHITE);                                                                     // Modifier la couleur du texte
         topPanel.add(labelNbContacts);                                                                                  // Ajout du label au topPanel
@@ -99,13 +97,15 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
 
     public void creationMainPanel() {
         contactsPanel = new JPanel();                                                                                   // Settings du Panel qui contient les contacts
-        if (contacts.size() <= 11)
+        if (contacts.size() <= 11) {
             contactsPanel.setLayout(new GridLayout(11,1));
-        else
+        }
+        else {
             contactsPanel.setLayout(new GridLayout(contacts.size(),1));
+        }
         contactsPanel.setPreferredSize(new Dimension(255,contacts.size()* 45));
-        // Scrollbar qui viendra s'ajouter au panel contactsPanel
-        JScrollPane scrollPane = new JScrollPane(contactsPanel);
+
+        JScrollPane scrollPane = new JScrollPane(contactsPanel);                                                        // Scrollbar qui viendra s'ajouter au panel contactsPanel
         scrollPane.setBounds(27, 40, 285, 530);
         scrollPane.getVerticalScrollBar().setUnitIncrement(30);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -154,7 +154,7 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
     }
 
     /**
-     * Classe contenant des actions listener pour ajouter un nouveua contact, ou en afficher un
+     * Classe contenant des actions listener pour ajouter un nouveau contact, ou en afficher un
      */
 
     class ContactActionListener implements ActionListener {
@@ -171,7 +171,7 @@ public class ContactWindow extends JPanel implements ScrollPaneConstants {
                         new Smartphone(new InfoContact(contacts.get(i), contacts), new TopBarColor(black));
                     }
                 }
-            }catch (SmartphoneException sme) {
+            } catch (SmartphoneException sme) {
                 System.out.println(sme.getErrorMessage());
                 System.out.println(sme.getErrorCode());
             }

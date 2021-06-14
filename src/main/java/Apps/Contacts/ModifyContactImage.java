@@ -17,7 +17,8 @@ public class ModifyContactImage extends GalleryWindow {
     private final ArrayList<Contact> contacts;
 
     /**
-     * Classe utilisée pour modifier l'image du contact passé en paramètre
+     * Constructeur de la classe ModifyContactImage qui est utilisée pour
+     * modifier l'image du contact passé en paramètre
      * @param contact Contact pour lequel l'image va être modifiée
      * @param contacts ArrayList contenant les contacts
      */
@@ -26,7 +27,6 @@ public class ModifyContactImage extends GalleryWindow {
         super();
         this.contact = contact;
         this.contacts = contacts;
-        buttonsAddDeletePanel.setVisible(true);
         buttonAdd.setVisible(false);
     }
 
@@ -39,10 +39,13 @@ public class ModifyContactImage extends GalleryWindow {
         for (JButton b : buttonImages) {
             b.addActionListener(new ChooseImage());
         }
+        buttonReturn.addActionListener(new ChooseImage());
     }
 
     /**
-     * Classe interne pour modifier l'image d'un contact
+     * Classe contenant des actions listener pour :
+     *  - Modifier l'image d'un contact
+     *  - Retourner sur la liste des contacts enregistrés
      */
 
     class ChooseImage implements ActionListener {
@@ -58,9 +61,8 @@ public class ModifyContactImage extends GalleryWindow {
                     }
                 }
                 if (e.getSource() == buttonReturn) {
-                    new Smartphone(new ModifyContactImage(contact, contacts), new TopBarColor(Color.black));
+                    new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(Color.black));
                 }
-
             } catch (SmartphoneException sme) {
                 System.out.println(sme.getErrorMessage());
                 System.out.println(sme.getErrorCode());
