@@ -1,5 +1,8 @@
 package Errors;
 
+/**
+ * Ennumeration des codes d'erreurs
+ */
 public enum ErrorCode {
 
     IO_EXCEPTION(50),

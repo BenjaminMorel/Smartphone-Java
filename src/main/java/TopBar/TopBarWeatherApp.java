@@ -5,7 +5,9 @@ import javax.swing.*;
 
 public class TopBarWeatherApp extends TopBar {
 
-
+    /**
+     * constructeur de la top bar pour l'app Météo
+     */
     public TopBarWeatherApp() {
         super();
 

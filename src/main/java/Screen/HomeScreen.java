@@ -214,7 +214,7 @@ public class HomeScreen extends JPanel implements ActionListener {
                 new Smartphone(new ContactWindow(), new TopBarColor(new Color(0, 0, 0)));                          // action d'ouvrir l'application de contacts
             }
             if (e.getSource() == buttonGallery) {
-                new Smartphone(new GalleryWindow(), new TopBarWeatherApp());                                                // action d'ouvrir l'application de la gallerie
+                new Smartphone(new GalleryWindow(), new TopBarColor(black));                                                // action d'ouvrir l'application de la gallerie
             }
             if (e.getSource() == searchBar) {
                 new Smartphone(new Google(), new TopBarWeatherApp());                                                       // action d'ouvrir l'application de Google

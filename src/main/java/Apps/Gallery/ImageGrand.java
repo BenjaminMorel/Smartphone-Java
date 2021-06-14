@@ -4,10 +4,8 @@ import Apps.Contacts.Contact;
 
 import Demo.Smartphone;
 
-import Errors.ErrorCode;
 import Errors.SmartphoneException;
 import TopBar.TopBarColor;
-import TopBar.TopBarGalleryApp;
 import Storable.JSONStorage;
 
 import javax.swing.*;
@@ -34,11 +32,11 @@ public class ImageGrand extends JPanel {
     //button retour, qui contient une icone dimensionnée à la taille du bouton
     private final JButton buttonReturn = new JButton(new ImageIcon(new ImageIcon(ClassLoader.getSystemResource("Images/ContactApp/BackButton.png")).getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT)));
 
-    protected JButton buttonDelete;                                                         //création du bouton delete
+    protected JButton buttonDelete;                                                                                     //création du bouton delete
     protected JButton buttonEdit;
     protected JButton buttonConfirmation = new JButton("OK");
 
-    private String name;                                                                                                //String qui contiendra le path de l'iamge donné en paramètre
+    private final String name;                                                                                                //String qui contiendra le path de l'iamge donné en paramètre
 
     protected JLabel nomPhoto;
     protected JTextField textField;
@@ -64,9 +62,6 @@ public class ImageGrand extends JPanel {
         creationBoutonDelete();
         creationBoutonEdit();
 
-        setBackground(Color.GRAY);
-
-
     }
 
     /**
@@ -80,7 +75,7 @@ public class ImageGrand extends JPanel {
         image = new ImageIcon(ClassLoader.getSystemResource(name)).getImage();
 
         label = new JLabel(new ImageIcon(image));                                                                       //ajouter l'image à un Jlabel
-        nomPhoto = new JLabel(name);
+        nomPhoto = new JLabel((String) name.subSequence(14,name.length()-4));
 
         panel.add(nomPhoto);
         panel.add(label);                                                                                               //ajouter le label au panel
@@ -95,7 +90,7 @@ public class ImageGrand extends JPanel {
     public void creationBoutonEdit() {
         buttonEdit = new JButton("Edit");
         add(buttonEdit);
-        buttonEdit.setBounds(120, 20, 75, 25);
+        buttonEdit.setBounds(135, 20, 75, 25);
         buttonEdit.addActionListener(new ModifyImage());
     }
 
@@ -105,7 +100,7 @@ public class ImageGrand extends JPanel {
     public void creationBoutonDelete() {
         buttonDelete = new JButton("Delete");
         add(buttonDelete);                                                                    //ajouter un bouton supprimer au panel principal
-        buttonDelete.setBounds(120, 500, 75, 25);                              //donner une taille et un emplacement au bouton supprimer dans le panel principal
+        buttonDelete.setBounds(135, 500, 75, 25);                              //donner une taille et un emplacement au bouton supprimer dans le panel principal
         buttonDelete.addActionListener(new ModifyImage());                              //attribuer un actionlistener qui va appeler une classe, pour que celui-ci ait une fonction
 
     }
@@ -154,8 +149,7 @@ public class ImageGrand extends JPanel {
     /**
      * methode qui enregistre l'arraylist images, et lecture dans le fichier json
      */
-    public void saveImage()
-    {
+    public void saveImage() throws SmartphoneException {
         try {
             jsonStorage.writeImages(new File(System.getenv("HOME") + "\\Images.json"), images);
         } catch (SmartphoneException sm) {
@@ -175,8 +169,6 @@ public class ImageGrand extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
-
-
             loadContact();
 
             //button return
@@ -192,7 +184,6 @@ public class ImageGrand extends JPanel {
             //button edit
             if (e.getSource() == buttonEdit) {
 
-
                 try {
                     new Smartphone(new EditImageName(name, images), new TopBarColor(black));
                 } catch (SmartphoneException smartphoneException) {
@@ -201,20 +192,18 @@ public class ImageGrand extends JPanel {
 
             }
 
-
                 //button delete
                 if (e.getSource() == buttonDelete) {
-                    for (int i = 0; i < images.size(); i++) {                                                               //parcourir toute la liste des images
-                        if (name == images.get(i).getName())    //regarder adresse                                           //si le nom en parametre est le m'eme sur l'image cliqué
+                    for (int i = 0; i < images.size(); i++) {                                                           //parcourir toute la liste des images
+                        if (name == images.get(i).getName())    //regarder adresse                                      //si le nom en parametre est le meme sur l'image cliqué
                         {
                             for (int j = 0; j < contacts.size(); j++) {
                                 if ((contacts.get(j).getImagePath().equals(images.get(i).getName()))) {
                                     contacts.get(j).setImagePath("Images/ContactApp/Contact.png");
                                 }
                             }
-                            images.remove(images.get(i));                                                                   //supprimer l'image de la Liste d'Images
+                            images.remove(images.get(i));                                                                //supprimer l'image de la Liste d'Images
                         }
-                        //revenir sur la page Apps.Gallery Windows, il n'y aura pas l'image supprimée
                     }
 
                     try {
@@ -235,8 +224,6 @@ public class ImageGrand extends JPanel {
                 }
             }
         }
-
-
 
         /**
          * methode qui donne les bordures du natel

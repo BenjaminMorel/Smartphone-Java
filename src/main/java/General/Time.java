@@ -10,11 +10,15 @@ import java.util.Date;
 
 public class Time {
 
-    public Time() {
-        Calendar maintenant = Calendar.getInstance();
+    /**
+     * constructor time
+     */
+    public Time() {}
 
-    }
-
+    /**
+     * methode permettant  de retourner l'heure
+     * @return String time
+     */
     public String getTime(){
         String time = "";
 
@@ -25,6 +29,10 @@ public class Time {
         return time ;
     }
 
+    /**
+     * methode permettant de retourner la date
+     * @return String Date
+     */
     public String getDate() {
         String date = "";
         LocalDate currentDate = LocalDate.now();
@@ -50,6 +58,10 @@ public class Time {
         return date ;
     }
 
+    /**
+     * methode permettant de retourner le mois
+     * @return String mois
+     */
     public String getMonth(){
         String time = "";
 
@@ -61,18 +73,28 @@ public class Time {
         return time;
     }
 
+    /**
+     * methode permettant de changer la date unix en date normale
+     * @param unixSeconds secondes en unix
+     * @return date normale
+     */
     public String unixToDate(int unixSeconds){
-        Date date = new java.util.Date(unixSeconds*1000L);                                          // convert seconds to miliseconds
-        SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm z");       // the format of your date
-        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+2"));                                   // give a timezone reference for formatting (see comment at the bottom)
+        Date date = new java.util.Date(unixSeconds*1000L);                                                              // convert seconds to miliseconds
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm z");                                        // the format of your date
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+2"));                                                       // give a timezone reference for formatting (see comment at the bottom)
         String formattedDate = sdf.format(date);
         return formattedDate ;
     }
 
+    /**
+     methode permettant de changer des heures unix en heures normales
+     * @param unixSeconds secondes en unix
+     * @return heures normales
+     */
     public String unixToHours(int unixSeconds){
-        Date date = new java.util.Date(unixSeconds*1000L);                                          // convert seconds to miliseconds
-        SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH");       // the format of your date
-        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+2"));                                   // give a timezone reference for formatting (see comment at the bottom)
+        Date date = new java.util.Date(unixSeconds*1000L);                                                              // convert seconds to miliseconds
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH");                                             // the format of your date
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+2"));                                                       // give a timezone reference for formatting (see comment at the bottom)
         String formattedDate = sdf.format(date);
         return formattedDate ;
     }

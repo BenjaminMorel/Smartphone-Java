@@ -5,6 +5,9 @@ import javax.swing.*;
 public class TopBarHomeScreen extends TopBar {
 
 
+    /**
+     * constructor Top Bar du HomeScreen
+     */
     public TopBarHomeScreen() {
         super();
 

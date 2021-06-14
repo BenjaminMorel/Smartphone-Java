@@ -2,6 +2,7 @@ package Apps.Gallery;
 
 import Apps.Contacts.Contact;
 import Errors.ErrorCode;
+import Errors.ErrorPanel;
 import Errors.SmartphoneException;
 import Storable.JSONStorage;
 
@@ -13,14 +14,14 @@ import java.util.ArrayList;
 
 public class EditImageName extends ImageGrand{
 
-    private String name;
-    private ArrayList<Images> images;                                                                                   //liste de images
+    private final String name;
+    private final ArrayList<Images> images;
     private ArrayList<Contact> contacts;
     private final File jsonFile = new File(System.getenv("HOME") + "\\Contacts.json");
     private final JSONStorage storable = new JSONStorage();
 
     /**
-     * Classe du constructeur qui a en parametre
+     * Classe du constructeur qui extend de ImageGrand et reprend name et image
      *
      * @param name   String name, qui contient le path de l'image
      * @param images Array list avec toutes les images
@@ -50,6 +51,12 @@ public class EditImageName extends ImageGrand{
 
     }
 
+    /**
+     * Donner une fonctionalité au bouton confirm
+     * qui va appeler changerLeNom
+     * et va cacher le bouton Confirmation et le text Field
+     * et re-afficher le bouton edit et le nom de l'image
+     */
     class BoutonConfirm implements ActionListener {
 
         @Override
@@ -58,7 +65,7 @@ public class EditImageName extends ImageGrand{
                 try {
                     changerLeNom();
                 } catch (SmartphoneException smartphoneException) {
-                    smartphoneException.printStackTrace();
+                    System.out.println(smartphoneException.getErrorMessage());
                 }
 
                 buttonConfirmation.setVisible(false);
@@ -78,51 +85,62 @@ public class EditImageName extends ImageGrand{
     }
 
     /**
-     * methode qui enregistre l'arraylist images, et lecture dans le fichier json
+     * methode qui met à jour le fichier json images et l'arraylist imagaes
+     * @throws SmartphoneException, ajout des exceptions dans la méthode
      */
-    public void saveImage()
-    {
+    public void saveImage() throws SmartphoneException {
+
         try {
             storable.writeImages(new File(System.getenv("HOME") + "\\Images.json"), images);
         } catch (SmartphoneException sm) {
-            System.out.println(sm.getErrorMessage());
-            System.out.println(sm.getErrorCode());
+            new ErrorPanel(sm.getErrorCode() ,sm.getErrorMessage());
+            throw new SmartphoneException("Pas trouvé le bon fichier", ErrorCode.BAD_PARAMETER);
         }
     }
 
     /**
-     *
-     * @throws SmartphoneException
+     * changer le nom de l'image
+     * parcourir la arraylist images, s'assurer qu'on est sur l'image séléctionnée
+     * @throws SmartphoneException, ajout des exceptions Smartphone dans la methode
      */
     public void changerLeNom() throws SmartphoneException
     {
-        for (int i = 0; i < images.size(); i++) {                                                               //parcourir toute la liste des images
-            if (name.equals(images.get(i).getName()))    //regarder adresse                                           //si le nom en parametre est le m'eme sur l'image cliqué
-            {
-                nomPhoto.setText(textField.getText());
+        try {
+            for (int i = 0; i < images.size(); i++) {                                                                   //parcourir toute la liste des images
+                if (name.equals(images.get(i).getName()))                                                               //si le nom en parametre est le m'eme sur l'image cliqué
+                {
 
-                //créer fichjeir
-                try
-                {
-                    File f = new File(System.getenv("HOME") + "\\" + images.get(i).getName());
-                    System.out.println(f);
-                    f.renameTo(new File(System.getenv("HOME") + "\\ImagesGallery\\" + nomPhoto.getText() + ".png"));
-                    System.out.println(f);
-                    images.get(i).setName("ImagesGallery/" + nomPhoto.getText() + ".png");
-                    saveImage();
-                    break;
-                }
-                catch (NullPointerException npe)
-                {
-                    throw new SmartphoneException("Pas trouvé le bon fichier", ErrorCode.BAD_PARAMETER);
+                    if(textField.getText().equals(""))                                                                  //assurer l'erreur si rien est rentré
+                    {
+                        throw new SmartphoneException("Le texte ne peut pas être vide", ErrorCode.BAD_PARAMETER);
+                    }
+                    else
+                    {
+                        nomPhoto.setText(textField.getText());
+                        //créer fichier
+                        File f = new File(System.getenv("HOME") + "\\" + images.get(i).getName());        //créer un fichier qui a le nom avec le path
+                        f.renameTo(new File(System.getenv("HOME") + "\\ImagesGallery\\" + nomPhoto.getText() + ".png")); //renommer le fichier avec le nom rentré dans le texte field
+                        images.get(i).setName("ImagesGallery/" + nomPhoto.getText() + ".png");
+                    }
+
                 }
             }
+
         }
+
+        catch (SmartphoneException sm)
+        {
+            new ErrorPanel(sm.getErrorCode() ,sm.getErrorMessage());
+            throw new SmartphoneException("Le nom est incorrect", ErrorCode.BAD_PARAMETER);
+        }
+
+        saveImage();
+
     }
 
     /**
-     *
-     * @throws SmartphoneException
+     * Mettre à jour le fichier contacts, pour pouvoir afficher l'image
+     * @throws SmartphoneException, ajout des exceptions à la méthode
      */
     public void changerNomImageContact() throws SmartphoneException {
 
@@ -151,8 +169,8 @@ public class EditImageName extends ImageGrand{
     }
 
     /**
-     *
-     * @throws SmartphoneException
+     * methode pour write (mettre à jour) le fichier Json contact et arraylist contacts
+     * @throws SmartphoneException, ajout des exceptions à la méthode
      */
     public void saveContact() throws SmartphoneException
     {

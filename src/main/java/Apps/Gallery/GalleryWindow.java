@@ -4,7 +4,6 @@ import Demo.Smartphone;
 import Errors.SmartphoneException;
 import Screen.HomeScreen;
 import TopBar.TopBarColor;
-import TopBar.TopBarGalleryApp;
 import TopBar.TopBarHomeScreen;
 import Storable.JSONStorage;
 
@@ -104,7 +103,6 @@ public class GalleryWindow extends JPanel{
         creationPanelAddDelete();
 
         buttonReturn.setBounds(30,5,25,25);
-        buttonReturn.addActionListener(new ButtonListener());
         buttonReturn.setBorderPainted(false);
         buttonReturn.setFocusPainted(false);
         buttonReturn.setContentAreaFilled(false);
@@ -161,6 +159,8 @@ public class GalleryWindow extends JPanel{
         {
             buttonImages[i].addActionListener(new ButtonListener());
         }
+
+        buttonReturn.addActionListener(new ButtonListener());
     }
 
     /**
@@ -211,7 +211,6 @@ public class GalleryWindow extends JPanel{
                 System.out.println(sme.getErrorCode());
             }
 
-
             try {
                 for (int i = 0; i < images.size(); i++) {
                     if (e.getSource() == buttonImages[i]) {
@@ -232,7 +231,6 @@ public class GalleryWindow extends JPanel{
                 System.out.println(sme.getErrorMessage());
                 System.out.println(sme.getErrorCode());
             }
-
         }
     }
 
