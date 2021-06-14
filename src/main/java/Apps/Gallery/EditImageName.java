@@ -63,7 +63,7 @@ public class EditImageName extends ImageGrand{
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == buttonConfirmation) {
                 try {
-                    changerLeNom();
+                    changerLeNom(name);
                 } catch (SmartphoneException smartphoneException) {
                     System.out.println(smartphoneException.getErrorMessage());
                 }
@@ -79,7 +79,6 @@ public class EditImageName extends ImageGrand{
                 } catch (SmartphoneException smartphoneException) {
                     smartphoneException.printStackTrace();
                 }
-
             }
         }
     }
@@ -93,7 +92,7 @@ public class EditImageName extends ImageGrand{
         try {
             storable.writeImages(new File(System.getenv("HOME") + "\\Images.json"), images);
         } catch (SmartphoneException sm) {
-            new ErrorPanel(sm.getErrorCode() ,sm.getErrorMessage());
+            new ErrorPanel(sm.getErrorCode(), sm.getErrorMessage());
             throw new SmartphoneException("Pas trouvé le bon fichier", ErrorCode.BAD_PARAMETER);
         }
     }
@@ -103,13 +102,12 @@ public class EditImageName extends ImageGrand{
      * parcourir la arraylist images, s'assurer qu'on est sur l'image séléctionnée
      * @throws SmartphoneException, ajout des exceptions Smartphone dans la methode
      */
-    public void changerLeNom() throws SmartphoneException
+    public void changerLeNom(String name) throws SmartphoneException
     {
         try {
             for (int i = 0; i < images.size(); i++) {                                                                   //parcourir toute la liste des images
                 if (name.equals(images.get(i).getName()))                                                               //si le nom en parametre est le m'eme sur l'image cliqué
                 {
-
                     if(textField.getText().equals(""))                                                                  //assurer l'erreur si rien est rentré
                     {
                         throw new SmartphoneException("Le texte ne peut pas être vide", ErrorCode.BAD_PARAMETER);
@@ -122,10 +120,8 @@ public class EditImageName extends ImageGrand{
                         f.renameTo(new File(System.getenv("HOME") + "\\ImagesGallery\\" + nomPhoto.getText() + ".png")); //renommer le fichier avec le nom rentré dans le texte field
                         images.get(i).setName("ImagesGallery/" + nomPhoto.getText() + ".png");
                     }
-
                 }
             }
-
         }
 
         catch (SmartphoneException sm)
