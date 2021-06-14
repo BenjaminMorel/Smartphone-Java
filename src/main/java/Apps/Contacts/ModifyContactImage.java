@@ -26,7 +26,8 @@ public class ModifyContactImage extends GalleryWindow {
         super();
         this.contact = contact;
         this.contacts = contacts;
-        buttonsAddDeletePanel.setVisible(false);
+        buttonsAddDeletePanel.setVisible(true);
+        buttonAdd.setVisible(false);
     }
 
     /**
@@ -56,7 +57,11 @@ public class ModifyContactImage extends GalleryWindow {
                         new Smartphone(new ModifyContact(contact, contacts), new TopBarColor(Color.BLACK));
                     }
                 }
-            }catch (SmartphoneException sme) {
+                if (e.getSource() == buttonReturn) {
+                    new Smartphone(new ModifyContactImage(contact, contacts), new TopBarColor(Color.black));
+                }
+
+            } catch (SmartphoneException sme) {
                 System.out.println(sme.getErrorMessage());
                 System.out.println(sme.getErrorCode());
             }

@@ -2,6 +2,7 @@ package Apps.Contacts;
 
 import Demo.Smartphone;
 import Errors.ErrorCode;
+import Errors.ErrorPanel;
 import Errors.SmartphoneException;
 import Storable.JSONStorage;
 import TopBar.TopBarColor;
@@ -141,16 +142,21 @@ public class ModifyContact extends InfoContact {
      */
 
     public void saveInJsonStorage(File destination) throws SmartphoneException {
-
         try {
             contact.setFirstName(firstNameText.getText());
             contact.setLastName(lastNameText.getText());
             contact.setTelNumber(telNumberText.getText());
             contact.setBirthDate(birthDateText.getText());
+        } catch (SmartphoneException e) {
+            new ErrorPanel(e.getErrorMessage());
+            throw new SmartphoneException(e.getErrorMessage(), ErrorCode.BAD_PARAMETER);
+        }
 
+        try {
             storable.write(destination, contacts);
         } catch (SmartphoneException e) {
-            throw new SmartphoneException("Erreur à l'enregistrement des données dans le fichier JSON", ErrorCode.SAVE_ERROR);
+            new ErrorPanel(e.getErrorMessage());
+            throw new SmartphoneException(e.getErrorMessage(), ErrorCode.SAVE_ERROR);
         }
     }
 
@@ -167,11 +173,7 @@ public class ModifyContact extends InfoContact {
         public void actionPerformed(ActionEvent e) {
             try {
                 if (e.getSource() == buttonConfirm) {
-                    try {
-                        saveInJsonStorage(jsonFile);
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
+                    saveInJsonStorage(jsonFile);
                     new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
                 }
                 if (e.getSource() == buttonCancel) {
