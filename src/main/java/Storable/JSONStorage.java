@@ -4,22 +4,19 @@ import Apps.Gallery.Images;
 import Errors.ErrorCode;
 import Errors.SmartphoneException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 
 public class JSONStorage{
 
     /**
      * Méthode permettant de lire un fichier contacts JSON
-     * @param source
-     * @param contacts
-     * @return
-     * @throws SmartphoneException
+     * @param source Fichier source qui va être lu par l'objectMapper
+     * @param contacts ArrayList de contact
+     * @return ArrayList de contacts avec les infos des contacts enregistrés
+     * @throws SmartphoneException Ajout des exceptions Smartphone à la méthode
      */
 
     public ArrayList<Contact> read(File source, ArrayList<Contact> contacts) throws SmartphoneException {
@@ -30,16 +27,16 @@ public class JSONStorage{
             contactsArray = mapper.readValue(source, Contact[].class);
             contacts = new ArrayList<>(Arrays.asList(contactsArray));
         } catch (IOException e) {
-            throw new SmartphoneException("Error while reading JSON file", ErrorCode.JSON_FILE) ;
+            throw new SmartphoneException("Erreur lors de la lecture du fichier JSON", ErrorCode.JSON_FILE) ;
         }
         return contacts;
     }
 
     /**
      * Méthode permettant d'écrire un fichier de contacts JSON
-     * @param destination
-     * @param contacts
-     * @throws SmartphoneException
+     * @param destination Fichier de destination dans lequel les données sont enregistrées
+     * @param contacts ArrayList de contacts avec les infos des contacts enregistrés
+     * @throws SmartphoneException Ajout des exceptions Smartphone à la méthode
      */
 
     public void write(File destination, ArrayList<Contact> contacts) throws SmartphoneException{
@@ -48,7 +45,7 @@ public class JSONStorage{
         try {
             mapper.writeValue(destination, contacts);
         } catch (IOException e) {
-            throw new SmartphoneException("Error while writing in JSON file", ErrorCode.JSON_FILE) ;
+            throw new SmartphoneException("Erreurs lors de l'écriture des données dans le fichier JSON", ErrorCode.JSON_FILE) ;
         }
     }
 

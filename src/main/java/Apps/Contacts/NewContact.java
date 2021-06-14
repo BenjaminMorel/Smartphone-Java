@@ -1,9 +1,7 @@
 package Apps.Contacts;
 
 import Demo.Smartphone;
-import Errors.ErrorCode;
-import Errors.ErrorPanel;
-import Errors.SmartphoneException;
+import Errors.*;
 import Storable.JSONStorage;
 import TopBar.TopBarColor;
 
@@ -32,7 +30,7 @@ public class NewContact extends JPanel {
     private final File jsonFile = new File(System.getenv("HOME") + "\\Contacts.json");
 
     /**
-     *
+     * Constructeur de la classe NewContact qui permet d'ajouter un nouveau contact
      * @param contacts ArrayList contentant les contacts
      */
 
@@ -78,7 +76,6 @@ public class NewContact extends JPanel {
      */
 
     public void creationMainPanel() {
-        // Variables générales
         JPanel panelInfoContact = new JPanel();                                                                                // Création du panel
         panelInfoContact.setLayout(new GridLayout(4,1));
         panelInfoContact.setBounds(40, 230, 300, 180);
@@ -135,7 +132,7 @@ public class NewContact extends JPanel {
     /**
      * Méthode pour sauver les modifications dans le fichier JSON
      * @param destination Spécifier le fichier de destination
-     * @throws SmartphoneException Ajout des exceptions à la méthode
+     * @throws SmartphoneException Ajout des exceptions Smartphone à la méthode
      */
 
     public void saveInJsonStorage(File destination) throws SmartphoneException {
@@ -143,7 +140,7 @@ public class NewContact extends JPanel {
             contacts.add(new Contact(firstNameText.getText(), lastNameText.getText(), telNumberText.getText(), birthDateText.getText(), "Images/ContactApp/Contact.png"));
             storable.write(destination, contacts);
         } catch (SmartphoneException e) {
-            new ErrorPanel(e.getErrorMessage());
+            new ErrorPanel(e.getErrorCode(), e.getErrorMessage());
             throw new SmartphoneException(e.getErrorMessage(), ErrorCode.BAD_PARAMETER);
         }
     }

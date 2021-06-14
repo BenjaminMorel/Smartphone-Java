@@ -14,10 +14,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
-/**
- * Classe contenant un panel où le contact passé en paramètre pourra être modifié
- */
-
 public class ModifyContact extends InfoContact {
 
     // Variables générales
@@ -37,7 +33,7 @@ public class ModifyContact extends InfoContact {
     private final Color black = Color.black;
 
     /**
-     *
+     * Constructeur de la classe ModifyContact qui sert à modifier les données d'un contact
      * @param contact Contact à modifier
      * @param contacts ArrayList des contacts
      */
@@ -57,7 +53,6 @@ public class ModifyContact extends InfoContact {
         creationButtonChangeImage();
         creationButtonConfirm();
         creationButtonCancel();
-
     }
 
     /**
@@ -110,7 +105,6 @@ public class ModifyContact extends InfoContact {
         add(buttonChangeImage);
     }
 
-
     /**
      * Création du button pour confirmer les informations entrées
      */
@@ -138,7 +132,7 @@ public class ModifyContact extends InfoContact {
     /**
      * Méthode pour sauver les modifications dans le fichier JSON
      * @param destination Spécifier le fichier de destination
-     * @throws SmartphoneException Ajout des exceptions à la méthode
+     * @throws SmartphoneException Ajout des exceptions Smartphone à la méthode
      */
 
     public void saveInJsonStorage(File destination) throws SmartphoneException {
@@ -148,14 +142,14 @@ public class ModifyContact extends InfoContact {
             contact.setTelNumber(telNumberText.getText());
             contact.setBirthDate(birthDateText.getText());
         } catch (SmartphoneException e) {
-            new ErrorPanel(e.getErrorMessage());
+            new ErrorPanel(e.getErrorCode(), e.getErrorMessage());
             throw new SmartphoneException(e.getErrorMessage(), ErrorCode.BAD_PARAMETER);
         }
 
         try {
             storable.write(destination, contacts);
         } catch (SmartphoneException e) {
-            new ErrorPanel(e.getErrorMessage());
+//            new ErrorPanel(e.getErrorMessage());
             throw new SmartphoneException(e.getErrorMessage(), ErrorCode.SAVE_ERROR);
         }
     }
@@ -177,10 +171,10 @@ public class ModifyContact extends InfoContact {
                     new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
                 }
                 if (e.getSource() == buttonCancel) {
-                    if (contact.getImagePath().equals("Images/ContactApp/Contact.png"))
-                        contact.setImagePath("Images/ContactApp/Contact.png");
-                    else
-                        contact.setImagePath(contact.getImagePath());
+//                    if (contact.getImagePath().equals("Images/ContactApp/Contact.png"))
+//                        contact.setImagePath("Images/ContactApp/Contact.png");
+//                    else
+//                        contact.setImagePath(contact.getImagePath());
                     new Smartphone(new InfoContact(contact, contacts), new TopBarColor(black));
                 }
                 if (e.getSource() == buttonChangeImage) {

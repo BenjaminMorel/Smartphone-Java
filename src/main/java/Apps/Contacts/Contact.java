@@ -1,14 +1,15 @@
 package Apps.Contacts;
 
 
-import Errors.ErrorCode;
-import Errors.SmartphoneException;
+import Errors.*;
+
 
 public class Contact {
 
     private String firstName, lastName, fullName, telNumber, birthDate, imagePath;
 
     /**
+     * Constructeur de la classe Contact contenant les informations personnelles du contact
      * @param firstName String qui contient le prénom du contact
      * @param lastName String qui contient le nom du contatc
      * @param telNumber String qui contient le téléphone du contact
@@ -26,7 +27,7 @@ public class Contact {
         setFullName();
     }
 
-    public Contact() {
+    public Contact() throws SmartphoneException {
 
     }
 
@@ -77,8 +78,14 @@ public class Contact {
     }
 
     public void setTelNumber(String telNumber) throws SmartphoneException {
+
+        telNumber = telNumber.replaceAll(" ", "");
+
         if (telNumber.isEmpty())
             throw new SmartphoneException("Le numéro de téléphone est vide", ErrorCode.BAD_PARAMETER);
+
+        if (telNumber.length() != 10)
+            throw new SmartphoneException("Le numéro de téléphone n'est pas valide\nFormat: 012 345 67 89", ErrorCode.BAD_PARAMETER);
 
         else {
             for (int i = 0; i < telNumber.length(); i++) {
@@ -89,7 +96,6 @@ public class Contact {
                     throw new SmartphoneException("Le numéro de téléphone ne peut contenir que des chiffres", ErrorCode.BAD_PARAMETER);
                 }
             }
-            // .replace all (/.,)
         }
     }
 
@@ -98,17 +104,25 @@ public class Contact {
     }
 
     public void setBirthDate(String birthDate) throws SmartphoneException {
-        if (birthDate.isEmpty()) {
+
+        birthDate = birthDate.replaceAll(" ", "");
+
+        if (birthDate.isEmpty())
             this.birthDate = birthDate;
-        }
+
         else {
+            if (birthDate.length()!= 10) {
+                throw new SmartphoneException("La date de naissance n'est pas valide\nFormat: dd/mm/yyyy", ErrorCode.BAD_PARAMETER);
+            }
             for (int i = 0; i < birthDate.length(); i++) {
-                if (birthDate.charAt(i) > 47 && birthDate.charAt(i) < 58) {
+                if (birthDate.charAt(i) > 46 && birthDate.charAt(i) < 58)
                     this.birthDate = birthDate;
-                } else {
-                    throw new SmartphoneException("La date ne peut contenir que des chiffres, format DD/MM/YYYY", ErrorCode.BAD_PARAMETER);
+
+                else {
+                    throw new SmartphoneException("La date ne peut contenir que des chiffres\nFormat: dd/mm/yyyy", ErrorCode.BAD_PARAMETER);
                 }
             }
+
         }
     }
 

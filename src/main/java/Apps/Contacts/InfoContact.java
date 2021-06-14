@@ -29,7 +29,7 @@ public class InfoContact extends JPanel {
     private final Contact contact;
 
     /**
-     *
+     * Constructeur de la classe InfoContact dans laquelle les infos du contact sont affichées
      * @param contact Contact à afficher
      * @param contacts ArrayList des contacts
      */
@@ -147,7 +147,7 @@ public class InfoContact extends JPanel {
     }
 
     /**
-     *
+     * Méthode pour supprimer un contact
      * @param fullName Prend le fullname (prénom + nom) du contact à supprimer
      */
 
@@ -166,7 +166,10 @@ public class InfoContact extends JPanel {
     }
 
     /**
-     *
+     * Classe contenant des actions listener pour :
+     *  - Retourner à la liste des contacts
+     *  - Modifier les données du contact
+     *  - Supprimer le contact enregistré
      */
 
     class InfoContactListener implements ActionListener {
@@ -186,7 +189,7 @@ public class InfoContact extends JPanel {
                     System.out.println("Supprime le contact: " + contact.getFullName());
                     new Smartphone(new ContactWindow(), new TopBarColor(black));
                 }
-            }catch (SmartphoneException sme) {
+            } catch (SmartphoneException sme) {
                 System.out.println(sme.getErrorMessage());
                 System.out.println(sme.getErrorCode());
             }
