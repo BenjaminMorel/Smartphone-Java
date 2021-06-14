@@ -59,7 +59,6 @@ public class ImageGrand extends JPanel {
         setSmartphoneShape();                                                                                           // ajout du contour du smartphone
         setLayout(null);
 
-
         creationPanel();
         creationBoutonReturn();
         creationBoutonDelete();
@@ -78,7 +77,7 @@ public class ImageGrand extends JPanel {
         panel = new JPanel();
         panel.setOpaque(false);
 
-        image = new ImageIcon(ClassLoader.getSystemResource(name)).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);                   //redimenssionner l'image en allant chercher le path qui est donné en paramètre
+        image = new ImageIcon(ClassLoader.getSystemResource(name)).getImage();
 
         label = new JLabel(new ImageIcon(image));                                                                       //ajouter l'image à un Jlabel
         nomPhoto = new JLabel(name);
@@ -86,8 +85,8 @@ public class ImageGrand extends JPanel {
         panel.add(nomPhoto);
         panel.add(label);                                                                                               //ajouter le label au panel
 
-        panel.setBounds(30, 60, width, height);                                                                      //donner taille et emplacement du panel qui contient l'image
-        add(panel);                                                                           //ajouter panel qui contien l'image au panel principal, le panel de l'application
+        panel.setBounds(30, 60, width, height);                                                                   //donner taille et emplacement du panel qui contient l'image
+        add(panel);                                                                                                     //ajouter panel qui contien l'image au panel principal, le panel de l'application
     }
 
     /**
