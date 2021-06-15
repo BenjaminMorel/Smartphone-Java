@@ -114,7 +114,7 @@ public class EditImageName extends ImageGrand{
                     }
                     else
                     {
-                        nomPhoto.setText(textField.getText());
+                        nomPhoto.setText(textField.getText().trim());                                                      //Trim pour enlever les espaces avant et après le nom
                         //créer fichier
                         File f = new File(System.getenv("HOME") + "\\" + images.get(i).getName());        //créer un fichier qui a le nom avec le path
                         f.renameTo(new File(System.getenv("HOME") + "\\ImagesGallery\\" + nomPhoto.getText() + ".png")); //renommer le fichier avec le nom rentré dans le texte field

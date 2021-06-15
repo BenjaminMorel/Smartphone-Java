@@ -16,6 +16,9 @@ import java.io.File;
 
 import java.util.ArrayList;
 
+/**
+ * Classe Image grand qui extend de JPanel
+ */
 public class ImageGrand extends JPanel {
 
     protected JPanel panel;

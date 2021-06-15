@@ -37,7 +37,7 @@ public class Contact {
 
     public void setFirstName(String firstName) throws SmartphoneException {
 
-        firstName = firstName.replaceAll(" ", "");
+        firstName = firstName.trim();
 
         if (firstName.isEmpty())
             throw new SmartphoneException("Le prénom est vide", ErrorCode.BAD_PARAMETER);
@@ -54,7 +54,7 @@ public class Contact {
 
     public void setLastName(String lastName) throws SmartphoneException {
 
-        lastName = lastName.replaceAll(" ", "");
+        lastName = lastName.trim();
 
         if (lastName.isEmpty())
             throw new SmartphoneException("Le nom est vide", ErrorCode.BAD_PARAMETER);
